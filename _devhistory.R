@@ -117,6 +117,9 @@ system2("git push -u origin master") # Same (CLI).
 # IMPORTANT NOTE: because of the CLI-RStudio bugs, I can "commit" from RStudio but I cannot push,
 # so I will always be forced to do it from a CLI every time!
 
+# To ignore changes made to the Rproj file:
+usethis::use_git_ignore("ppl.ipa.Rproj")
+
 
 
 ##### * 1.2. Project architecture ----------------------------------------------
@@ -188,7 +191,8 @@ usethis::use_build_ignore("ppl.tits_biblio.bib")
 
 
 
-usethis::use_git_ignore("ppl.ipa.Rproj")
+
+
 
 ########### *-----------------------------------------------------* ############
 ############################ Main Git commits ##################################
