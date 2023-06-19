@@ -64,7 +64,8 @@
 # To keep track of all future changes and have a backup, I need to initiate a Git version control
 # repository and link my R project folder to my GitHub account. Here, I created the Git repository
 # alongside the R project (using the buttons of RStudio), but I could have done it with the procedure
-# described below. As it is not the first time I do that on my computer and with this R version,
+# described below. As it is not the first time I do that on my computer and with this R version, my Git
+# is already parametrised and I do not need to follow the entire procedure.
 # As I'm connecting my 'ppl.ipa" project AFTER its creation, I'm following a 'GitHub-last' procedure:
 # STEP 1: Make sure Git is installed (e.g. by typing 'git status' in the R terminal), if not, install it!
 # STEP 2: Enter your project and type 'git init' in the R Terminal, it will initiate a Git
@@ -103,7 +104,7 @@ usethis::use_git(message = ":tada: Initial commit") # Then restart RStudio and t
 # appear on the top-right box of RStudio.
 # STEP 6: Log in your GitHub account and create a new repository (without anything in it).
 # STEP 7: Use the following command to associate your R project with the GitHub project:
-system2("git remote add origin git@github.com:mrelnoob/ppl.tits") # Here also, personalize
+system2("git remote add origin git@github.com:mrelnoob/ppl.ipa") # Here also, personalize
 # with your own account and project names! And here again, it does not work (so --> CLI).
 # STEP 8: Finally, you can push the changes made to your local files to GitHub:
 system2("git push -u origin master") # Same (CLI).
