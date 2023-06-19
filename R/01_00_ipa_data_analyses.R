@@ -57,74 +57,77 @@ rmetrics <- readr::read_csv2(file = here::here("data/ipa_urban_metrics.csv"), co
                                                            "medium", "intesive")))) # Note, as I use "read_csv2",
 # my decimal separator should be a "," and not a "." (as used by default by most softwares). I thus corrected
 # that manually on my CSV file!
-
-ripa <- read.csv2(here::here("data/ppl_ipa_data_20192022.csv"),  na.strings = "")
-rtraits <- read.csv2(here::here("data/ppl_ipa_species_traits.csv"),  na.strings = "")
-
-
-rmetrics %>% dplyr::mutate(
-  id_ipa = as.factor(id_ipa),
-  area = as.numeric(area),
-  site_name = as.factor(site_name),
-  neighbourhood = as.factor(neighbourhood),
-  urban_type = as.factor(urban_type),
-  urban_type_2 = as.factor(urban_type_2),
-  possible_outlier = as.factor(possible_outlier),
-  x = as.numeric(x),
-  y = as.numeric(y),
-  evenness_class = as.factor(evenness_class),
-  dom_sp_1 = as.factor(dom_sp_1),
-  dom_sp_2 = as.factor(dom_sp_2),
-  dom_sp_3 = as.factor(dom_sp_3),
-  bprop = as.numeric(bprop),
-  bh = as.numeric(bh),
-  bh_m = as.numeric(bh_m),
-  bh_iqr = as.numeric(bh_iqr),
-  bconti = as.numeric(bconti),
-  bfreq = as.numeric(bfreq),
-  barea_m = as.numeric(barea_m),
-  barea_iqr = as.numeric(barea_iqr),
-  bgaps = as.numeric(bgaps),
-  bhgaps = as.numeric(bhgaps),
-  rlength = as.numeric(rlength),
-  rdens = as.numeric(rdens),
-  rortho_m = as.numeric(rortho_m),
-  rortho_m = as.numeric(rortho_m),
-
-
-) %>%
-  dplyr::rename(
-    flower_sp = espece_fleur,
-    date = date_de_session,
-    observed_arthropoda = espece_insecte,
-    obs_genus = genre_insecte,
-    obs_family = famille_insecte,
-    obs_order = ordre_insecte
-  ) -> rgenera
-
-rsites %>% dplyr::mutate(
-  collection = as.factor(collection),
-  espece_fleur = as.factor(espece_fleur),
-  ville = as.factor(ville),
-  code_ua = as.factor(UA_code_2018_simp)) %>%
-  dplyr::relocate(code_ua, .after = UA_code_2018_simp) -> rsites
-
-rcoord %>% dplyr::mutate(collection = as.factor(collection),
-                         xcoord = as.numeric(xcoord),
-                         ycoord = as.numeric(ycoord)) -> rcoord
-
-rgenera$coord_x <- rcoord$xcoord
-rgenera$coord_y <- rcoord$ycoord
-rgenera %>% dplyr::relocate(coord_x, .after = date) %>%
-  dplyr::relocate(coord_y, .after = coord_x) -> rgenera
-summary(rgenera)
+ripa <- readr::read_csv2(file = here::here("data/ppl_ipa_data_20192022.csv"), col_names = TRUE, na = "",
+                         col_types = readr::cols(id_ipa = readr::col_factor(),
+                                                 id_site = readr::col_factor(),
+                                                 site_name = readr::col_factor(),
+                                                 observator = readr::col_factor(),
+                                                 year = readr::col_factor(),
+                                                 date = readr::col_factor()))
+rtraits <- readr::read_csv2(file = here::here("data/ppl_ipa_species_traits.csv"), col_names = TRUE, na = "",
+                            col_select = -comment, col_types = readr::cols(
+                              sp_id = readr::col_factor(),
+                              order = readr::col_factor(),
+                              family = readr::col_factor(),
+                              genus = readr::col_factor(),
+                              species = readr::col_factor(),
+                              nesting_pref = readr::col_factor(),
+                              development_mode = readr::col_factor(),
+                              trophic_level = readr::col_factor(),
+                              trophic_niche = readr::col_factor(),
+                              foraging_behaviour = readr::col_factor(),
+                              foraging_strata = readr::col_factor(),
+                              habitat = readr::col_factor(),
+                              hab_density = readr::col_factor(),
+                              prim_lifestyle = readr::col_factor(),
+                              urban_tolerance = readr::col_factor(),
+                              social_behaviour = readr::col_factor(),
+                              migratory = readr::col_factor(),
+                              iucn_status = readr::col_factor()))
 
 
 
 ### ** 0.1.2. Data preparation and cleaning ----
 # ______________________________________________
 
-### *** 0.1.2.1. Computing richness for corrected genera data ----
+## Removing useless columns and converting number of couples into number of contacted individuals:
+ripa %>% dplyr::select(-id_site, -site_name, -date) %>%
+  dplyr::mutate_if(is.numeric, ~ . * 2) -> ripa
+
+## Removing useless columns, dealing with NAs and other slight changes:
+rmetrics %>% dplyr::select(-area, -vmanag) %>%
+  dplyr::rename(coord_x = x) %>%
+  dplyr::rename(coord_y = y) -> rmetrics
+rmetrics[which(is.na(rmetrics$bh_m)), "bh_m"] <- 0
+rmetrics[which(is.na(rmetrics$bh_iqr)), "bh_iqr"] <- 0
+rmetrics[which(is.na(rmetrics$barea_m)), "barea_m"] <- 0
+rmetrics[which(is.na(rmetrics$barea_iqr)), "barea_iqr"] <- 0
+rmetrics[which(is.na(rmetrics$rdens)), "rdens"] <- 0
+rmetrics[which(is.na(rmetrics$rortho_m)), "rortho_m"] <- 0
+# Note that I do not attribute 0 to the NAs of "bconti" as it would not make sense!
+
+rmetrics %>% dplyr::mutate(urban_type = stats::relevel(x = urban_type, ref = 7), # Assigning "urban parks" as
+                           # reference level.
+                           urban_type_2 = stats::relevel(x = urban_type_2, ref = 8), # Same here.
+                           lcz = stats::relevel(x = lcz, ref = 5)) %>% # Assigning "forested areas" as
+  # reference level.
+  dplyr::mutate(coord_y = jitter(x = coord_y, factor = 1.2)) %>% # Jitter coordinates a little bit.
+  dplyr::mutate(coord_x = jitter(x = coord_x, factor = 1.2)) -> rmetrics
+
+## Removing useless columns:
+rtraits %>% dplyr::select(-maturity_age, -longevity) -> rtraits
+
+
+
+### ** 0.1.3. Computing functional groups richness and diversity indices ----
+# ___________________________________________________________________________
+
+# For now, we will only work with the data extracted from the 150m radius buffers, so we select them:
+rmetrics
+
+
+
+### *** 0.1.2.2. Computing species richness for corrected genera data ----
 ## For all arthropods:
 rgenera %>% dplyr::group_by(collection) %>%
   dplyr::summarise(flower_sp = dplyr::first(flower_sp),
@@ -145,6 +148,15 @@ rgenera %>% dplyr::filter(obs_order %in% c("Diptera", "Hymenoptera", "Coleoptera
                    genus_richness = dplyr::n_distinct(obs_genus, na.rm = TRUE),
                    family_richness = dplyr::n_distinct(obs_family),
                    order_richness = dplyr::n_distinct(obs_order)) -> richness_polli
+
+
+
+
+
+
+
+
+
 
 
 ### *** 0.1.2.2. Data reduction ----
