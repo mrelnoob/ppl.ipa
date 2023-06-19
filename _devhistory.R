@@ -193,6 +193,21 @@ usethis::use_build_ignore("ppl.tits_biblio.bib")
 
 
 
+########################## ********************************************* ###############################
+# -------------------------------- #
+##### 2. Populating my project #####
+# -------------------------------- #
+
+##### * 2.1. Writing functions -------------------------------------------------
+# ---------------------------------------------------------------------------- #
+
+# I may now write my scripts and associated functions --> THEN TARGETS§§§§§
+# I may now write my scripts and associated functions --> THEN TARGETS§§§§§
+# I may now write my scripts and associated functions --> THEN TARGETS§§§§§
+# I may now write my scripts and associated functions --> THEN TARGETS§§§§§
+
+
+
 
 ########### *-----------------------------------------------------* ############
 ############################ Main Git commits ##################################
