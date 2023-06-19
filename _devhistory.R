@@ -116,3 +116,92 @@ system2("git push -u origin master") # Same (CLI).
 # master" (the -f means to "force" the push).
 # IMPORTANT NOTE: because of the CLI-RStudio bugs, I can "commit" from RStudio but I cannot push,
 # so I will always be forced to do it from a CLI every time!
+
+
+
+##### * 1.2. Project architecture ----------------------------------------------
+# ---------------------------------------------------------------------------- #
+
+# To create a folder containing my data and functions:
+dir.create("data")
+dir.create("R")
+# To create other useful folders for my package:
+# dir.create("output")
+# dir.create("output/plots")
+# dir.create("output/tables")
+# dir.create("output/texts") # I WILL TRY CREATING THE FOLDERS DIRECTLY IN MY FUNCTIONS§§§§§
+# dir.create("output/texts") # I WILL TRY CREATING THE FOLDERS DIRECTLY IN MY FUNCTIONS§§§§§
+# dir.create("output/texts") # I WILL TRY CREATING THE FOLDERS DIRECTLY IN MY FUNCTIONS§§§§§
+#
+# usethis::use_build_ignore("output/")
+# usethis::use_build_ignore("tables/")
+# usethis::use_build_ignore("texts/")
+# usethis::use_build_ignore("plots/")
+# usethis::use_git_ignore("plots/") # To avoid saturating Git, I ignore the folders prone to contain
+# # rather heavy files such as spatial layers and plots, but not tables and texts!
+
+
+
+##### * 1.3. Creating scripts for custom functions -----------------------------
+# ---------------------------------------------------------------------------- #
+
+file.create(... = "R/01_00_ipa_data_analyses.R")
+# ATTENTION: Je devrais probablement créer plus de scripts pour être propre (à voir quand je TARGET)§§§
+# ATTENTION: Je devrais probablement créer plus de scripts pour être propre (à voir quand je TARGET)§§§
+# ATTENTION: Je devrais probablement créer plus de scripts pour être propre (à voir quand je TARGET)§§§
+
+
+
+
+##### * 1.4. Creating reports (RMarkdown) --------------------------------------
+# ---------------------------------------------------------------------------- #
+
+file.create(... = "output/texts/ppl.tits.exploration_report.Rmd")
+file.create(... = "output/texts/ppl.tits.intermediate_analyses_report.Rmd") # Using this command,
+# a .Rmd file will be created but will lack the YAML header skeleton that should thus be manually
+# placed at the top of the document.
+# NOTE: for guidance to use .Rmd documents with {targets}, please refer to the {targets} related
+# section (chapter 2 below).
+
+
+### ** 1.3.1. To manage citations and bibliography ----
+# _____________________________________________________
+
+# To manage citations and get an automatic bibliography with RMarkdown, I have to follow these
+# steps:
+#  1) Using Zotero (or something similar), I have to 'export' the references to be cited in the
+#     report in a BibTex format (.bib) and place this text file in the same folder as my .Rmd file.
+#  2) Call this document in the `bibliography` field in the YAML metadata header (e.g.
+#     bibliography: my_example.bib).
+#  3) In text, I use arobases (@) and brackets ([], use semi-colons ";" for separation between
+#     references) to add citations (e.g. "@Martin2022 said that..." or "blabla [@Martin2022;
+#     see also @Darwin1832]").
+#  4) I can change the citation style by using the `csl` field in the YAML metadata header
+#     (e.g. csl: my_style.csl) and pasting the said style in the same folder as before.
+# Thus, I pasted my BibTex file in the same folder as my .Rdm file. But in the case where my .Rmd
+# file would be at the root of my package, I need to tell R to ignore it:
+usethis::use_build_ignore("ppl.tits_biblio.bib")
+# For practical reasons, this .bib file will certainly be updated many times during the duration
+# of the project. Also, it may be useful to manually edit the file to shorten the reference tags
+# since Zotero tends to create long tag using the name of the 1st author, the 1st work of the title
+# and the year of publication.
+
+
+
+usethis::use_git_ignore("ppl.ipa.Rproj")
+
+########### *-----------------------------------------------------* ############
+############################ Main Git commits ##################################
+# ---------------------------------------------------------------------------- #
+usethis::use_git(message = ":boom: Imported first raw data")
+usethis::use_git(message = ":metal: Created a new function")
+usethis::use_git(message = ":zap: Ignoring something")
+usethis::use_git(message = ":pencil: Documented a function or wrote something")
+usethis::use_git(message = ":hammer: Ongoing programming!")
+usethis::use_git(message = ":white_check_mark: Updated the {target} pipeline")
+usethis::use_git(message = ":x: Problem detected!")
+#system("git push") # Or using a CLI!
+# Don't forget to push your commits once you're sure you made no mistakes.
+# ---------------------------------------------------------------------------- #
+# ------------------------------- THE END ------------------------------------ #
+########### *-----------------------------------------------------* ############
