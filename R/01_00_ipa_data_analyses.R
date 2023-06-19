@@ -37,33 +37,61 @@ usethis::use_git(message = ":x: Problem detected!")
 
 library(magrittr)
 
-ripa <- read.csv2(here::here("data/ipa_urban_metrics.csv"),  na.strings = "")
-x <- readr::read_csv2(file = here::here("data/ipa_urban_metrics.csv"), col_names = TRUE, na = "",
-                         col_types = readr::cols(id_ipa = readr::col_factor(),
-                                                 site_name = readr::col_factor(),
-                                                 neighbourhood = readr::col_factor(),
-                                                 urban_type = readr::col_factor(),
-                                                 urban_type_2 = readr::col_factor(),
-                                                 possible_outlier = readr::col_factor(),
-                                                 evenness_class = readr::col_factor(
-                                                   ordered = TRUE,
-                                                   levels = c("A", "B", "C", "D")),
-                                                 dom_sp_1 = readr::col_factor(),
-                                                 dom_sp_2 = readr::col_factor(),
-                                                 dom_sp_3 = readr::col_factor(),
-                                                 comments_2 = readr::col_factor()))
+rmetrics <- readr::read_csv2(file = here::here("data/ipa_urban_metrics.csv"), col_names = TRUE, na = "",
+                             col_types = readr::cols(id_ipa = readr::col_factor(),
+                                              site_name = readr::col_factor(),
+                                              neighbourhood = readr::col_factor(),
+                                              urban_type = readr::col_factor(),
+                                              urban_type_2 = readr::col_factor(),
+                                              possible_outlier = readr::col_factor(),
+                                              evenness_class = readr::col_factor(
+                                                ordered = TRUE,
+                                                levels = c("A", "B", "C", "D")),
+                                              dom_sp_1 = readr::col_factor(),
+                                              dom_sp_2 = readr::col_factor(),
+                                              dom_sp_3 = readr::col_factor(),
+                                              lcz = readr::col_factor(),
+                                              vmanag = readr::col_factor(
+                                                ordered = TRUE,
+                                                levels = c("natural_evol", "extensive",
+                                                           "medium", "intesive")))) # Note, as I use "read_csv2",
+# my decimal separator should be a "," and not a "." (as used by default by most softwares). I thus corrected
+# that manually on my CSV file!
+
+ripa <- read.csv2(here::here("data/ppl_ipa_data_20192022.csv"),  na.strings = "")
+rtraits <- read.csv2(here::here("data/ppl_ipa_species_traits.csv"),  na.strings = "")
 
 
+rmetrics %>% dplyr::mutate(
+  id_ipa = as.factor(id_ipa),
+  area = as.numeric(area),
+  site_name = as.factor(site_name),
+  neighbourhood = as.factor(neighbourhood),
+  urban_type = as.factor(urban_type),
+  urban_type_2 = as.factor(urban_type_2),
+  possible_outlier = as.factor(possible_outlier),
+  x = as.numeric(x),
+  y = as.numeric(y),
+  evenness_class = as.factor(evenness_class),
+  dom_sp_1 = as.factor(dom_sp_1),
+  dom_sp_2 = as.factor(dom_sp_2),
+  dom_sp_3 = as.factor(dom_sp_3),
+  bprop = as.numeric(bprop),
+  bh = as.numeric(bh),
+  bh_m = as.numeric(bh_m),
+  bh_iqr = as.numeric(bh_iqr),
+  bconti = as.numeric(bconti),
+  bfreq = as.numeric(bfreq),
+  barea_m = as.numeric(barea_m),
+  barea_iqr = as.numeric(barea_iqr),
+  bgaps = as.numeric(bgaps),
+  bhgaps = as.numeric(bhgaps),
+  rlength = as.numeric(rlength),
+  rdens = as.numeric(rdens),
+  rortho_m = as.numeric(rortho_m),
+  rortho_m = as.numeric(rortho_m),
 
 
-rgenera %>% dplyr::mutate(
-  collection = as.factor(collection),
-  espece_fleur = as.factor(espece_fleur),
-  date_de_session = as.factor(date_de_session),
-  espece_insecte = as.factor(espece_insecte),
-  genre_insecte = as.factor(genre_insecte),
-  famille_insecte = as.factor(famille_insecte),
-  ordre_insecte = as.factor(ordre_insecte)
 ) %>%
   dplyr::rename(
     flower_sp = espece_fleur,
