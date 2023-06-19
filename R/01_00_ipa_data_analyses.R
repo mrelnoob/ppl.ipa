@@ -5,27 +5,6 @@
 # Note that I manually added this project and its files into my Github account (cf. '_devhistory.R' at the
 # root of this project) that can be found at: https://github.com/mrelnoob/ppl.ipa
 
-
-########### *-----------------------------------------------------* ############
-############################ Main Git commits ##################################
-# ---------------------------------------------------------------------------- #
-usethis::use_git(message = ":boom: First generated results!")
-usethis::use_git(message = ":metal: Created a new function")
-usethis::use_git(message = ":zap: Ignoring something")
-usethis::use_git(message = ":pencil: Documented a function or wrote something")
-usethis::use_git(message = ":hammer: Ongoing programming!")
-usethis::use_git(message = ":white_check_mark: Updated the {target} pipeline")
-usethis::use_git(message = ":x: Problem detected!")
-#system("git push") # Or using a CLI!
-# Don't forget to push your commits once you're sure you made no mistakes.
-# ---------------------------------------------------------------------------- #
-# ------------------------------- THE END ------------------------------------ #
-########### *-----------------------------------------------------* ############
-
-
-
-
-
 # ---------------------- #
 ##### 0. Data import #####
 # ---------------------- #
@@ -57,7 +36,7 @@ rmetrics <- readr::read_csv2(file = here::here("data/ipa_urban_metrics.csv"), co
                                                            "medium", "intesive")))) # Note, as I use "read_csv2",
 # my decimal separator should be a "," and not a "." (as used by default by most softwares). I thus corrected
 # that manually on my CSV file!
-ripa <- readr::read_csv2(file = here::here("data/ppl_ipa_data_20192022.csv"), col_names = TRUE, na = "",
+rdata <- readr::read_csv2(file = here::here("data/ppl_ipa_data_20192022.csv"), col_names = TRUE, na = "",
                          col_types = readr::cols(id_ipa = readr::col_factor(),
                                                  id_site = readr::col_factor(),
                                                  site_name = readr::col_factor(),
@@ -90,12 +69,15 @@ rtraits <- readr::read_csv2(file = here::here("data/ppl_ipa_species_traits.csv")
 ### ** 0.1.2. Data preparation and cleaning ----
 # ______________________________________________
 
-## Removing useless columns and converting number of couples into number of contacted individuals:
-ripa %>% dplyr::select(-id_site, -site_name, -date) %>%
-  dplyr::mutate_if(is.numeric, ~ . * 2) -> ripa
+## Removing useless columns, converting number of couples into number of contacted individuals, and changing
+# NAs by zeros (i.e. the species was not observed):
+rdata %>% dplyr::select(-id_site, -site_name, -date) %>%
+  dplyr::mutate_if(is.numeric, ~ . * 2) -> rdata
+rdata[is.na(rdata)] <- 0
 
 ## Removing useless columns, dealing with NAs and other slight changes:
 rmetrics %>% dplyr::select(-area, -vmanag) %>%
+  dplyr::rename(buffer_radius = rayon) %>%
   dplyr::rename(coord_x = x) %>%
   dplyr::rename(coord_y = y) -> rmetrics
 rmetrics[which(is.na(rmetrics$bh_m)), "bh_m"] <- 0
@@ -119,87 +101,49 @@ rtraits %>% dplyr::select(-maturity_age, -longevity) -> rtraits
 
 
 
-### ** 0.1.3. Computing functional groups richness and diversity indices ----
-# ___________________________________________________________________________
-
+### ** 0.1.3. Choice of the buffer radius size ----
+# _________________________________________________
 # For now, we will only work with the data extracted from the 150m radius buffers, so we select them:
-rmetrics
-
-
-
-### *** 0.1.2.2. Computing species richness for corrected genera data ----
-## For all arthropods:
-rgenera %>% dplyr::group_by(collection) %>%
-  dplyr::summarise(flower_sp = dplyr::first(flower_sp),
-                   date = dplyr::first(date),
-                   coord_x = mean(coord_x),
-                   coord_y = mean(coord_y),
-                   genus_richness = dplyr::n_distinct(obs_genus, na.rm = TRUE),
-                   family_richness = dplyr::n_distinct(obs_family),
-                   order_richness = dplyr::n_distinct(obs_order)) -> richness_arthro
-
-## For the main pollinator orders only:
-rgenera %>% dplyr::filter(obs_order %in% c("Diptera", "Hymenoptera", "Coleoptera", "Lepidoptera")) %>%
-  dplyr::group_by(collection) %>%
-  dplyr::summarise(flower_sp = dplyr::first(flower_sp),
-                   date = dplyr::first(date),
-                   coord_x = mean(coord_x),
-                   coord_y = mean(coord_y),
-                   genus_richness = dplyr::n_distinct(obs_genus, na.rm = TRUE),
-                   family_richness = dplyr::n_distinct(obs_family),
-                   order_richness = dplyr::n_distinct(obs_order)) -> richness_polli
+rmetrics %>% dplyr::filter(buffer_radius == 150) -> ipa_metrics
 
 
 
 
 
+########################## ************************************************* ###############################
+# ------------------------------------------------------ #
+##### 1. Computing specific and functional diversity #####
+# ------------------------------------------------------ #
+
+##### * 1.1. Overall species diversity -----------------------------------------
+# ---------------------------------------------------------------------------- #
+### ** 1.1.1. Species richness and abundance ----
+# _______________________________________________
+
+### *** 1.1.1.1. Computing species richness for corrected genera data ----
+ipa_data <- rdata
+ipa_data$sp_richness <- apply(rdata[,4:ncol(rdata)] > 0, 1, sum)
+ipa_data$sp_abund <- apply(rdata[,4:ncol(rdata)], 1, sum)
+
+summary(ipa_data)
+rdata %>% dplyr::group_by(id_ipa) %>%
+  dplyr::summarise(species_rich = )
+
+
+
+summary(rdata)
+# STOP!
 
 
 
 
 
 
-### *** 0.1.2.2. Data reduction ----
-summary(rsites)
-rsites %>% tidyr::drop_na() %>%
-  dplyr::filter(bn > 5) %>% # I only keep sites with at least 5 buildings
-  dplyr::select(-nb_insecte, -nb_espece_insecte, -nb_famille_insecte, -nb_ordre_insecte, -rayon,
-                -log_nb_insecte, -log_nb_espece_insecte, -log_nb_famille_insecte, -log_nb_ordre_insecte,
-                -UA_code_2018_simp) %>%
-  dplyr::select(!dplyr::starts_with("log")) %>% # Deletes columns that start with...
-  tibble::as_tibble() %>%
-  janitor::clean_names() -> rsites # The "clean_names" function sets every name to lower cases!
 
 
-# Deleting the original OSO variables:
-rsites %>% dplyr::select(!dplyr::starts_with("oso") | dplyr::starts_with("oso_f")) -> site_metrics
-colnames(site_metrics)
 
 
-### *** 0.1.2.3. Joining datasets ----
-srich_arthro <- dplyr::left_join(x = site_metrics, y = richness_arthro, by = "collection")
-srich_arthro %>% tidyr::drop_na() %>%
-  dplyr::select(-espece_fleur) %>%
-  dplyr::relocate(date, .after = collection) %>%
-  dplyr::relocate(flower_sp, .after = date) %>%
-  dplyr::relocate(coord_x, .after = ville) %>%
-  dplyr::relocate(coord_y, .after = coord_x) %>%
-  dplyr::relocate(genus_richness, .after = flower_sp) %>%
-  dplyr::relocate(family_richness, .after = genus_richness) %>%
-  dplyr::relocate(order_richness, .after = family_richness) -> srich_arthro
 
-srich_polli <- dplyr::left_join(x = site_metrics, y = richness_polli, by = "collection")
-srich_polli %>% tidyr::drop_na() %>%
-  dplyr::select(-espece_fleur) %>%
-  dplyr::relocate(date, .after = collection) %>%
-  dplyr::relocate(flower_sp, .after = date) %>%
-  dplyr::relocate(coord_x, .after = ville) %>%
-  dplyr::relocate(coord_y, .after = coord_x) %>%
-  dplyr::relocate(genus_richness, .after = flower_sp) %>%
-  dplyr::relocate(family_richness, .after = genus_richness) %>%
-  dplyr::relocate(order_richness, .after = family_richness) -> srich_polli
-summary(srich_arthro)
-summary(srich_polli)
 
 
 
@@ -207,7 +151,7 @@ summary(srich_polli)
 
 ########################## ************************************************* ###############################
 # ------------------------------------------ #
-##### 1. Exploratory data analyses (EDA) #####
+##### 2. Exploratory data analyses (EDA) #####
 # ------------------------------------------ #
 
 ##### * 1.1. Outliers detection ------------------------------------------------
@@ -564,3 +508,23 @@ sjPlot::plot_model(model = sppGNa_glmm3, type = "int", terms = c("c.log_bn", "c.
 # Interesting, but very high variability, suggesting that some variable combinations are likely rare.
 
 
+
+
+
+
+
+########### *-----------------------------------------------------* ############
+############################ Main Git commits ##################################
+# ---------------------------------------------------------------------------- #
+usethis::use_git(message = ":boom: First generated results!")
+usethis::use_git(message = ":metal: Created a new function")
+usethis::use_git(message = ":zap: Ignoring something")
+usethis::use_git(message = ":pencil: Documented a function or wrote something")
+usethis::use_git(message = ":hammer: Ongoing programming!")
+usethis::use_git(message = ":white_check_mark: Updated the {target} pipeline")
+usethis::use_git(message = ":x: Problem detected!")
+#system("git push") # Or using a CLI!
+# Don't forget to push your commits once you're sure you made no mistakes.
+# ---------------------------------------------------------------------------- #
+# ------------------------------- THE END ------------------------------------ #
+########### *-----------------------------------------------------* ############
