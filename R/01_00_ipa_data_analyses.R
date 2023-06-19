@@ -111,27 +111,41 @@ rmetrics %>% dplyr::filter(buffer_radius == 150) -> ipa_metrics
 
 
 ########################## ************************************************* ###############################
-# ------------------------------------------------------ #
-##### 1. Computing specific and functional diversity #####
-# ------------------------------------------------------ #
+# --------------------------------------------------------- #
+##### 1. Specific and functional diversity computations #####
+# --------------------------------------------------------- #
 
 ##### * 1.1. Overall species diversity -----------------------------------------
 # ---------------------------------------------------------------------------- #
 ### ** 1.1.1. Species richness and abundance ----
 # _______________________________________________
 
-### *** 1.1.1.1. Computing species richness for corrected genera data ----
 ipa_data <- rdata
-ipa_data$sp_richness <- apply(rdata[,4:ncol(rdata)] > 0, 1, sum)
-ipa_data$sp_abund <- apply(rdata[,4:ncol(rdata)], 1, sum)
+ipa_data$sp_richness <- apply(rdata[,4:ncol(rdata)] > 0, 1, sum) # Total number of bird species per site.
+ipa_data$sp_abund <- apply(rdata[,4:ncol(rdata)], 1, sum) # Total abundance of birds per site.
+
+
+
+### ** 1.1.2. Species diversity indices ----
+# __________________________________________
+
+## Per site diversity indices:
+ipa_data$sp_shannon <- vegan::diversity(x = rdata[,4:ncol(rdata)], index = "shannon") # Shannon-Wiever index.
+ipa_data$sp_simpson <- vegan::diversity(x = rdata[,4:ncol(rdata)], index = "invsimpson") # Inverse Simpson index.
+ipa_data$sp_evenness <- (ipa_data$sp_shannon/log(ipa_data$sp_richness)) # Pielou's evenness index.
+# We preferred the Shannon index over the Simpson one because we wanted to give importance to rare species, but
+# we calculate both anyway, notably because Pielou's J is known to be sensitive to sample size (likely not a
+# problem here) and to rare species.
+pairs(ipa_data[,58:62], pch ="+", col = "blue")
+
+## Per urban form diversity levels:
+alpha_uf <- with(ipa_metrics, tapply(vegan::specnumber(rdata[,4:ncol(rdata)]), urban_type_2, mean))
+gamma_uf <- with(ipa_metrics, vegan::specnumber(rdata[,4:ncol(rdata)], urban_type_2))
+beta_uf <- gamma_uf/alpha_uf - 1
+# NOTE: the above computations are from the {vegan} package help. The definition of beta diversity might differ
+# from that of others.
 
 summary(ipa_data)
-rdata %>% dplyr::group_by(id_ipa) %>%
-  dplyr::summarise(species_rich = )
-
-
-
-summary(rdata)
 # STOP!
 
 
