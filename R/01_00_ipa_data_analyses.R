@@ -99,6 +99,10 @@ rmetrics %>% dplyr::mutate(urban_type = stats::relevel(x = urban_type, ref = 7),
 ## Removing useless columns:
 rtraits %>% dplyr::select(-maturity_age, -longevity) -> rtraits
 
+## To check the matching of species names among tables:
+sum(!rtraits$sp_id %in% colnames(rdata)) # Initially yielded 2 errors (typos) that I manually corrected in the
+# original CSV files to be cleaner (but less reproducible, shame on me :O)!
+
 
 
 ### ** 0.1.3. Choice of the buffer radius size ----
@@ -115,10 +119,10 @@ rmetrics %>% dplyr::filter(buffer_radius == 150) -> ipa_metrics
 ##### 1. Specific and functional diversity computations #####
 # --------------------------------------------------------- #
 
-##### * 1.1. Overall species diversity -----------------------------------------
+##### * 1.1. Birds specific diversity ------------------------------------------
 # ---------------------------------------------------------------------------- #
-### ** 1.1.1. Species richness and abundance ----
-# _______________________________________________
+### ** 1.1.1. Species richness and abundances ----
+# ________________________________________________
 
 ipa_data <- rdata
 ipa_data$sp_richness <- apply(rdata[,4:ncol(rdata)] > 0, 1, sum) # Total number of bird species per site.
@@ -129,7 +133,7 @@ ipa_data$sp_abund <- apply(rdata[,4:ncol(rdata)], 1, sum) # Total abundance of b
 ### ** 1.1.2. Species diversity indices ----
 # __________________________________________
 
-## Per site diversity indices:
+### *** 2.1.2.1. Per site diversity indices ----
 ipa_data$sp_shannon <- vegan::diversity(x = rdata[,4:ncol(rdata)], index = "shannon") # Shannon-Wiever index.
 ipa_data$sp_simpson <- vegan::diversity(x = rdata[,4:ncol(rdata)], index = "invsimpson") # Inverse Simpson index.
 ipa_data$sp_evenness <- (ipa_data$sp_shannon/log(ipa_data$sp_richness)) # Pielou's evenness index.
@@ -138,17 +142,60 @@ ipa_data$sp_evenness <- (ipa_data$sp_shannon/log(ipa_data$sp_richness)) # Pielou
 # problem here) and to rare species.
 pairs(ipa_data[,58:62], pch ="+", col = "blue")
 
-## Per urban form diversity levels:
+
+### *** 2.1.2.1. Per urban form diversity levels ----
 alpha_uf <- with(ipa_metrics, tapply(vegan::specnumber(rdata[,4:ncol(rdata)]), urban_type_2, mean))
 gamma_uf <- with(ipa_metrics, vegan::specnumber(rdata[,4:ncol(rdata)], urban_type_2))
 beta_uf <- gamma_uf/alpha_uf - 1
 # NOTE: the above computations are from the {vegan} package help. The definition of beta diversity might differ
 # from that of others.
 
+
+
+
+
+##### * 1.2. Birds functional diversity ----------------------------------------
+# ---------------------------------------------------------------------------- #
+### ** 1.2.1. Functional groups richness and abundances ----
+# __________________________________________________________
+
+### *** 1.2.1.1. Trophic guild richness and abundances ----
+
+j <- 1
+
+ipa_data %>% dplyr::select(-sp_richness, -sp_abund, -sp_shannon, -sp_simpson, -sp_evenness) %>%
+  as.data.frame() -> birds
+nb_gr <- length(unique(rtraits$trophic_level))
+
+birds_subsets <- NULL
+
+
+for (j in 1:nb_gr){
+  sp_list <- as.character(as.matrix(rtraits[which(rtraits$trophic_level == levels(rtraits$trophic_level)[j]),
+                                            "sp_id"]))
+
+
+  birds_subsets[[j]] <- birds[, which(colnames(birds) %in% sp_list)]
+
+}
+
+carnibirds <- birds_subsets[[1]]
+
+
+
+
+
+summary(rtraits)
+summary(ipa_metrics)
 summary(ipa_data)
 # STOP!
 
 
+
+### ** 1.2.1. Functional diversity indices ----
+# _____________________________________________
+
+# airpoumpoum::super_distriplot(MYVARIABLES = ipa_data[,58:62], GROUPS = ipa_metrics$evenness_class, breaks = 5)
 
 
 
@@ -280,7 +327,7 @@ colnames(srich_polli2)
 
 ########################## ************************************************* ###############################
 # --------------------------------------------------- #
-##### 2. Modelling the arthropods family richness #####
+##### 2. Modelling the BIRDYDYDYDY family richness #####
 # --------------------------------------------------- #
 
 ##### * 2.1. Genus richness models ---------------------------------------------
