@@ -100,8 +100,8 @@ rmetrics %>% dplyr::mutate(urban_type = stats::relevel(x = urban_type, ref = 7),
 rtraits %>% dplyr::select(-maturity_age, -longevity) -> rtraits
 
 ## To check the matching of species names among tables:
-sum(!rtraits$sp_id %in% colnames(rdata)) # Initially yielded 2 errors (typos) that I manually corrected in the
-# original CSV files to be cleaner (but less reproducible, shame on me :O)!
+sum(!rtraits$sp_id %in% colnames(rdata)) # Counts the number of elements of the first vector that is not
+# included in the second vector!
 
 
 
@@ -159,49 +159,73 @@ beta_uf <- gamma_uf/alpha_uf - 1
 ### ** 1.2.1. Functional groups richness and abundances ----
 # __________________________________________________________
 
-### *** 1.2.1.1. Trophic guild richness and abundances ----
+### *** 1.2.1.1. Creating a function to create functional groups subset data ----
+functional_groups <- function(community_table, grouping_factor){
 
-j <- 1
+  nb_gr <- length(unique(grouping_factor))
+  data_subsets <- NULL
 
-ipa_data %>% dplyr::select(-sp_richness, -sp_abund, -sp_shannon, -sp_simpson, -sp_evenness) %>%
-  as.data.frame() -> birds
-nb_gr <- length(unique(rtraits$trophic_level))
-
-birds_subsets <- NULL
-
-
-for (j in 1:nb_gr){
-  sp_list <- as.character(as.matrix(rtraits[which(rtraits$trophic_level == levels(rtraits$trophic_level)[j]),
-                                            "sp_id"]))
-
-
-  birds_subsets[[j]] <- birds[, which(colnames(birds) %in% sp_list)]
-
+  for (i in 1:nb_gr){
+    sp_list <- as.character(as.matrix(rtraits[which(grouping_factor == levels(grouping_factor)[i]),
+                                              "sp_id"]))
+    data_subsets[[i]] <- community_table[, which(colnames(community_table) %in% sp_list)]
+  }
+  return(data_subsets) # Must be within the function but NOT in the for-loop (otherwise it will obviously only
+  # return the first element of the list)!
 }
 
-carnibirds <- birds_subsets[[1]]
+
+### *** 1.2.1.2. Trophic guild richness, abundances and diversity ----
+ttt <- functional_groups(community_table = ipa_data, grouping_factor = rtraits$trophic_level)
+
+rcarnibirds <- ttt[[1]]
+rherbibirds <- ttt[[2]]
+romnibirds <- ttt[[3]]
+
+## For carnivore species:
+ipa_data$carni_richness <- apply(rcarnibirds > 0, 1, sum) # No need for [,4:ncol...] because the table only
+# contains species columns.
+ipa_data$carni_abund <- apply(rcarnibirds, 1, sum) # Same.
+ipa_data$carni_shannon <- vegan::diversity(x = rcarnibirds, index = "shannon")
+ipa_data$carni_simpson <- vegan::diversity(x = rcarnibirds, index = "invsimpson")
+ipa_data$carni_evenness <- (ipa_data$carni_shannon/log(ipa_data$carni_richness))
+# IMPORTANT NOTE: when there is only one species, the Shannon index = 0 and as a consequence, Pielou's evenness
+# is an NA (because log(0) = 0, so 0/0 = NaN)!
 
 
+## For herbivore species:
+ipa_data$herbi_richness <- apply(rherbibirds > 0, 1, sum) # No need for [,4:ncol...] because the table only
+# contains species columns.
+ipa_data$herbi_abund <- apply(rherbibirds, 1, sum) # Same.
+ipa_data$herbi_shannon <- vegan::diversity(x = rherbibirds, index = "shannon")
+ipa_data$herbi_simpson <- vegan::diversity(x = rherbibirds, index = "invsimpson")
+ipa_data$herbi_evenness <- (ipa_data$herbi_shannon/log(ipa_data$herbi_richness))
 
 
-
-summary(rtraits)
-summary(ipa_metrics)
-summary(ipa_data)
-# STOP!
+## For omnivore species:
+ipa_data$omni_richness <- apply(romnibirds > 0, 1, sum) # No need for [,4:ncol...] because the table only
+# contains species columns.
+ipa_data$omni_abund <- apply(romnibirds, 1, sum) # Same.
+ipa_data$omni_shannon <- vegan::diversity(x = romnibirds, index = "shannon")
+ipa_data$omni_simpson <- vegan::diversity(x = romnibirds, index = "invsimpson")
+ipa_data$omni_evenness <- (ipa_data$omni_shannon/log(ipa_data$omni_richness))
+rm(ttt)
+# summary(rtraits)
+# summary(ipa_metrics)
+# summary(ipa_data)
 
 
 
 ### ** 1.2.1. Functional diversity indices ----
 # _____________________________________________
 
+# RaoQ???
+# Convex hull?
 # airpoumpoum::super_distriplot(MYVARIABLES = ipa_data[,58:62], GROUPS = ipa_metrics$evenness_class, breaks = 5)
 
-
-
-
-
-
+##### AFINIR§§§ ----
+##### AFINIR§§§ ----
+##### AFINIR§§§ ----
 
 
 
