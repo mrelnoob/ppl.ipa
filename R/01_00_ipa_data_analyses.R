@@ -113,6 +113,33 @@ rmetrics %>% dplyr::filter(buffer_radius == 150) -> ipa_metrics
 
 
 
+### ** 0.1.4. Missing data imputation ----
+# ________________________________________
+
+rtraits %>% dplyr::select(-sp_id, -genus, -species, -hwi, -iucn_status) %>%
+  as.data.frame() -> rtraits_mis # missForest only accepts data.frames or matrices (not tibbles).
+# Variables must also be only numeric or factors (no character, date, etc.)!
+
+## Actual data imputation using Random Forests:
+set.seed(19)
+imput <- missForest::missForest(xmis = rtraits_mis, maxiter = 300, ntree = 300, variablewise = TRUE)
+rtraits_imp <- imput$ximp
+
+# To create a summary table for the OOB errors (for each imputed variable):
+rtraits_imp_error <- data.frame(cbind(
+  sapply(rtraits_mis, function(y) sum(length(which(is.na(y))))), # Number of imputed values (i.e. NAs).
+  sqrt(imput$OOBerror)), # When 'variablewise' is set to TRUE, missForest() returns MSE (Mean
+  # Squared Error) values instead of NRMSE (Normalized Root Mean Square Error). Therefore, I use
+  # the square root of the out-of-bag (OOB) values to convert MSE into RMSE.
+  row.names = colnames(rtraits_mis)) # To get the name of the variables
+rtraits_imp_error %>% dplyr::rename(Nb_imputed_values = 'X1', Oob_RMSE = 'X2') %>%
+  dplyr::filter(Nb_imputed_values > 0) -> sub_errtab_rtraits
+
+rtraits$brain_mass <- rtraits_imp$brain_mass
+rm(imput, rtraits_mis, rtraits_imp_error, sub_errtab_rtraits, rtraits_imp)
+
+
+
 
 
 ########################## ************************************************* ###############################
@@ -176,6 +203,7 @@ functional_groups <- function(community_table, grouping_factor){
 }
 
 
+
 ### *** 1.2.1.2. Trophic guild richness, abundances and diversity ----
 ttt <- functional_groups(community_table = ipa_data, grouping_factor = rtraits$trophic_level)
 
@@ -187,9 +215,7 @@ romnibirds <- ttt[[3]]
 ipa_data$carni_richness <- apply(rcarnibirds > 0, 1, sum) # No need for [,4:ncol...] because the table only
 # contains species columns.
 ipa_data$carni_abund <- apply(rcarnibirds, 1, sum) # Same.
-ipa_data$carni_shannon <- vegan::diversity(x = rcarnibirds, index = "shannon")
 ipa_data$carni_simpson <- vegan::diversity(x = rcarnibirds, index = "invsimpson")
-ipa_data$carni_evenness <- (ipa_data$carni_shannon/log(ipa_data$carni_richness))
 # IMPORTANT NOTE: when there is only one species, the Shannon index = 0 and as a consequence, Pielou's evenness
 # is an NA (because log(0) = 0, so 0/0 = NaN)!
 
@@ -198,35 +224,79 @@ ipa_data$carni_evenness <- (ipa_data$carni_shannon/log(ipa_data$carni_richness))
 ipa_data$herbi_richness <- apply(rherbibirds > 0, 1, sum) # No need for [,4:ncol...] because the table only
 # contains species columns.
 ipa_data$herbi_abund <- apply(rherbibirds, 1, sum) # Same.
-ipa_data$herbi_shannon <- vegan::diversity(x = rherbibirds, index = "shannon")
 ipa_data$herbi_simpson <- vegan::diversity(x = rherbibirds, index = "invsimpson")
-ipa_data$herbi_evenness <- (ipa_data$herbi_shannon/log(ipa_data$herbi_richness))
 
 
 ## For omnivore species:
 ipa_data$omni_richness <- apply(romnibirds > 0, 1, sum) # No need for [,4:ncol...] because the table only
 # contains species columns.
 ipa_data$omni_abund <- apply(romnibirds, 1, sum) # Same.
-ipa_data$omni_shannon <- vegan::diversity(x = romnibirds, index = "shannon")
 ipa_data$omni_simpson <- vegan::diversity(x = romnibirds, index = "invsimpson")
-ipa_data$omni_evenness <- (ipa_data$omni_shannon/log(ipa_data$omni_richness))
 rm(ttt)
 
 
 
-### ** 1.2.1. Functional diversity indices ----
+### *** 1.2.1.3. Nesting guild richness, abundances and diversity ----
+ttt <- functional_groups(community_table = ipa_data, grouping_factor = rtraits$nesting_pref)
+
+rnest_cavity <- ttt[[5]] # Cavity nesters.
+rnest_tree <- cbind(ttt[[1]], ttt[[6]], ttt[[7]]) # Treetop or tree branch nesters.
+rnest_shrub <- cbind(ttt[[10]], ttt[[12]], ttt[[13]]) # Shrub or partial shrub nesters.
+rnest_open <- cbind(ttt[[2]], ttt[[3]], ttt[[8]], ttt[[9]], ttt[[11]], ttt[[12]]) # Species that nest on open
+# surfaces or almost (e.g. ground, riverbanks, water).
+
+
+## For cavity nesters:
+ipa_data$ncav_richness <- apply(rnest_cavity > 0, 1, sum)
+ipa_data$ncav_abund <- apply(rnest_cavity, 1, sum)
+ipa_data$ncav_simpson <- vegan::diversity(x = rnest_cavity, index = "invsimpson")
+# IMPORTANT NOTE: when there is only one species, the Shannon index = 0 and as a consequence, Pielou's evenness
+# is an NA (because log(0) = 0, so 0/0 = NaN)!
+
+## For tree nesters:
+ipa_data$ntree_richness <- apply(rnest_tree > 0, 1, sum)
+ipa_data$ntree_abund <- apply(rnest_tree, 1, sum) # Same.
+ipa_data$ntree_simpson <- vegan::diversity(x = rnest_tree, index = "invsimpson")
+
+## For shrub nesters:
+ipa_data$nshrub_richness <- apply(rnest_shrub > 0, 1, sum)
+ipa_data$nshrub_abund <- apply(rnest_shrub, 1, sum) # Same.
+ipa_data$nshrub_simpson <- vegan::diversity(x = rnest_shrub, index = "invsimpson")
+
+## For open nesters:
+ipa_data$nopen_richness <- apply(rnest_open > 0, 1, sum)
+ipa_data$nopen_abund <- apply(rnest_open, 1, sum) # Same.
+ipa_data$nopen_simpson <- vegan::diversity(x = rnest_open, index = "invsimpson")
+rm(ttt)
+
+
+
+### ** 1.2.2. Functional diversity indices ----
 # _____________________________________________
 
-# RaoQ???
-# Convex hull?
-# airpoumpoum::super_distriplot(MYVARIABLES = ipa_data[,58:62], GROUPS = ipa_metrics$evenness_class, breaks = 5)
+### *** 1.2.2.1. Rao's entropy and functionnal redundancy ----
+ipa_data[,c(4:57)] -> wdata # Species only matrix.
+rtraits %>%
+  dplyr::select(-sp_id, -order, -family, -genus, -species, -hwi, -max_longevity,
+                -migratory, -iucn_status) %>%
+  as.data.frame() -> wtraits # Simpler traits.
+rownames(wtraits) <- rtraits$sp_id # Required by the 'rao.diversity()' function.
 
-##### AFINIR§§§ ----
-##### AFINIR§§§ ----
-##### AFINIR§§§ ----
+# The 'rao.diversity()' function enables the creation of groups of trait to assign valid weights:
+traits_grp <- list(c("nesting_pref", "habitat", "hab_density"),
+                   c("prim_lifestyle", "urban_tolerance", "social_behaviour", "brain_mass"),
+                   c("latitude_cent", "longitude_cent", "range_size"),
+                   c("trophic_level", "trophic_niche", "foraging_behaviour", "foraging_strata"),
+                   c("beak_length", "beak_width", "beak_depth"),
+                   c("body_mass", "tarsus_length", "wing_length", "kipps_distance", "tail_length"),
+                   c("clutch_size", "clutch_nb", "egg_mass", "fledging_age", "development_mode")) # The list
+# must have the same length as the trait table!
 
-
-
+ttt <- SYNCSA::rao.diversity(comm = wdata, traits = wtraits, put.together = traits_grp)
+ipa_data$gini_simpson <- ttt$Simpson
+ipa_data$rao_q <- ttt$FunRao
+ipa_data$fun_redund <- ttt$FunRedundancy
+rm(ttt)
 
 
 
@@ -244,9 +314,7 @@ summary(ipa_data)
 # First, let's reduce the dataset:
 wdata <- cbind(ipa_data[,-c(4:57)],
                ipa_metrics[, c(3:29,37,48,50,64,66)])
-wdata %>% dplyr::select(-neighbourhood, -carni_shannon, -carni_evenness,
-                        -herbi_shannon, -herbi_evenness,
-                        -omni_shannon, -omni_evenness) -> wdata
+wdata %>% dplyr::select(-neighbourhood) -> wdata
 summary(wdata)
 
 

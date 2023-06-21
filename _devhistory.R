@@ -119,6 +119,7 @@ system2("git push -u origin master") # Same (CLI).
 
 # To ignore changes made to the Rproj file:
 usethis::use_git_ignore("ppl.ipa.Rproj")
+usethis::use_git_ignore("/outputs")
 
 
 
