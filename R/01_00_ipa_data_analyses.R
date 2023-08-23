@@ -2,8 +2,8 @@
 ####################### PRELIMINARY ANALYSES FOR ppl.ipa #######################
 ######## *------------------------------------------------------------* ########
 
-# Note that I manually added this project and its files into my Github account (cf. '_devhistory.R' at the
-# root of this project) that can be found at: https://github.com/mrelnoob/ppl.ipa
+# Note that I manually added this project and its files into my Github account (cf. '_devhistory_ppl.ipa.R'
+# at the root of this project) that can be found at: https://github.com/mrelnoob/ppl.ipa
 
 # ---------------------- #
 ##### 0. Data import #####
@@ -78,9 +78,9 @@ rdata[is.na(rdata)] <- 0
 
 ## Removing useless columns, dealing with NAs and other slight changes:
 rmetrics %>% dplyr::select(-area, -vmanag) %>%
-  dplyr::rename(buffer_radius = rayon) %>%
-  dplyr::rename(coord_x = x) %>%
-  dplyr::rename(coord_y = y) -> rmetrics
+  dplyr::rename(buffer_radius = rayon,
+                coord_x = x,
+                coord_y = y) -> rmetrics
 rmetrics[which(is.na(rmetrics$bh_m)), "bh_m"] <- 0
 rmetrics[which(is.na(rmetrics$bh_iqr)), "bh_iqr"] <- 0
 rmetrics[which(is.na(rmetrics$barea_m)), "barea_m"] <- 0
@@ -121,7 +121,7 @@ rtraits %>% dplyr::select(-sp_id, -genus, -species, -hwi, -iucn_status) %>%
 # Variables must also be only numeric or factors (no character, date, etc.)!
 
 ## Actual data imputation using Random Forests:
-set.seed(19)
+set.seed(382)
 imput <- missForest::missForest(xmis = rtraits_mis, maxiter = 300, ntree = 300, variablewise = TRUE)
 rtraits_imp <- imput$ximp
 
@@ -171,12 +171,19 @@ ipa_data$sp_evenness <- (ipa_data$sp_shannon/log(ipa_data$sp_richness)) # Pielou
 pairs(ipa_data[,58:62], pch ="+", col = "blue")
 
 
-### *** 2.1.2.1. Per urban form diversity levels ----
-alpha_uf <- with(ipa_metrics, tapply(vegan::specnumber(rdata[,4:ncol(rdata)]), urban_type_2, mean))
-gamma_uf <- with(ipa_metrics, vegan::specnumber(rdata[,4:ncol(rdata)], urban_type_2))
+### *** 2.1.2.1. Per urban form (UF) diversity levels ----
+## For the first UF typology:
+alpha_uf <- with(ipa_metrics, tapply(vegan::specnumber(rdata[,4:ncol(rdata)]), urban_type, mean))
+gamma_uf <- with(ipa_metrics, vegan::specnumber(rdata[,4:ncol(rdata)], urban_type))
 beta_uf <- gamma_uf/alpha_uf - 1
 # NOTE: the above computations are from the {vegan} package help. The definition of beta diversity might differ
-# from that of others.
+# from that of others. I could also use the 'betdiver' function (e.g.
+# https://nhcooper123.github.io/macro-module-2020/diversity-indices-in-r.html#beta-diversity).
+
+## For the second UF typology:
+alpha_uf_2 <- with(ipa_metrics, tapply(vegan::specnumber(rdata[,4:ncol(rdata)]), urban_type_2, mean))
+gamma_uf_2 <- with(ipa_metrics, vegan::specnumber(rdata[,4:ncol(rdata)], urban_type_2))
+beta_uf_2 <- gamma_uf_2/alpha_uf_2 - 1
 
 
 
@@ -204,77 +211,95 @@ functional_groups <- function(community_table, grouping_factor){
 
 
 
-### *** 1.2.1.2. Trophic guild richness, abundances and diversity ----
-ttt <- functional_groups(community_table = ipa_data, grouping_factor = rtraits$trophic_level)
+# ### *** 1.2.1.2. Trophic guild richness, abundances and diversity ----
+# ttt <- functional_groups(community_table = ipa_data, grouping_factor = rtraits$trophic_level)
+#
+# rcarnibirds <- ttt[[1]]
+# rherbibirds <- ttt[[2]]
+# romnibirds <- ttt[[3]]
+#
+# ## For carnivore species:
+# ipa_data$carni_richness <- apply(rcarnibirds > 0, 1, sum) # No need for [,4:ncol...] because the table only
+# # contains species columns.
+# ipa_data$carni_abund <- apply(rcarnibirds, 1, sum) # Same.
+# ipa_data$carni_simpson <- vegan::diversity(x = rcarnibirds, index = "invsimpson")
+# # IMPORTANT NOTE: when there is only one species, the Shannon index = 0 and as a consequence, Pielou's evenness
+# # is an NA (because log(0) = 0, so 0/0 = NaN)!
+#
+#
+# ## For herbivore species:
+# ipa_data$herbi_richness <- apply(rherbibirds > 0, 1, sum) # No need for [,4:ncol...] because the table only
+# # contains species columns.
+# ipa_data$herbi_abund <- apply(rherbibirds, 1, sum) # Same.
+# ipa_data$herbi_simpson <- vegan::diversity(x = rherbibirds, index = "invsimpson")
+#
+#
+# ## For omnivore species:
+# ipa_data$omni_richness <- apply(romnibirds > 0, 1, sum) # No need for [,4:ncol...] because the table only
+# # contains species columns.
+# ipa_data$omni_abund <- apply(romnibirds, 1, sum) # Same.
+# ipa_data$omni_simpson <- vegan::diversity(x = romnibirds, index = "invsimpson")
+# rm(ttt)
+#
+#
+#
+# ### *** 1.2.1.3. Nesting guild richness, abundances and diversity ----
+# ttt <- functional_groups(community_table = ipa_data, grouping_factor = rtraits$nesting_pref)
+#
+# rnest_cavity <- ttt[[5]] # Cavity nesters.
+# rnest_tree <- cbind(ttt[[1]], ttt[[6]], ttt[[7]]) # Treetop or tree branch nesters.
+# rnest_shrub <- cbind(ttt[[10]], ttt[[12]], ttt[[13]]) # Shrub or partial shrub nesters.
+# rnest_open <- cbind(ttt[[2]], ttt[[3]], ttt[[8]], ttt[[9]], ttt[[11]], ttt[[12]]) # Species that nest on open
+# # surfaces or almost (e.g. ground, riverbanks, water).
+#
+#
+# ## For cavity nesters:
+# ipa_data$ncav_richness <- apply(rnest_cavity > 0, 1, sum)
+# ipa_data$ncav_abund <- apply(rnest_cavity, 1, sum)
+# ipa_data$ncav_simpson <- vegan::diversity(x = rnest_cavity, index = "invsimpson")
+# # IMPORTANT NOTE: when there is only one species, the Shannon index = 0 and as a consequence, Pielou's evenness
+# # is an NA (because log(0) = 0, so 0/0 = NaN)!
+#
+# ## For tree nesters:
+# ipa_data$ntree_richness <- apply(rnest_tree > 0, 1, sum)
+# ipa_data$ntree_abund <- apply(rnest_tree, 1, sum) # Same.
+# ipa_data$ntree_simpson <- vegan::diversity(x = rnest_tree, index = "invsimpson")
+#
+# ## For shrub nesters:
+# ipa_data$nshrub_richness <- apply(rnest_shrub > 0, 1, sum)
+# ipa_data$nshrub_abund <- apply(rnest_shrub, 1, sum) # Same.
+# ipa_data$nshrub_simpson <- vegan::diversity(x = rnest_shrub, index = "invsimpson")
+#
+# ## For open nesters:
+# ipa_data$nopen_richness <- apply(rnest_open > 0, 1, sum)
+# ipa_data$nopen_abund <- apply(rnest_open, 1, sum) # Same.
+# ipa_data$nopen_simpson <- vegan::diversity(x = rnest_open, index = "invsimpson")
+# rm(ttt)
 
-rcarnibirds <- ttt[[1]]
-rherbibirds <- ttt[[2]]
-romnibirds <- ttt[[3]]
-
-## For carnivore species:
-ipa_data$carni_richness <- apply(rcarnibirds > 0, 1, sum) # No need for [,4:ncol...] because the table only
-# contains species columns.
-ipa_data$carni_abund <- apply(rcarnibirds, 1, sum) # Same.
-ipa_data$carni_simpson <- vegan::diversity(x = rcarnibirds, index = "invsimpson")
-# IMPORTANT NOTE: when there is only one species, the Shannon index = 0 and as a consequence, Pielou's evenness
-# is an NA (because log(0) = 0, so 0/0 = NaN)!
 
 
-## For herbivore species:
-ipa_data$herbi_richness <- apply(rherbibirds > 0, 1, sum) # No need for [,4:ncol...] because the table only
-# contains species columns.
-ipa_data$herbi_abund <- apply(rherbibirds, 1, sum) # Same.
-ipa_data$herbi_simpson <- vegan::diversity(x = rherbibirds, index = "invsimpson")
+### ** 1.2.2. Functional and phylogenetic diversity indices ----
+# ______________________________________________________________
 
+# To compute some diversity metrics while accounting for phylogenetic signal, I first need to compute
+# phylogenetic distances. To do so, I'll have to create a phylogenetic tree. This tree might also be useful
+# later on.
 
-## For omnivore species:
-ipa_data$omni_richness <- apply(romnibirds > 0, 1, sum) # No need for [,4:ncol...] because the table only
-# contains species columns.
-ipa_data$omni_abund <- apply(romnibirds, 1, sum) # Same.
-ipa_data$omni_simpson <- vegan::diversity(x = romnibirds, index = "invsimpson")
-rm(ttt)
+### *** 1.2.2.1. Compute phylogenetic distances ----
+## Create a phylogenetic tree from the species list:
+taxa <- paste(rtraits$genus, rtraits$species, sep = " ")
+
+taxa <- rotl::tnrs_match_names(names = taxa) # To check whether the input names match those from the
+# "Open Tree of Life" database.
+tree <- rotl::tol_induced_subtree(ott_ids = rotl::ott_id(taxa), label_format = "name")
+plot(tree, cex = .8, label.offset = .1, no.margin = TRUE)
+
+## Compute the phylogenetic distance between species:
+phylo_dist <- as.matrix(ape::cophenetic.phylo(x = tree))
 
 
 
-### *** 1.2.1.3. Nesting guild richness, abundances and diversity ----
-ttt <- functional_groups(community_table = ipa_data, grouping_factor = rtraits$nesting_pref)
-
-rnest_cavity <- ttt[[5]] # Cavity nesters.
-rnest_tree <- cbind(ttt[[1]], ttt[[6]], ttt[[7]]) # Treetop or tree branch nesters.
-rnest_shrub <- cbind(ttt[[10]], ttt[[12]], ttt[[13]]) # Shrub or partial shrub nesters.
-rnest_open <- cbind(ttt[[2]], ttt[[3]], ttt[[8]], ttt[[9]], ttt[[11]], ttt[[12]]) # Species that nest on open
-# surfaces or almost (e.g. ground, riverbanks, water).
-
-
-## For cavity nesters:
-ipa_data$ncav_richness <- apply(rnest_cavity > 0, 1, sum)
-ipa_data$ncav_abund <- apply(rnest_cavity, 1, sum)
-ipa_data$ncav_simpson <- vegan::diversity(x = rnest_cavity, index = "invsimpson")
-# IMPORTANT NOTE: when there is only one species, the Shannon index = 0 and as a consequence, Pielou's evenness
-# is an NA (because log(0) = 0, so 0/0 = NaN)!
-
-## For tree nesters:
-ipa_data$ntree_richness <- apply(rnest_tree > 0, 1, sum)
-ipa_data$ntree_abund <- apply(rnest_tree, 1, sum) # Same.
-ipa_data$ntree_simpson <- vegan::diversity(x = rnest_tree, index = "invsimpson")
-
-## For shrub nesters:
-ipa_data$nshrub_richness <- apply(rnest_shrub > 0, 1, sum)
-ipa_data$nshrub_abund <- apply(rnest_shrub, 1, sum) # Same.
-ipa_data$nshrub_simpson <- vegan::diversity(x = rnest_shrub, index = "invsimpson")
-
-## For open nesters:
-ipa_data$nopen_richness <- apply(rnest_open > 0, 1, sum)
-ipa_data$nopen_abund <- apply(rnest_open, 1, sum) # Same.
-ipa_data$nopen_simpson <- vegan::diversity(x = rnest_open, index = "invsimpson")
-rm(ttt)
-
-
-
-### ** 1.2.2. Functional diversity indices ----
-# _____________________________________________
-
-### *** 1.2.2.1. Rao's entropy and functionnal redundancy ----
+### *** 1.2.2.2. Rao's entropy and functional redundancy ----
 ipa_data[,c(4:57)] -> wdata # Species only matrix.
 rtraits %>%
   dplyr::select(-sp_id, -order, -family, -genus, -species, -hwi, -max_longevity,
@@ -732,3 +757,14 @@ usethis::use_git(message = ":x: Problem detected!")
 # ---------------------------------------------------------------------------- #
 # ------------------------------- THE END ------------------------------------ #
 ########### *-----------------------------------------------------* ############
+
+
+
+########### TO DO LIST ----
+# ----------------------- #
+# * Finir RaoQ avec phylodist: 1) check order, 2) assign same name?, 3) compute
+# * Compute FD et PD ? CWM?
+# * Try and plot species accumulation curves????
+# * Explorer toutes les combinaisons possibles (avec les 2 typo de FU), d'abord graphiquement, puis stats
+# * Faire un rapport
+# * Faire analyse RLQ!!!!!
