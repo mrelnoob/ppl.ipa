@@ -3,9 +3,9 @@
 ################### *----------------------------------------* #################
 
 # All comments in this file or in this project are first meant for future me and, second,
-# for other so they can reproduce my work. That is why there are so many of them, so anyone can
+# for others so they can reproduce my work. That is why there are so many of them, so anyone can
 # do what I did, regardless of his/her own experience. Note also that English and R are not my
-# native tongues, so please forgive any mistakes.
+# native languages, so please forgive any mistakes.
 # IMPORTANT NOTE: I chose to use a {targets} pipeline to organise my data analysis procedure to ensure
 # a clean workflow and favour reproducibility. However, that also means that my code cannot be run as is
 # if you do not know how to use {targets}, so be careful!
@@ -123,7 +123,41 @@ usethis::use_git_ignore("/outputs")
 
 
 
-##### * 1.2. Project architecture ----------------------------------------------
+##### * 1.2. Managing the project library (renv) -------------------------------
+# ---------------------------------------------------------------------------- #
+renv::init() # To initiate the project local library manager named 'renv'. Among other things, it
+# created a 'renv' folder and a 'renv.lock' file. This file is the only thing that you need to be
+# able to recreate the same R environment (correct package versions) as the one I used in this
+# project PROVIDED THAT you use the same R version as me (currently R 4.2.2).
+
+# To install a package into the 'renv' project, use:
+renv::install() # You can either specify the package name manually (e.g. "ggplot2") or you can call
+# the function as is and it will install all the packages of your DESCRIPTION file (if you have one),
+# and also screen R and Rmd files and install all packages mentioned as 'library(pkg)', 'require(pkg)',
+# and 'pkg::fun()'! Pretty cool, right?
+
+# To check the status of your 'renv' project:
+renv::status()
+
+# To update the lockfile (to add or remove packages):
+renv::snapshot() # It will compare what's inside the R project and what is listed in the lockfile and
+# ask if you want to add or remove the packages that are not yet on both projects. You can also use:
+renv::clean()
+
+# To restore another 'renv' project (if you want to create the local library of another project, yours
+# or someone else's):
+renv::restore() # You may need to use 'renv::init()' first if you only have a lockfile. Remember though,
+# you need to install the same major R version as the one used to create the 'renv' project!
+
+# Other functions:
+renv::deactivate()       # Deactivate local environment
+renv::activate()         # (Re)activate local environment
+renv::dependencies()     # List used packages (R and Rmd files)
+renv::history()          # Browse previous commits (with git)
+
+
+
+##### * 1.3. Project architecture ----------------------------------------------
 # ---------------------------------------------------------------------------- #
 
 # To create a folder containing my data and functions:
@@ -146,7 +180,7 @@ dir.create("R")
 
 
 
-##### * 1.3. Creating scripts for custom functions -----------------------------
+##### * 1.4. Creating scripts for custom functions -----------------------------
 # ---------------------------------------------------------------------------- #
 
 file.create(... = "R/01_00_ipa_data_analyses.R")
@@ -157,7 +191,7 @@ file.create(... = "R/01_00_ipa_data_analyses.R")
 
 
 
-##### * 1.4. Creating reports (RMarkdown) --------------------------------------
+##### * 1.5. Creating reports (RMarkdown) --------------------------------------
 # ---------------------------------------------------------------------------- #
 
 file.create(... = "output/texts/ppl.tits.exploration_report.Rmd")
@@ -168,7 +202,7 @@ file.create(... = "output/texts/ppl.tits.intermediate_analyses_report.Rmd") # Us
 # section (chapter 2 below).
 
 
-### ** 1.3.1. To manage citations and bibliography ----
+### ** 1.5.1. To manage citations and bibliography ----
 # _____________________________________________________
 
 # To manage citations and get an automatic bibliography with RMarkdown, I have to follow these
