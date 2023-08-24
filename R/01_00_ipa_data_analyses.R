@@ -9,10 +9,11 @@
 ##### 0. Data import #####
 # ---------------------- #
 
+# ---------------------------------------------------------------------------- #
 ##### * 0.1. Import and initial formatting -------------------------------------
 # ---------------------------------------------------------------------------- #
-### ** 0.1.1. Import ----
-# _______________________
+##### ** 0.1.1. Import ----
+# _________________________
 
 library(magrittr)
 .pardefault <- par()
@@ -67,8 +68,8 @@ rtraits <- readr::read_csv2(file = here::here("data/ppl_ipa_species_traits.csv")
 
 
 
-### ** 0.1.2. Data preparation and cleaning ----
-# ______________________________________________
+##### ** 0.1.2. Data preparation and cleaning ----
+# ________________________________________________
 
 ## Removing useless columns, converting number of couples into number of contacted individuals, and changing
 # NAs by zeros (i.e. the species was not observed):
@@ -106,16 +107,16 @@ sum(!rtraits$sp_id %in% colnames(rdata)) # Counts the number of elements of the 
 
 
 
-### ** 0.1.3. Choice of the buffer radius size ----
-# _________________________________________________
+##### ** 0.1.3. Choice of the buffer radius size ----
+# ___________________________________________________
 # For now, we will only work with the data extracted from the 150m radius buffers, so we select them:
 rmetrics %>% dplyr::filter(buffer_radius == 150) -> ipa_metrics
 ipa_metrics %>% dplyr::select(-buffer_radius) -> wmetrics
 
 
 
-### ** 0.1.4. Missing data imputation ----
-# ________________________________________
+##### ** 0.1.4. Missing data imputation ----
+# __________________________________________
 
 rtraits %>% dplyr::select(-sp_id, -genus, -species, -hwi, -iucn_status) %>%
   as.data.frame() -> rtraits_mis # missForest only accepts data.frames or matrices (not tibbles).
@@ -143,15 +144,16 @@ rm(imput, rtraits_mis, rtraits_imp_error, sub_errtab_rtraits, rtraits_imp)
 
 
 
-########################## ************************************************* ###############################
+############################ ************************************************* ###############################
 # --------------------------------------------------------- #
 ##### 1. Specific and functional diversity computations #####
 # --------------------------------------------------------- #
 
+# ---------------------------------------------------------------------------- #
 ##### * 1.1. Birds specific diversity ------------------------------------------
 # ---------------------------------------------------------------------------- #
-### ** 1.1.1. Species richness and abundances ----
-# ________________________________________________
+##### ** 1.1.1. Species richness and abundances ----
+# __________________________________________________
 
 ipa_data <- rdata
 ipa_data$sp_richness <- apply(rdata[,4:ncol(rdata)] > 0, 1, sum) # Total number of bird species per site.
@@ -159,10 +161,10 @@ ipa_data$sp_abund <- apply(rdata[,4:ncol(rdata)], 1, sum) # Total abundance of b
 
 
 
-### ** 1.1.2. Species diversity indices ----
-# __________________________________________
+##### ** 1.1.2. Species diversity indices ----
+# ____________________________________________
 
-### *** 2.1.2.1. Per site diversity indices ----
+##### *** 2.1.2.1. Per site diversity indices ----
 ipa_data$sp_shannon <- vegan::diversity(x = rdata[,4:ncol(rdata)], index = "shannon") # Shannon-Wiever index.
 ipa_data$sp_simpson <- vegan::diversity(x = rdata[,4:ncol(rdata)], index = "invsimpson") # Inverse Simpson index.
 ipa_data$sp_evenness <- (ipa_data$sp_shannon/log(ipa_data$sp_richness)) # Pielou's evenness index.
@@ -172,7 +174,7 @@ ipa_data$sp_evenness <- (ipa_data$sp_shannon/log(ipa_data$sp_richness)) # Pielou
 pairs(ipa_data[,58:62], pch ="+", col = "blue")
 
 
-### *** 2.1.2.1. Per urban form (UF) diversity levels ----
+##### *** 2.1.2.1. Per urban form (UF) diversity levels ----
 ## For the first UF typology:
 alpha_uf <- with(ipa_metrics, tapply(vegan::specnumber(rdata[,4:ncol(rdata)]), urban_type, mean))
 gamma_uf <- with(ipa_metrics, vegan::specnumber(rdata[,4:ncol(rdata)], urban_type))
@@ -190,16 +192,17 @@ beta_uf_2 <- gamma_uf_2/alpha_uf_2 - 1
 
 
 
+# ---------------------------------------------------------------------------- #
 ##### * 1.2. Birds functional diversity ----------------------------------------
 # ---------------------------------------------------------------------------- #
-### ** 1.2.1. Functional and phylogenetic diversity indices ----
-# ______________________________________________________________
+##### ** 1.2.1. Functional and phylogenetic diversity indices ----
+# ________________________________________________________________
 
 # To compute some diversity metrics while accounting for phylogenetic signal, I first need to compute
 # phylogenetic distances. To do so, I'll have to create a phylogenetic tree. This tree might also be useful
 # later on.
 
-### *** 1.2.1.1. Compute phylogenetic distances ----
+##### *** 1.2.1.1. Compute phylogenetic distances ----
 ## Create a phylogenetic tree from the species list:
 taxa <- paste(rtraits$genus, rtraits$species, sep = "_")
 
@@ -214,7 +217,7 @@ rphylo_dist <- as.matrix(ape::cophenetic.phylo(x = tree)) # Sometimes, this func
 
 
 
-### *** 1.2.1.2. Rao's entropy and redundancy indices ----
+##### *** 1.2.1.2. Rao's entropy and redundancy indices ----
 ## Data preparation and simplification:
 as.data.frame(ipa_data[,c(4:57)]) -> wdata # Species only matrix...
 rownames(wdata) <- ipa_data$id_ipa # ... but keeping site IDs as row names.
@@ -267,7 +270,7 @@ rm(taxa_m, taxa, traits_grp, tree, found)
 
 
 
-### *** 1.2.1.3. FD indices and CWM traits ----
+##### *** 1.2.1.3. FD indices and CWM traits ----
 ## Computing additional functional diversity (FD) indices and Community Weighted Mean traits (might be long
 # to run):
 wmetrics <- FD::dbFD(x = wmeta_com$traits, a = wmeta_com$community, w.abun = TRUE,
@@ -283,102 +286,117 @@ ipa_data$fun_richness <- wmetrics$FRic
 ipa_data$fun_evenness <- wmetrics$FEve
 ipa_data$fun_diversity <- wmetrics$FDiv
 ipa_data$fun_dispersion <- wmetrics$FDis
-# NOTE: To compute convex hull, 'dbFD()' needs to write a 'vert.txt' file at the root of the project. I'll just
-# delete it afterward but, in the case I forgot, I'll also tell Git to ignore it:
-usethis::use_git_ignore("vert.txt")
 
 
 
-# ### ** 1.2.2. Functional groups richness and abundances ----
-# # __________________________________________________________
-#
-# ### *** 1.2.2.1. Creating a function to create functional groups subset data ----
-# functional_groups <- function(community_table, grouping_factor){
-#
-#   nb_gr <- length(unique(grouping_factor))
-#   data_subsets <- NULL
-#
-#   for (i in 1:nb_gr){
-#     sp_list <- as.character(as.matrix(rtraits[which(grouping_factor == levels(grouping_factor)[i]),
-#                                               "sp_id"]))
-#     data_subsets[[i]] <- community_table[, which(colnames(community_table) %in% sp_list)]
-#   }
-#   return(data_subsets) # Must be within the function but NOT in the for-loop (otherwise it will obviously only
-#   # return the first element of the list)!
-# }
-#
-#
-#
-# ### *** 1.2.2.2. Trophic guild richness, abundances and diversity ----
-# ttt <- functional_groups(community_table = ipa_data, grouping_factor = rtraits$trophic_level)
-#
-# rcarnibirds <- ttt[[1]]
-# rherbibirds <- ttt[[2]]
-# romnibirds <- ttt[[3]]
-#
-# ## For carnivore species:
-# ipa_data$carni_richness <- apply(rcarnibirds > 0, 1, sum) # No need for [,4:ncol...] because the table only
-# # contains species columns.
-# ipa_data$carni_abund <- apply(rcarnibirds, 1, sum) # Same.
-# ipa_data$carni_simpson <- vegan::diversity(x = rcarnibirds, index = "invsimpson")
-# # IMPORTANT NOTE: when there is only one species, the Shannon index = 0 and as a consequence, Pielou's evenness
-# # is an NA (because log(0) = 0, so 0/0 = NaN)!
-#
-#
-# ## For herbivore species:
-# ipa_data$herbi_richness <- apply(rherbibirds > 0, 1, sum) # No need for [,4:ncol...] because the table only
-# # contains species columns.
-# ipa_data$herbi_abund <- apply(rherbibirds, 1, sum) # Same.
-# ipa_data$herbi_simpson <- vegan::diversity(x = rherbibirds, index = "invsimpson")
-#
-#
-# ## For omnivore species:
-# ipa_data$omni_richness <- apply(romnibirds > 0, 1, sum) # No need for [,4:ncol...] because the table only
-# # contains species columns.
-# ipa_data$omni_abund <- apply(romnibirds, 1, sum) # Same.
-# ipa_data$omni_simpson <- vegan::diversity(x = romnibirds, index = "invsimpson")
-# rm(ttt)
-#
-#
-#
-# ### *** 1.2.2.3. Nesting guild richness, abundances and diversity ----
-# ttt <- functional_groups(community_table = ipa_data, grouping_factor = rtraits$nesting_pref)
-#
-# rnest_cavity <- ttt[[5]] # Cavity nesters.
-# rnest_tree <- cbind(ttt[[1]], ttt[[6]], ttt[[7]]) # Treetop or tree branch nesters.
-# rnest_shrub <- cbind(ttt[[10]], ttt[[12]], ttt[[13]]) # Shrub or partial shrub nesters.
-# rnest_open <- cbind(ttt[[2]], ttt[[3]], ttt[[8]], ttt[[9]], ttt[[11]], ttt[[12]]) # Species that nest on open
-# # surfaces or almost (e.g. ground, riverbanks, water).
-#
-#
-# ## For cavity nesters:
-# ipa_data$ncav_richness <- apply(rnest_cavity > 0, 1, sum)
-# ipa_data$ncav_abund <- apply(rnest_cavity, 1, sum)
-# ipa_data$ncav_simpson <- vegan::diversity(x = rnest_cavity, index = "invsimpson")
-# # IMPORTANT NOTE: when there is only one species, the Shannon index = 0 and as a consequence, Pielou's evenness
-# # is an NA (because log(0) = 0, so 0/0 = NaN)!
-#
-# ## For tree nesters:
-# ipa_data$ntree_richness <- apply(rnest_tree > 0, 1, sum)
-# ipa_data$ntree_abund <- apply(rnest_tree, 1, sum) # Same.
-# ipa_data$ntree_simpson <- vegan::diversity(x = rnest_tree, index = "invsimpson")
-#
-# ## For shrub nesters:
-# ipa_data$nshrub_richness <- apply(rnest_shrub > 0, 1, sum)
-# ipa_data$nshrub_abund <- apply(rnest_shrub, 1, sum) # Same.
-# ipa_data$nshrub_simpson <- vegan::diversity(x = rnest_shrub, index = "invsimpson")
-#
-# ## For open nesters:
-# ipa_data$nopen_richness <- apply(rnest_open > 0, 1, sum)
-# ipa_data$nopen_abund <- apply(rnest_open, 1, sum) # Same.
-# ipa_data$nopen_simpson <- vegan::diversity(x = rnest_open, index = "invsimpson")
-# rm(ttt)
+##### ** 1.2.2. Functional groups richness and abundances ----
+# ____________________________________________________________
+
+##### *** 1.2.2.1. Creating a function to create functional groups subset data ----
+functional_groups <- function(community_table, grouping_factor){
+
+  nb_gr <- length(unique(grouping_factor))
+  data_subsets <- NULL
+
+  for (i in 1:nb_gr){
+    sp_list <- as.character(as.matrix(rtraits[which(grouping_factor == levels(grouping_factor)[i]),
+                                              "sp_id"]))
+    data_subsets[[i]] <- community_table[, which(colnames(community_table) %in% sp_list)]
+  }
+  return(data_subsets) # Must be within the function but NOT in the for-loop (otherwise it will obviously only
+  # return the first element of the list)!
+}
+
+
+
+##### *** 1.2.2.2. Trophic guild diversity ----
+ttt <- functional_groups(community_table = ipa_data, grouping_factor = rtraits$trophic_level)
+
+fg_troph_carni <- ttt[[1]]
+fg_troph_herbi <- ttt[[2]]
+fg_troph_omni <- ttt[[3]]
+
+## For carnivore species:
+ipa_data$carni_richness <- apply(fg_troph_carni > 0, 1, sum) # No need for [,4:ncol...] because the table only
+# contains species columns.
+ipa_data$carni_abund <- apply(fg_troph_carni, 1, sum) # Same.
+ipa_data$carni_simpson <- vegan::diversity(x = fg_troph_carni, index = "invsimpson")
+# IMPORTANT NOTE: when there is only one species, the Shannon index = 0 and as a consequence, Pielou's evenness
+# is an NA (because log(0) = 0, so 0/0 = NaN)!
+
+## For herbivore species:
+ipa_data$herbi_richness <- apply(fg_troph_herbi > 0, 1, sum)
+ipa_data$herbi_abund <- apply(fg_troph_herbi, 1, sum) # Same.
+ipa_data$herbi_simpson <- vegan::diversity(x = fg_troph_herbi, index = "invsimpson")
+
+## For omnivore species:
+ipa_data$omni_richness <- apply(fg_troph_omni > 0, 1, sum)
+ipa_data$omni_abund <- apply(fg_troph_omni, 1, sum) # Same.
+ipa_data$omni_simpson <- vegan::diversity(x = fg_troph_omni, index = "invsimpson")
+
+
+
+##### *** 1.2.2.3. Nesting guild diversity ----
+ttt <- functional_groups(community_table = ipa_data, grouping_factor = rtraits$nesting_pref)
+
+fg_nest_cavity <- ttt[[5]] # Cavity nesters.
+fg_nest_tree <- cbind(ttt[[1]], ttt[[6]], ttt[[7]]) # Treetop or tree branch nesters.
+fg_nest_shrub <- cbind(ttt[[6]], ttt[[10]], ttt[[12]], ttt[[13]]) # Shrub or partial shrub nesters.
+fg_nest_ground <- cbind(ttt[[2]], ttt[[12]]) # Species that nest on the ground.
+# I disregard aquatic species as it is obvious that their nestling habits depends on the presence of water,
+# which is rather unrelated to urban forms.
+
+## For cavity nesters:
+ipa_data$ncav_richness <- apply(fg_nest_cavity > 0, 1, sum)
+ipa_data$ncav_abund <- apply(fg_nest_cavity, 1, sum)
+ipa_data$ncav_simpson <- vegan::diversity(x = fg_nest_cavity, index = "invsimpson")
+
+## For tree nesters:
+ipa_data$ntree_richness <- apply(fg_nest_tree > 0, 1, sum)
+ipa_data$ntree_abund <- apply(fg_nest_tree, 1, sum) # Same.
+ipa_data$ntree_simpson <- vegan::diversity(x = fg_nest_tree, index = "invsimpson")
+
+## For shrub nesters:
+ipa_data$nshrub_richness <- apply(fg_nest_shrub > 0, 1, sum)
+ipa_data$nshrub_abund <- apply(fg_nest_shrub, 1, sum) # Same.
+ipa_data$nshrub_simpson <- vegan::diversity(x = fg_nest_shrub, index = "invsimpson")
+
+## For open nesters:
+ipa_data$nground_richness <- apply(fg_nest_ground > 0, 1, sum)
+ipa_data$nground_abund <- apply(fg_nest_ground, 1, sum) # Same.
+ipa_data$nground_simpson <- vegan::diversity(x = fg_nest_ground, index = "invsimpson")
+
+
+
+##### *** 1.2.2.4. Foraging guild diversity ----
+ttt <- functional_groups(community_table = ipa_data, grouping_factor = rtraits$foraging_strata)
+summary(wtraits$foraging_strata)
+
+fg_nest_cavity <- ttt[[5]] # Cavity nesters.
+fg_nest_tree <- cbind(ttt[[1]], ttt[[6]], ttt[[7]]) # Treetop or tree branch nesters.
+fg_nest_shrub <- cbind(ttt[[6]], ttt[[10]], ttt[[12]], ttt[[13]]) # Shrub or partial shrub nesters.
+fg_nest_ground <- cbind(ttt[[2]], ttt[[12]]) # Species that nest on the ground.
+# I disregard aquatic species as it is obvious that their nestling habits depends on the presence of water,
+# which is rather unrelated to urban forms.
+
+## For cavity nesters:
+ipa_data$ncav_richness <- apply(fg_nest_cavity > 0, 1, sum)
+ipa_data$ncav_abund <- apply(fg_nest_cavity, 1, sum)
+ipa_data$ncav_simpson <- vegan::diversity(x = fg_nest_cavity, index = "invsimpson")
 
 
 
 
 
-########################## ************************************************* ###############################
+# FORAGING BEHAVIOUR?????????? other?
+
+rm(ttt)
+
+
+
+
+
+############################ ************************************************* ###############################
 # ------------------------------------------ #
 ##### 2. Exploratory data analyses (EDA) #####
 # ------------------------------------------ #
@@ -395,6 +413,7 @@ summary(wdata)
 
 
 
+# ---------------------------------------------------------------------------- #
 ##### * 2.1. Outliers detection ------------------------------------------------
 # ---------------------------------------------------------------------------- #
 
@@ -406,6 +425,7 @@ ppl.tits::uni.dotplots(wdata)
 
 
 
+# ---------------------------------------------------------------------------- #
 ##### * 2.2. Distribution, skewness and kurtosis -------------------------------
 # ---------------------------------------------------------------------------- #
 ppl.tits::uni.histograms(wdata)
@@ -421,6 +441,7 @@ rm(tab)
 
 
 
+# ---------------------------------------------------------------------------- #
 ##### * 2.3. Bivariate relationships -------------------------------------------
 # ---------------------------------------------------------------------------- #
 
@@ -451,6 +472,7 @@ ipa.pairplot <- GGally::ggpairs(wdata.num)
 
 
 
+# ---------------------------------------------------------------------------- #
 ##### * 2.4. Homoscedasticity and conditional distributions --------------------
 # ---------------------------------------------------------------------------- #
 
@@ -528,6 +550,7 @@ stats::bartlett.test(omni_abund~urban_type_2, data = wdata2) # Ok-ish
 
 
 
+# ---------------------------------------------------------------------------- #
 ##### * 2.5. Final formatting --------------------------------------------------
 # ---------------------------------------------------------------------------- #
 
@@ -543,15 +566,16 @@ ppl.tits::uni.dotplots(wdata3)
 
 
 
-########################## ************************************************* ###############################
+############################ ************************************************* ###############################
 # ----------------------------------------------- #
 ##### 3. Modelling the bird species diversity #####
 # ----------------------------------------------- #
 
+# ---------------------------------------------------------------------------- #
 ##### * 3.1. Species richness models -------------------------------------------
 # ---------------------------------------------------------------------------- #
-### ** 3.1.1. Poisson or negative binomial GL(M)M ----
-# ____________________________________________________
+##### ** 3.1.1. Poisson or negative binomial GL(M)M ----
+# ______________________________________________________
 
 colnames(wdata3)
 
@@ -609,10 +633,10 @@ summary(ttt2)
 
 
 
-### ** 3.1.2. Diagnostics and assumption checks ----
-# __________________________________________________
+##### ** 3.1.2. Diagnostics and assumption checks ----
+# ____________________________________________________
 
-### *** 3.1.2.1. Residuals extraction, autocorrelation and collinearity ----
+##### *** 3.1.2.1. Residuals extraction, autocorrelation and collinearity ----
 par(.pardefault)
 
 ## Simulation-based scaled residuals computation ({DHARMa} method):
@@ -644,7 +668,7 @@ DHARMa::plotResiduals(simu.resid, form = wdata3$log_ff)
 
 
 
-### *** 3.1.2.2. Distribution (family, ZI, dispersion) ----
+##### *** 3.1.2.2. Distribution (family, ZI, dispersion) ----
 ## Assessing over or under-dispersion:
 AER::dispersiontest(object = ipaSR_comglm1) # Underdispersion?
 DHARMa::testDispersion(simu.resid, alternative = "less") # Significant underdispersion.
@@ -671,7 +695,7 @@ DHARMa::testDispersion(simu.resid, alternative = "less") # Significant underdisp
 #
 #
 #
-# ### *** 3.1.2.3. Linearity ----
+# ##### *** 3.1.2.3. Linearity ----
 # # For the sake of further exploration, I also plot variants of our predictors:
 # wdata3 %>% dplyr::select(log_patch_area, log_patch_perim, log_woody_vw, log_woody_area,
 #                          log_F_metric_d1b0, log_F_metric_d2b0, log_F_metric_d3b0, log_F_metric_d1b1,
@@ -694,7 +718,7 @@ DHARMa::testDispersion(simu.resid, alternative = "less") # Significant underdisp
 #
 #
 #
-# ### *** 3.1.2.4. Model goodness-of-fit (GOF) and performances ----
+# ##### *** 3.1.2.4. Model goodness-of-fit (GOF) and performances ----
 # # GOF test of Pearson's Chi2 residuals:
 # dat.resid <- sum(stats::resid(ipaSR_glmm2, type = "pearson")^2)
 # 1 - stats::pchisq(dat.resid, stats::df.residual(ipaSR_glmm2)) # p = 0.83, indicating that there is no
@@ -727,7 +751,7 @@ DHARMa::testDispersion(simu.resid, alternative = "less") # Significant underdisp
 #
 #
 #
-# ### *** 3.1.2.5. Posterior predictive simulations ----
+# ##### *** 3.1.2.5. Posterior predictive simulations ----
 # # Predicted counts:
 # par(.pardefault)
 # obsprop <- prop.table(table(wdata3$clutch_size))
@@ -758,8 +782,8 @@ DHARMa::testDispersion(simu.resid, alternative = "less") # Significant underdisp
 
 
 
-### ** 3.1.3. Conclusions ----
-# ____________________________
+##### ** 3.1.3. Conclusions ----
+# ______________________________
 
 # There are strong GENUS richness variations across regions.
 # Methodologically challenging to account for many urban metrics at the same time as they are highly correlated
@@ -813,8 +837,7 @@ usethis::use_git(message = ":x: Problem detected!")
 
 ########### TO DO LIST ----
 # ----------------------- #
-# * Finir RaoQ avec phylodist: 1) check order, 2) assign same name?, 3) compute
-# * Compute FD et PD ? CWM?
+# * Finish computing FG!!!!!!
 # * Try and plot species accumulation curves????
 # * Explorer toutes les combinaisons possibles (avec les 2 typo de FU), d'abord graphiquement, puis stats
 # * Faire un rapport
