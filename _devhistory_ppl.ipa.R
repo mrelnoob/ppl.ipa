@@ -120,6 +120,9 @@ system2("git push -u origin master") # Same (CLI).
 # To ignore changes made to the Rproj file:
 usethis::use_git_ignore("ppl.ipa.Rproj")
 usethis::use_git_ignore("/outputs")
+# NOTE: To compute convex hull, 'DF::dbFD()' needs to write a 'vert.txt' file at the root of the project.
+# I'll just delete it afterwards but, in the case I forgot, I'll also tell Git to ignore it:
+usethis::use_git_ignore("vert.txt")
 
 
 
