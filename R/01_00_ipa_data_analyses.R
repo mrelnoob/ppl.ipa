@@ -110,6 +110,7 @@ sum(!rtraits$sp_id %in% colnames(rdata)) # Counts the number of elements of the 
 # _________________________________________________
 # For now, we will only work with the data extracted from the 150m radius buffers, so we select them:
 rmetrics %>% dplyr::filter(buffer_radius == 150) -> ipa_metrics
+ipa_metrics %>% dplyr::select(-buffer_radius) -> wmetrics
 
 
 
@@ -191,27 +192,124 @@ beta_uf_2 <- gamma_uf_2/alpha_uf_2 - 1
 
 ##### * 1.2. Birds functional diversity ----------------------------------------
 # ---------------------------------------------------------------------------- #
-### ** 1.2.1. Functional groups richness and abundances ----
-# __________________________________________________________
+### ** 1.2.1. Functional and phylogenetic diversity indices ----
+# ______________________________________________________________
 
-### *** 1.2.1.1. Creating a function to create functional groups subset data ----
-functional_groups <- function(community_table, grouping_factor){
+# To compute some diversity metrics while accounting for phylogenetic signal, I first need to compute
+# phylogenetic distances. To do so, I'll have to create a phylogenetic tree. This tree might also be useful
+# later on.
 
-  nb_gr <- length(unique(grouping_factor))
-  data_subsets <- NULL
+### *** 1.2.1.1. Compute phylogenetic distances ----
+## Create a phylogenetic tree from the species list:
+taxa <- paste(rtraits$genus, rtraits$species, sep = "_")
 
-  for (i in 1:nb_gr){
-    sp_list <- as.character(as.matrix(rtraits[which(grouping_factor == levels(grouping_factor)[i]),
-                                              "sp_id"]))
-    data_subsets[[i]] <- community_table[, which(colnames(community_table) %in% sp_list)]
-  }
-  return(data_subsets) # Must be within the function but NOT in the for-loop (otherwise it will obviously only
-  # return the first element of the list)!
-}
+taxa_m <- rotl::tnrs_match_names(names = taxa) # To check whether the input names match those from the
+# "Open Tree of Life" database.
+tree <- rotl::tol_induced_subtree(ott_ids = rotl::ott_id(taxa_m), label_format = "name")
+plot(tree, cex = .8, label.offset = .1, no.margin = TRUE)
+
+## Compute the phylogenetic distance between species:
+rphylo_dist <- as.matrix(ape::cophenetic.phylo(x = tree)) # Sometimes, this function doesn't return the expected
+# values (too many 0), and the code chunk should thus be run again. So be careful!
 
 
 
-# ### *** 1.2.1.2. Trophic guild richness, abundances and diversity ----
+### *** 1.2.1.2. Rao's entropy and redundancy indices ----
+## Data preparation and simplification:
+as.data.frame(ipa_data[,c(4:57)]) -> wdata # Species only matrix...
+rownames(wdata) <- ipa_data$id_ipa # ... but keeping site IDs as row names.
+
+rtraits %>%
+  dplyr::select(-sp_id, -order, -family, -genus, -species,
+                -hwi, -max_longevity, -migratory, -iucn_status) %>%
+  as.data.frame() -> wtraits # Simpler traits.
+
+## As the 'rao.diversity()' function requires matching species name lists, I need to harmonize the order
+# and names of the species included in the tables:
+rownames(wtraits) <- rtraits$sp_id # Names should be set as row names.
+
+wphylo_dist <- rphylo_dist
+found <- match(colnames(wphylo_dist), table = taxa, nomatch = 0) # This functions enables me to match each name
+# of column of "wphylo_dist" with the index of its match in "taxa".
+# Now, the following lines of code enable me to assign the matching code names for columns and rows in the
+# order found in "found" (= conditional renaming).
+colnames(wphylo_dist) <- as.character(rtraits$sp_id)[found]
+rownames(wphylo_dist) <- as.character(rtraits$sp_id)[found]
+
+# Now our three tables share the same code names (names ID - e.g. "pass_dome" for "Passer domesticus"), but not
+# in the same order (because the tables were not built this way).
+all(rownames(wtraits) == colnames(wdata)) # FALSE!
+all(rownames(wtraits) == colnames(wphylo_dist)) # FALSE!
+# So we need to re-order them:
+wmeta_com <- SYNCSA::organize.syncsa(comm = wdata, traits = wtraits, phylodist = wphylo_dist)
+all(rownames(wmeta_com$traits) == colnames(wmeta_com$community)) # TRUE!
+all(rownames(wmeta_com$traits) == colnames(wmeta_com$phylodist)) # TRUE!
+
+## Rao's indices computations:
+# Creating groups of trait to assign valid weights:
+traits_grp <- list(c("nesting_pref", "habitat", "hab_density"),
+                   c("prim_lifestyle", "urban_tolerance", "social_behaviour", "brain_mass"),
+                   c("latitude_cent", "longitude_cent", "range_size"),
+                   c("trophic_level", "trophic_niche", "foraging_behaviour", "foraging_strata"),
+                   c("beak_length", "beak_width", "beak_depth"),
+                   c("body_mass", "tarsus_length", "wing_length", "kipps_distance", "tail_length"),
+                   c("clutch_size", "clutch_nb", "egg_mass", "fledging_age", "development_mode")) # The list
+# must have the same length as the trait table!
+
+wmetrics <- SYNCSA::rao.diversity(comm = wmeta_com$community, traits = wmeta_com$traits,
+                             phylodist = wmeta_com$phylodist, put.together = traits_grp)
+ipa_data$gini_simpson <- wmetrics$Simpson # Gini Simpson index.
+ipa_data$rao_q <- wmetrics$FunRao # Rao's quadratic entropy index (based on trait distances).
+ipa_data$fun_redund <- wmetrics$FunRedundancy # Functional redundancy index.
+ipa_data$rao_phy <- wmetrics$PhyRao # Rao's quadratic entropy index (based on phylogenetic distances).
+ipa_data$phy_redund <- wmetrics$PhyRedundancy # Phylogenetic redundancy index.
+rm(taxa_m, taxa, traits_grp, tree, found)
+
+
+
+### *** 1.2.1.3. FD indices and CWM traits ----
+## Computing additional functional diversity (FD) indices and Community Weighted Mean traits (might be long
+# to run):
+wmetrics <- FD::dbFD(x = wmeta_com$traits, a = wmeta_com$community, w.abun = TRUE,
+                     calc.FRic = TRUE, stand.FRic = TRUE, # To calculate functional richness (i.e. the convex
+                     # hull volume of the PCA of the trait space).
+                     m = "min", # To reduce the dimensionality of the trait matrix.
+                     calc.CWM = TRUE, CWM.type = "all", # To calculate CWM with the abundance of each
+                     # individual class being returned for categorical variables.
+                     calc.FDiv = TRUE, # To calculate functional richness.
+                     print.pco = TRUE) # To print the PCA axes eigenvalues.
+ipa_cwm <- wmetrics$CWM
+ipa_data$fun_richness <- wmetrics$FRic
+ipa_data$fun_evenness <- wmetrics$FEve
+ipa_data$fun_diversity <- wmetrics$FDiv
+ipa_data$fun_dispersion <- wmetrics$FDis
+# NOTE: To compute convex hull, 'dbFD()' needs to write a 'vert.txt' file at the root of the project. I'll just
+# delete it afterward but, in the case I forgot, I'll also tell Git to ignore it:
+usethis::use_git_ignore("vert.txt")
+
+
+
+# ### ** 1.2.2. Functional groups richness and abundances ----
+# # __________________________________________________________
+#
+# ### *** 1.2.2.1. Creating a function to create functional groups subset data ----
+# functional_groups <- function(community_table, grouping_factor){
+#
+#   nb_gr <- length(unique(grouping_factor))
+#   data_subsets <- NULL
+#
+#   for (i in 1:nb_gr){
+#     sp_list <- as.character(as.matrix(rtraits[which(grouping_factor == levels(grouping_factor)[i]),
+#                                               "sp_id"]))
+#     data_subsets[[i]] <- community_table[, which(colnames(community_table) %in% sp_list)]
+#   }
+#   return(data_subsets) # Must be within the function but NOT in the for-loop (otherwise it will obviously only
+#   # return the first element of the list)!
+# }
+#
+#
+#
+# ### *** 1.2.2.2. Trophic guild richness, abundances and diversity ----
 # ttt <- functional_groups(community_table = ipa_data, grouping_factor = rtraits$trophic_level)
 #
 # rcarnibirds <- ttt[[1]]
@@ -243,7 +341,7 @@ functional_groups <- function(community_table, grouping_factor){
 #
 #
 #
-# ### *** 1.2.1.3. Nesting guild richness, abundances and diversity ----
+# ### *** 1.2.2.3. Nesting guild richness, abundances and diversity ----
 # ttt <- functional_groups(community_table = ipa_data, grouping_factor = rtraits$nesting_pref)
 #
 # rnest_cavity <- ttt[[5]] # Cavity nesters.
@@ -275,53 +373,6 @@ functional_groups <- function(community_table, grouping_factor){
 # ipa_data$nopen_abund <- apply(rnest_open, 1, sum) # Same.
 # ipa_data$nopen_simpson <- vegan::diversity(x = rnest_open, index = "invsimpson")
 # rm(ttt)
-
-
-
-### ** 1.2.2. Functional and phylogenetic diversity indices ----
-# ______________________________________________________________
-
-# To compute some diversity metrics while accounting for phylogenetic signal, I first need to compute
-# phylogenetic distances. To do so, I'll have to create a phylogenetic tree. This tree might also be useful
-# later on.
-
-### *** 1.2.2.1. Compute phylogenetic distances ----
-## Create a phylogenetic tree from the species list:
-taxa <- paste(rtraits$genus, rtraits$species, sep = " ")
-
-taxa <- rotl::tnrs_match_names(names = taxa) # To check whether the input names match those from the
-# "Open Tree of Life" database.
-tree <- rotl::tol_induced_subtree(ott_ids = rotl::ott_id(taxa), label_format = "name")
-plot(tree, cex = .8, label.offset = .1, no.margin = TRUE)
-
-## Compute the phylogenetic distance between species:
-phylo_dist <- as.matrix(ape::cophenetic.phylo(x = tree))
-
-
-
-### *** 1.2.2.2. Rao's entropy and functional redundancy ----
-ipa_data[,c(4:57)] -> wdata # Species only matrix.
-rtraits %>%
-  dplyr::select(-sp_id, -order, -family, -genus, -species, -hwi, -max_longevity,
-                -migratory, -iucn_status) %>%
-  as.data.frame() -> wtraits # Simpler traits.
-rownames(wtraits) <- rtraits$sp_id # Required by the 'rao.diversity()' function.
-
-# The 'rao.diversity()' function enables the creation of groups of trait to assign valid weights:
-traits_grp <- list(c("nesting_pref", "habitat", "hab_density"),
-                   c("prim_lifestyle", "urban_tolerance", "social_behaviour", "brain_mass"),
-                   c("latitude_cent", "longitude_cent", "range_size"),
-                   c("trophic_level", "trophic_niche", "foraging_behaviour", "foraging_strata"),
-                   c("beak_length", "beak_width", "beak_depth"),
-                   c("body_mass", "tarsus_length", "wing_length", "kipps_distance", "tail_length"),
-                   c("clutch_size", "clutch_nb", "egg_mass", "fledging_age", "development_mode")) # The list
-# must have the same length as the trait table!
-
-ttt <- SYNCSA::rao.diversity(comm = wdata, traits = wtraits, put.together = traits_grp)
-ipa_data$gini_simpson <- ttt$Simpson
-ipa_data$rao_q <- ttt$FunRao
-ipa_data$fun_redund <- ttt$FunRedundancy
-rm(ttt)
 
 
 
