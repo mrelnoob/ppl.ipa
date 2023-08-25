@@ -309,6 +309,18 @@
       ],
       "Hash": "b062cb79db56803311ea22b90ed6f57a"
     },
+    "XML": {
+      "Package": "XML",
+      "Version": "3.99-0.14",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "methods",
+        "utils"
+      ],
+      "Hash": "e5c8af79df616c135b21eaeb1dc6bc5c"
+    },
     "abind": {
       "Package": "abind",
       "Version": "1.4-5",
@@ -2271,6 +2283,19 @@
       ],
       "Hash": "76c9e04c712a05848ae7a23d2f170a40"
     },
+    "rentrez": {
+      "Package": "rentrez",
+      "Version": "1.2.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "XML",
+        "httr",
+        "jsonlite"
+      ],
+      "Hash": "90e6d8dc1b2fe96d0753a94943cf604d"
+    },
     "renv": {
       "Package": "renv",
       "Version": "1.0.2",
@@ -2340,6 +2365,19 @@
       ],
       "Hash": "3854c37590717c08c32ec8542a2e0a35"
     },
+    "rncl": {
+      "Package": "rncl",
+      "Version": "0.8.7",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "Rcpp",
+        "progress",
+        "stats"
+      ],
+      "Hash": "2dbd130a701df2cd4b40987815376637"
+    },
     "rngtools": {
       "Package": "rngtools",
       "Version": "1.5.2",
@@ -2354,6 +2392,23 @@
         "utils"
       ],
       "Hash": "367a915f939520767660671efa0e32bd"
+    },
+    "rotl": {
+      "Package": "rotl",
+      "Version": "3.1.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "ape",
+        "curl",
+        "httr",
+        "jsonlite",
+        "rentrez",
+        "rlang",
+        "rncl"
+      ],
+      "Hash": "ee9a04a094199411f539d0c5a32df3c2"
     },
     "rpart": {
       "Package": "rpart",
