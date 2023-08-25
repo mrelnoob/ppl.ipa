@@ -145,9 +145,9 @@ rm(imput, rtraits_mis, rtraits_imp_error, sub_errtab_rtraits, rtraits_imp)
 
 
 ############################ ************************************************* ###############################
-# --------------------------------------------------------- #
-##### 1. Specific and functional diversity computations #####
-# --------------------------------------------------------- #
+# ---------------------------------------------------------------- #
+##### 1. Computating specific and functional diversity indices #####
+# ---------------------------------------------------------------- #
 
 # ---------------------------------------------------------------------------- #
 ##### * 1.1. Birds specific diversity ------------------------------------------
@@ -368,21 +368,24 @@ ipa_data$nground_simpson <- vegan::diversity(x = fg_nest_ground, index = "invsim
 
 
 
-##### *** 1.2.2.4. Foraging guild diversity ----
-ttt <- functional_groups(community_table = ipa_data, grouping_factor = rtraits$foraging_strata)
-summary(wtraits$foraging_strata)
-
-fg_nest_cavity <- ttt[[5]] # Cavity nesters.
-fg_nest_tree <- cbind(ttt[[1]], ttt[[6]], ttt[[7]]) # Treetop or tree branch nesters.
-fg_nest_shrub <- cbind(ttt[[6]], ttt[[10]], ttt[[12]], ttt[[13]]) # Shrub or partial shrub nesters.
-fg_nest_ground <- cbind(ttt[[2]], ttt[[12]]) # Species that nest on the ground.
-# I disregard aquatic species as it is obvious that their nestling habits depends on the presence of water,
-# which is rather unrelated to urban forms.
-
-## For cavity nesters:
-ipa_data$ncav_richness <- apply(fg_nest_cavity > 0, 1, sum)
-ipa_data$ncav_abund <- apply(fg_nest_cavity, 1, sum)
-ipa_data$ncav_simpson <- vegan::diversity(x = fg_nest_cavity, index = "invsimpson")
+# ##### *** 1.2.2.4. Foraging guild diversity ----
+# ttt <- functional_groups(community_table = ipa_data, grouping_factor = rtraits$foraging_strata)
+# summary(wtraits$foraging_strata)
+#
+# fg_forag_cavity <- ttt[[5]] # Cavity nesters.
+# fg_forag_tree <- cbind(ttt[[1]], ttt[[6]], ttt[[7]]) # Treetop or tree branch nesters.
+# fg_forag_shrub <- cbind(ttt[[6]], ttt[[10]], ttt[[12]], ttt[[13]]) # Shrub or partial shrub nesters.
+# fg_forag_ground <- cbind(ttt[[2]], ttt[[12]]) # Species that nest on the ground.
+# # I disregard aquatic species as it is obvious that their nestling habits depends on the presence of water,
+# # which is rather unrelated to urban forms.
+#
+# ## For cavity nesters:
+# ipa_data$ncav_richness <- apply(fg_forag_cavity > 0, 1, sum)
+# ipa_data$ncav_abund <- apply(fg_forag_cavity, 1, sum)
+# ipa_data$ncav_simpson <- vegan::diversity(x = fg_forag_cavity, index = "invsimpson")
+#
+#
+# BUILDINGS nesters??????? toutes FU pas similaires pour eux?
 
 
 
@@ -838,7 +841,9 @@ usethis::use_git(message = ":x: Problem detected!")
 ########### TO DO LIST ----
 # ----------------------- #
 # * Finish computing FG!!!!!!
-# * Try and plot species accumulation curves????
+# * Try CAH???
 # * Explorer toutes les combinaisons possibles (avec les 2 typo de FU), d'abord graphiquement, puis stats
 # * Faire un rapport
 # * Faire analyse RLQ!!!!!
+# ** (Try and plot species accumulation curves????)
+# ----------------------- #
