@@ -76,6 +76,7 @@ rtraits <- readr::read_csv2(file = here::here("data/ppl_ipa_species_traits.csv")
 rdata %>% dplyr::select(-id_site, -site_name, -date) %>%
   dplyr::mutate_if(is.numeric, ~ . * 2) -> rdata
 rdata[is.na(rdata)] <- 0
+rdata$pica_pica <- round(rdata$pica_pica)
 
 ## Removing useless columns, dealing with NAs and other slight changes:
 rmetrics %>% dplyr::select(-area, -vmanag) %>%
@@ -148,8 +149,8 @@ rm(imput, rtraits_mis, rtraits_imp_error, sub_errtab_rtraits, rtraits_imp)
 taxa <- as.character(rtraits$sp_id)[which(rtraits$habitat %in% c("wetland", "riverine"))]
 
 ## Removing the columns or rows belonging to the 8 wetland or riverine species:
-wdata <- rdata[, !c(colnames(rdata) %in% taxa)]
-wtraits <- rtraits[!rtraits$sp_id %in% taxa, ]
+ipa_data <- as.data.frame(rdata[, !c(colnames(rdata) %in% taxa)])
+ipa_traits <- as.data.frame(rtraits[!rtraits$sp_id %in% taxa, ])
 # I decided to remove these species as they will bias analyses.
 
 
@@ -167,7 +168,7 @@ wtraits <- rtraits[!rtraits$sp_id %in% taxa, ]
 ##### ** 1.1.1. Species richness and abundances ----
 # __________________________________________________
 
-ipa_data <- wdata
+wdata <- ipa_data
 ipa_data$sp_richness <- apply(wdata[,4:ncol(wdata)] > 0, 1, sum) # Total number of bird species per site.
 ipa_data$sp_abund <- apply(wdata[,4:ncol(wdata)], 1, sum) # Total abundance of birds per site.
 
@@ -183,7 +184,7 @@ ipa_data$sp_evenness <- (ipa_data$sp_shannon/log(ipa_data$sp_richness)) # Pielou
 # We preferred the Shannon index over the Simpson one because we wanted to give importance to rare species, but
 # we calculate both anyway, notably because Pielou's J is known to be sensitive to sample size (likely not a
 # problem here) and to rare species.
-pairs(ipa_data[,58:62], pch ="+", col = "blue")
+pairs(ipa_data[,50:54], pch ="+", col = "blue")
 
 
 ##### *** 2.1.2.1. Per urban form (UF) diversity levels ----
@@ -216,7 +217,7 @@ beta_uf_2 <- gamma_uf_2/alpha_uf_2 - 1
 
 ##### *** 1.2.1.1. Compute phylogenetic distances ----
 ## Create a phylogenetic tree from the species list:
-taxa <- paste(wtraits$genus, wtraits$species, sep = "_")
+taxa <- paste(ipa_traits$genus, ipa_traits$species, sep = "_")
 
 taxa_m <- rotl::tnrs_match_names(names = taxa) # To check whether the input names match those from the
 # "Open Tree of Life" database.
@@ -231,25 +232,26 @@ rphylo_dist <- as.matrix(ape::cophenetic.phylo(x = tree)) # Sometimes, this func
 
 ##### *** 1.2.1.2. Rao's entropy and redundancy indices ----
 ## Data preparation and simplification:
-as.data.frame(ipa_data[,c(4:57)]) -> wdata # Species only matrix...
+droplevels(as.data.frame(ipa_data[,c(4:49)])) -> wdata # Species only matrix...
 rownames(wdata) <- ipa_data$id_ipa # ... but keeping site IDs as row names.
 
-wtraits %>%
+ipa_traits %>%
   dplyr::select(-sp_id, -order, -family, -genus, -species,
-                -hwi, -max_longevity, -migratory, -iucn_status) %>%
-  as.data.frame() -> wtraits # Simpler traits.
+                -hwi, -max_longevity, -migratory, -iucn_status,
+                -latitude_cent, -longitude_cent, -range_size) %>%
+  as.data.frame() %>%
+  droplevels() -> wtraits # Simpler traits.
+rownames(wtraits) <- ipa_traits$sp_id # Names should be set as row names.
 
 ## As the 'rao.diversity()' function requires matching species name lists, I need to harmonize the order
 # and names of the species included in the tables:
-rownames(wtraits) <- wtraits$sp_id # Names should be set as row names.
-
-wphylo_dist <- rphylo_dist
+rphylo_dist -> wphylo_dist
 found <- match(colnames(wphylo_dist), table = taxa, nomatch = 0) # This functions enables me to match each name
 # of column of "wphylo_dist" with the index of its match in "taxa".
 # Now, the following lines of code enable me to assign the matching code names for columns and rows in the
 # order found in "found" (= conditional renaming).
-colnames(wphylo_dist) <- as.character(wtraits$sp_id)[found]
-rownames(wphylo_dist) <- as.character(wtraits$sp_id)[found]
+colnames(wphylo_dist) <- as.character(ipa_traits$sp_id)[found]
+rownames(wphylo_dist) <- as.character(ipa_traits$sp_id)[found]
 
 # Now our three tables share the same code names (names ID - e.g. "pass_dome" for "Passer domesticus"), but not
 # in the same order (because the tables were not built this way).
@@ -264,7 +266,6 @@ all(rownames(wmeta_com$traits) == colnames(wmeta_com$phylodist)) # TRUE!
 # Creating groups of trait to assign valid weights:
 traits_grp <- list(c("nesting_pref", "habitat", "hab_density"),
                    c("prim_lifestyle", "urban_tolerance", "social_behaviour", "brain_mass"),
-                   c("latitude_cent", "longitude_cent", "range_size"),
                    c("trophic_level", "trophic_niche", "foraging_behaviour", "foraging_strata"),
                    c("beak_length", "beak_width", "beak_depth"),
                    c("body_mass", "tarsus_length", "wing_length", "kipps_distance", "tail_length"),
@@ -311,9 +312,11 @@ functional_groups <- function(community_table, grouping_factor){
   data_subsets <- NULL
 
   for (i in 1:nb_gr){
-    sp_list <- as.character(as.matrix(wtraits[which(grouping_factor == levels(grouping_factor)[i]),
+    sp_list <- as.character(as.matrix(ipa_traits[which(grouping_factor == levels(grouping_factor)[i]),
                                               "sp_id"]))
-    data_subsets[[i]] <- community_table[, which(colnames(community_table) %in% sp_list)]
+    data_subsets[[i]] <- community_table[, which(colnames(community_table) %in% sp_list), drop = FALSE] # I
+    # have to use the 'drop = FALSE' in this case because otherwise, if a single column is extracted, it will
+    # coerced it into a numeric vector (not a data.frame) and thus drop its (col)name!
   }
   return(data_subsets) # Must be within the function but NOT in the for-loop (otherwise it will obviously only
   # return the first element of the list)!
@@ -322,87 +325,98 @@ ipa_fun_groups <- NULL
 
 
 
-# ##### *** 1.2.2.2. Trophic guild diversity ----
-# ttt <- functional_groups(community_table = ipa_data, grouping_factor = wtraits$trophic_level)
-#
-# fg_troph_carni <- ttt[[1]]
-# fg_troph_herbi <- ttt[[2]]
-# fg_troph_omni <- ttt[[3]]
-#
-# ## For carnivore species:
-# ipa_data$carni_richness <- apply(fg_troph_carni > 0, 1, sum) # No need for [,4:ncol...] because the table only
-# # contains species columns.
-# ipa_data$carni_abund <- apply(fg_troph_carni, 1, sum) # Same.
-# ipa_data$carni_simpson <- vegan::diversity(x = fg_troph_carni, index = "invsimpson")
-# # IMPORTANT NOTE: when there is only one species, the Shannon index = 0 and as a consequence, Pielou's evenness
-# # is an NA (because log(0) = 0, so 0/0 = NaN)!
-#
-# ## For herbivore species:
-# ipa_data$herbi_richness <- apply(fg_troph_herbi > 0, 1, sum)
-# ipa_data$herbi_abund <- apply(fg_troph_herbi, 1, sum) # Same.
-# ipa_data$herbi_simpson <- vegan::diversity(x = fg_troph_herbi, index = "invsimpson")
-#
-# ## For omnivore species:
-# ipa_data$omni_richness <- apply(fg_troph_omni > 0, 1, sum)
-# ipa_data$omni_abund <- apply(fg_troph_omni, 1, sum) # Same.
-# ipa_data$omni_simpson <- vegan::diversity(x = fg_troph_omni, index = "invsimpson")
-#
-#
-#
-# ##### *** 1.2.2.3. Nesting guild diversity ----
-# ttt <- functional_groups(community_table = ipa_data, grouping_factor = wtraits$nesting_pref)
-#
-# fg_nest_cavity <- ttt[[5]] # Cavity nesters.
-# fg_nest_tree <- cbind(ttt[[1]], ttt[[6]], ttt[[7]]) # Treetop or tree branch nesters.
-# fg_nest_shrub <- cbind(ttt[[6]], ttt[[10]], ttt[[12]], ttt[[13]]) # Shrub or partial shrub nesters.
-# fg_nest_ground <- cbind(ttt[[2]], ttt[[12]]) # Species that nest on the ground.
-# fg_nest_build <- cbind(ttt[[4]], ttt[[11]], ttt[[13]]) # Species that nest on buildings (or cliffs).
-# # I disregard aquatic species as it is obvious that their nestling habits depends on the presence of water,
-# # which is rather unrelated to urban forms.
-#
-# ## For cavity nesters:
-# ipa_data$ncav_richness <- apply(fg_nest_cavity > 0, 1, sum)
-# ipa_data$ncav_abund <- apply(fg_nest_cavity, 1, sum)
-# ipa_data$ncav_simpson <- vegan::diversity(x = fg_nest_cavity, index = "invsimpson")
-#
-# ## For tree nesters:
-# ipa_data$ntree_richness <- apply(fg_nest_tree > 0, 1, sum)
-# ipa_data$ntree_abund <- apply(fg_nest_tree, 1, sum) # Same.
-# ipa_data$ntree_simpson <- vegan::diversity(x = fg_nest_tree, index = "invsimpson")
-#
-# ## For shrub nesters:
-# ipa_data$nshrub_richness <- apply(fg_nest_shrub > 0, 1, sum)
-# ipa_data$nshrub_abund <- apply(fg_nest_shrub, 1, sum) # Same.
-# ipa_data$nshrub_simpson <- vegan::diversity(x = fg_nest_shrub, index = "invsimpson")
-#
-# ## For open nesters:
-# ipa_data$nground_richness <- apply(fg_nest_ground > 0, 1, sum)
-# ipa_data$nground_abund <- apply(fg_nest_ground, 1, sum) # Same.
-# ipa_data$nground_simpson <- vegan::diversity(x = fg_nest_ground, index = "invsimpson")
-#
-# ## For building nesters:
-# ipa_data$nbuild_richness <- apply(fg_nest_build > 0, 1, sum)
-# ipa_data$nbuild_abund <- apply(fg_nest_build, 1, sum) # Same.
-# ipa_data$nbuild_simpson <- vegan::diversity(x = fg_nest_build, index = "invsimpson")
-#
-#
-#
-# ##### *** 1.2.2.4. Foraging guild diversity ----
-# ttt <- functional_groups(community_table = ipa_data, grouping_factor = wtraits$foraging_strata)
-# summary(wtraits$foraging_strata)
-#
-# fg_forag_exclground <- ttt[[4]] # Ground foragers (exclusive).
-# fg_forag_ground <- cbind(ttt[[4]], ttt[[5]]) # Ground foragers (partial or exclusive).
-# fg_forag_lower <- cbind(ttt[[5]], ttt[[6]]) # Lower strata foragers (partial or exclusive).
-# fg_forag_upper <- cbind(ttt[[7]], ttt[[8]]) # Mid and upper strata foragers (exclusive).
-# # I disregard aquatic species as it is obvious that their foraging habits depends on the presence of water,
-# # which is rather unrelated to urban forms. I also disregard the four "air" foraging species as they also
-# # are building nesters and are thus already accounted for in the nesting guild diversity variables.
-#
-# ## For exclusive ground foragers:
-# ipa_data$ncav_richness <- apply(fg_forag_cavity > 0, 1, sum)
-# ipa_data$ncav_abund <- apply(fg_forag_cavity, 1, sum)
-# ipa_data$ncav_simpson <- vegan::diversity(x = fg_forag_cavity, index = "invsimpson")
+##### *** 1.2.2.2. Trophic guild diversity ----
+ttt <- functional_groups(community_table = ipa_data, grouping_factor = wtraits$trophic_level)
+
+ipa_fun_groups[[1]] <- ttt[[1]]
+names(ipa_fun_groups)[1] <- "fg_troph_carni"
+ipa_fun_groups[[2]] <- ttt[[2]]
+names(ipa_fun_groups)[2] <- "fg_troph_herbi"
+ipa_fun_groups[[3]] <- ttt[[3]]
+names(ipa_fun_groups)[3] <- "fg_troph_omni"
+
+## For carnivore species:
+ipa_data$carni_richness <- apply(ipa_fun_groups$fg_troph_carni > 0, 1, sum)
+ipa_data$carni_abund <- apply(ipa_fun_groups$fg_troph_carni, 1, sum) # Same.
+ipa_data$carni_simpson <- vegan::diversity(x = ipa_fun_groups$fg_troph_carni, index = "simpson")
+
+
+## For herbivore species:
+ipa_data$herbi_richness <- apply(ipa_fun_groups$fg_troph_herbi > 0, 1, sum)
+ipa_data$herbi_abund <- apply(ipa_fun_groups$fg_troph_herbi, 1, sum) # Same.
+ipa_data$herbi_simpson <- vegan::diversity(x = ipa_fun_groups$fg_troph_herbi, index = "simpson")
+
+## For omnivore species:
+ipa_data$omni_richness <- apply(ipa_fun_groups$fg_troph_omni > 0, 1, sum)
+ipa_data$omni_abund <- apply(ipa_fun_groups$fg_troph_omni, 1, sum) # Same.
+ipa_data$omni_simpson <- vegan::diversity(x = ipa_fun_groups$fg_troph_omni, index = "simpson")
+
+
+
+##### *** 1.2.2.3. Nesting guild diversity ----
+ttt <- functional_groups(community_table = ipa_data, grouping_factor = wtraits$nesting_pref)
+
+ipa_fun_groups[[4]] <- ttt[[4]] # Cavity nesters.
+names(ipa_fun_groups)[4] <- "fg_nest_cavity"
+ipa_fun_groups[[5]] <- cbind(ttt[[1]], ttt[[5]], ttt[[6]]) # Treetop or tree branch nesters.
+names(ipa_fun_groups)[5] <- "fg_nest_tree"
+ipa_fun_groups[[6]] <- cbind(ttt[[5]], ttt[[7]], ttt[[8]], ttt[[9]]) # Shrub or partial shrub nesters.
+names(ipa_fun_groups)[6] <- "fg_nest_shrub"
+ipa_fun_groups[[7]] <- cbind(ttt[[2]], ttt[[8]]) # Species that nest on the ground.
+names(ipa_fun_groups)[7] <- "fg_nest_ground"
+ipa_fun_groups[[8]] <- cbind(ttt[[3]], ttt[[9]]) # Species that nest on buildings (or cliffs).
+names(ipa_fun_groups)[8] <- "fg_nest_build"
+
+## For cavity nesters:
+ipa_data$ncav_richness <- apply(ipa_fun_groups$fg_nest_cavity > 0, 1, sum)
+ipa_data$ncav_abund <- apply(ipa_fun_groups$fg_nest_cavity, 1, sum)
+ipa_data$ncav_simpson <- vegan::diversity(x = ipa_fun_groups$fg_nest_cavity, index = "simpson")
+
+## For tree nesters:
+ipa_data$ntree_richness <- apply(ipa_fun_groups$fg_nest_tree > 0, 1, sum)
+ipa_data$ntree_abund <- apply(ipa_fun_groups$fg_nest_tree, 1, sum) # Same.
+ipa_data$ntree_simpson <- vegan::diversity(x = ipa_fun_groups$fg_nest_tree, index = "simpson")
+
+## For shrub nesters:
+ipa_data$nshrub_richness <- apply(ipa_fun_groups$fg_nest_shrub > 0, 1, sum)
+ipa_data$nshrub_abund <- apply(ipa_fun_groups$fg_nest_shrub, 1, sum) # Same.
+ipa_data$nshrub_simpson <- vegan::diversity(x = ipa_fun_groups$fg_nest_shrub, index = "simpson")
+
+## For open nesters:
+ipa_data$nground_richness <- apply(ipa_fun_groups$fg_nest_ground > 0, 1, sum)
+ipa_data$nground_abund <- apply(ipa_fun_groups$fg_nest_ground, 1, sum) # Same.
+ipa_data$nground_simpson <- vegan::diversity(x = ipa_fun_groups$fg_nest_ground, index = "simpson")
+
+## For building nesters:
+ipa_data$nbuild_richness <- apply(ipa_fun_groups$fg_nest_build > 0, 1, sum)
+ipa_data$nbuild_abund <- apply(ipa_fun_groups$fg_nest_build, 1, sum) # Same.
+ipa_data$nbuild_simpson <- vegan::diversity(x = ipa_fun_groups$fg_nest_build, index = "simpson")
+
+
+
+##### *** 1.2.2.4. Foraging guild diversity ----
+#####
+#####
+##### AFINIR§§§§§-----
+##### AFINIR§§§§§-----
+##### AFINIR§§§§§-----
+##### AFINIR§§§§§-----
+##### AFINIR§§§§§-----
+ttt <- functional_groups(community_table = ipa_data, grouping_factor = wtraits$foraging_strata)
+summary(wtraits$foraging_strata)
+
+fg_forag_exclground <- ttt[[4]] # Ground foragers (exclusive).
+fg_forag_ground <- cbind(ttt[[4]], ttt[[5]]) # Ground foragers (partial or exclusive).
+fg_forag_lower <- cbind(ttt[[5]], ttt[[6]]) # Lower strata foragers (partial or exclusive).
+fg_forag_upper <- cbind(ttt[[7]], ttt[[8]]) # Mid and upper strata foragers (exclusive).
+# I disregard aquatic species as it is obvious that their foraging habits depends on the presence of water,
+# which is rather unrelated to urban forms. I also disregard the four "air" foraging species as they also
+# are building nesters and are thus already accounted for in the nesting guild diversity variables.
+
+## For exclusive ground foragers:
+ipa_data$ncav_richness <- apply(fg_forag_cavity > 0, 1, sum)
+ipa_data$ncav_abund <- apply(fg_forag_cavity, 1, sum)
+ipa_data$ncav_simpson <- vegan::diversity(x = fg_forag_cavity, index = "simpson")
 
 
 
