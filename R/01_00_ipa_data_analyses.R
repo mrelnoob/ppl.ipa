@@ -119,7 +119,7 @@ ipa_metrics %>% dplyr::select(-buffer_radius) -> wmetrics
 ##### ** 0.1.4. Missing data imputation ----
 # __________________________________________
 
-rtraits %>% dplyr::select(-sp_id, -genus, -species, -hwi, -iucn_status) %>%
+rtraits %>% dplyr::select(-sp_id, -genus, -species, -iucn_status) %>%
   as.data.frame() -> rtraits_mis # missForest only accepts data.frames or matrices (not tibbles).
 # Variables must also be only numeric or factors (no character, date, etc.)!
 
@@ -215,7 +215,7 @@ beta_uf_2 <- gamma_uf_2/alpha_uf_2 - 1
 # phylogenetic distances. To do so, I'll have to create a phylogenetic tree. This tree might also be useful
 # later on.
 
-##### *** 1.2.1.1. Compute phylogenetic distances ----
+##### *** 1.2.1.1. Computing phylogenetic distances ----
 ## Create a phylogenetic tree from the species list:
 taxa <- paste(ipa_traits$genus, ipa_traits$species, sep = "_")
 
@@ -230,19 +230,76 @@ rphylo_dist <- as.matrix(ape::cophenetic.phylo(x = tree)) # Sometimes, this func
 
 
 
-##### *** 1.2.1.2. Rao's entropy and redundancy indices ----
+##### *** 1.2.1.2. Computing synthetic trait variables ----
 ## Data preparation and simplification:
 droplevels(as.data.frame(ipa_data[,c(4:49)])) -> wdata # Species only matrix...
 rownames(wdata) <- ipa_data$id_ipa # ... but keeping site IDs as row names.
 
 ipa_traits %>%
   dplyr::select(-sp_id, -order, -family, -genus, -species,
-                -hwi, -max_longevity, -migratory, -iucn_status,
+                -max_longevity, -migratory, -iucn_status,
                 -latitude_cent, -longitude_cent, -range_size) %>%
   as.data.frame() %>%
   droplevels() -> wtraits # Simpler traits.
 rownames(wtraits) <- ipa_traits$sp_id # Names should be set as row names.
 
+## Computing synthetic morphometric or reproductive variables:
+wtraits %>% dplyr::select(body_mass, tarsus_length, wing_length, tail_length,
+                          beak_length, beak_width, beak_depth,
+                          clutch_size, clutch_nb, egg_mass, fledging_age) -> ttt
+
+## Normed-PCA for general morphology variables:
+res.pca <- FactoMineR::PCA(X = ttt[, 1:4], scale.unit = TRUE, graph = FALSE)
+# To plot results:
+landscape.varplot <- factoextra::fviz_pca_var(res.pca, col.var = "contrib",
+                                              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), repel = TRUE)
+landscape.indplot <- plot(res.pca, choix = "ind", autoLab = "yes")
+# gridExtra::grid.arrange(landscape.varplot, landscape.indplot, ncol = 2)
+
+# As the first axis (PC) of my PCA satisfactorily synthesizes a large amount of the variance (86.7%)
+# of my four variables, we can use the coordinates of observations on this axis as a synthetic variable:
+zzz <- res.pca$ind$coord[,1]
+wtraits$morpho <- zzz # This variable opposes big birds (high values - with large body size and long wings,
+# tarsus and tails) to small birds (small values).
+
+## Normed-PCA for beak morphology variables:
+res.pca <- FactoMineR::PCA(X = ttt[, 5:7], scale.unit = TRUE, graph = FALSE)
+# To plot results:
+landscape.varplot <- factoextra::fviz_pca_var(res.pca, col.var = "contrib",
+                                              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), repel = TRUE)
+landscape.indplot <- plot(res.pca, choix = "ind", autoLab = "yes")
+# gridExtra::grid.arrange(landscape.varplot, landscape.indplot, ncol = 2)
+
+# As the first axis (PC) of my PCA satisfactorily synthesizes a large amount of the variance (92.5%)
+# of my three variables, we can use the coordinates of observations on this axis as a synthetic variable:
+zzz <- res.pca$ind$coord[,1]
+wtraits$beak_size <- zzz # This variable opposes large beak birds (high values) to birds with small and thin
+# beaks (small values).
+
+## Normed-PCA for reproductive variables:
+res.pca <- FactoMineR::PCA(X = ttt[, c(8,10,11)], scale.unit = TRUE, graph = FALSE)
+# To plot results:
+landscape.varplot <- factoextra::fviz_pca_var(res.pca, col.var = "contrib",
+                                              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), repel = TRUE)
+landscape.indplot <- plot(res.pca, choix = "ind", autoLab = "yes")
+# gridExtra::grid.arrange(landscape.varplot, landscape.indplot, ncol = 2)
+
+# As the first axis (PC) of my PCA satisfactorily synthesizes a large amount of the variance (67.3%)
+# of my three variables, we can use the coordinates of observations on this axis as a synthetic variable:
+zzz <- res.pca$ind$coord[,1]
+wtraits$repro <- zzz # This variable opposes birds that lay few large eggs and fledge late (large values) vs
+# birds that lay many small eggs with early fledging juveniles (~slow vs quick POLS)!
+
+wtraits %>% dplyr::relocate(morpho, .after = body_mass) %>%
+  dplyr::relocate(beak_size, .after = brain_mass) %>%
+  dplyr::relocate(repro, .after = clutch_nb) %>%
+  dplyr::select(-body_mass, -tarsus_length, -wing_length, -tail_length,
+                -beak_length, -beak_width, -beak_depth,
+                -clutch_size, -egg_mass, -fledging_age) -> wtraits
+
+
+
+##### *** 1.2.1.3. Rao's entropy and redundancy indices ----
 ## As the 'rao.diversity()' function requires matching species name lists, I need to harmonize the order
 # and names of the species included in the tables:
 rphylo_dist -> wphylo_dist
@@ -267,9 +324,9 @@ all(rownames(wmeta_com$traits) == colnames(wmeta_com$phylodist)) # TRUE!
 traits_grp <- list(c("nesting_pref", "habitat", "hab_density"),
                    c("prim_lifestyle", "urban_tolerance", "social_behaviour", "brain_mass"),
                    c("trophic_level", "trophic_niche", "foraging_behaviour", "foraging_strata"),
-                   c("beak_length", "beak_width", "beak_depth"),
-                   c("body_mass", "tarsus_length", "wing_length", "kipps_distance", "tail_length"),
-                   c("clutch_size", "clutch_nb", "egg_mass", "fledging_age", "development_mode")) # The list
+                   c("morpho", "beak_size"),
+                   c("kipps_distance", "hwi"),
+                   c("clutch_nb", "repro", "development_mode")) # The list
 # must have the same length as the trait table!
 
 wmetrics <- SYNCSA::rao.diversity(comm = wmeta_com$community, traits = wmeta_com$traits,
@@ -283,7 +340,7 @@ rm(taxa_m, taxa, traits_grp, tree, found)
 
 
 
-##### *** 1.2.1.3. FD indices and CWM traits ----
+##### *** 1.2.1.4. FD indices and CWM traits ----
 ## Computing additional functional diversity (FD) indices and Community Weighted Mean traits (might be long
 # to run):
 wmetrics <- FD::dbFD(x = wmeta_com$traits, a = wmeta_com$community, w.abun = TRUE,
@@ -382,7 +439,7 @@ ipa_data$nshrub_richness <- apply(ipa_fun_groups$fg_nest_shrub > 0, 1, sum)
 ipa_data$nshrub_abund <- apply(ipa_fun_groups$fg_nest_shrub, 1, sum) # Same.
 ipa_data$nshrub_simpson <- vegan::diversity(x = ipa_fun_groups$fg_nest_shrub, index = "simpson")
 
-## For open nesters:
+## For ground nesters:
 ipa_data$nground_richness <- apply(ipa_fun_groups$fg_nest_ground > 0, 1, sum)
 ipa_data$nground_abund <- apply(ipa_fun_groups$fg_nest_ground, 1, sum) # Same.
 ipa_data$nground_simpson <- vegan::diversity(x = ipa_fun_groups$fg_nest_ground, index = "simpson")
@@ -395,33 +452,44 @@ ipa_data$nbuild_simpson <- vegan::diversity(x = ipa_fun_groups$fg_nest_build, in
 
 
 ##### *** 1.2.2.4. Foraging guild diversity ----
-#####
-#####
-##### AFINIR§§§§§-----
-##### AFINIR§§§§§-----
-##### AFINIR§§§§§-----
-##### AFINIR§§§§§-----
-##### AFINIR§§§§§-----
 ttt <- functional_groups(community_table = ipa_data, grouping_factor = wtraits$foraging_strata)
-summary(wtraits$foraging_strata)
 
-fg_forag_exclground <- ttt[[4]] # Ground foragers (exclusive).
-fg_forag_ground <- cbind(ttt[[4]], ttt[[5]]) # Ground foragers (partial or exclusive).
-fg_forag_lower <- cbind(ttt[[5]], ttt[[6]]) # Lower strata foragers (partial or exclusive).
-fg_forag_upper <- cbind(ttt[[7]], ttt[[8]]) # Mid and upper strata foragers (exclusive).
+ipa_fun_groups[[9]] <- ttt[[3]] # Ground foragers (exclusive).
+names(ipa_fun_groups)[9] <- "fg_forag_exclground"
+ipa_fun_groups[[10]] <- cbind(ttt[[3]], ttt[[4]]) # Ground foragers (partial or exclusive).
+names(ipa_fun_groups)[10] <- "fg_forag_ground"
+ipa_fun_groups[[11]] <- cbind(ttt[[4]], ttt[[5]]) # Lower strata foragers (partial or exclusive).
+names(ipa_fun_groups)[11] <- "fg_forag_lower"
+ipa_fun_groups[[12]] <- cbind(ttt[[6]], ttt[[7]]) # Mid and upper strata foragers (exclusive).
+names(ipa_fun_groups)[12] <- "fg_forag_upper"
 # I disregard aquatic species as it is obvious that their foraging habits depends on the presence of water,
 # which is rather unrelated to urban forms. I also disregard the four "air" foraging species as they also
 # are building nesters and are thus already accounted for in the nesting guild diversity variables.
 
 ## For exclusive ground foragers:
-ipa_data$ncav_richness <- apply(fg_forag_cavity > 0, 1, sum)
-ipa_data$ncav_abund <- apply(fg_forag_cavity, 1, sum)
-ipa_data$ncav_simpson <- vegan::diversity(x = fg_forag_cavity, index = "simpson")
+ipa_data$fexground_richness <- apply(ipa_fun_groups$fg_forag_exclground > 0, 1, sum)
+ipa_data$fexground_abund <- apply(ipa_fun_groups$fg_forag_exclground, 1, sum)
+ipa_data$fexground_simpson <- vegan::diversity(x = ipa_fun_groups$fg_forag_exclground, index = "simpson")
+
+## For non-exclusive ground foragers:
+ipa_data$fground_richness <- apply(ipa_fun_groups$fg_forag_ground > 0, 1, sum)
+ipa_data$fground_abund <- apply(ipa_fun_groups$fg_forag_ground, 1, sum)
+ipa_data$fground_simpson <- vegan::diversity(x = ipa_fun_groups$fg_forag_ground, index = "simpson")
+
+## For lower strata foragers:
+ipa_data$flower_richness <- apply(ipa_fun_groups$fg_forag_lower > 0, 1, sum)
+ipa_data$flower_abund <- apply(ipa_fun_groups$fg_forag_lower, 1, sum)
+ipa_data$flower_simpson <- vegan::diversity(x = ipa_fun_groups$fg_forag_lower, index = "simpson")
+
+## For mid and upper strata foragers:
+ipa_data$fupper_richness <- apply(ipa_fun_groups$fg_forag_upper > 0, 1, sum)
+ipa_data$fupper_abund <- apply(ipa_fun_groups$fg_forag_upper, 1, sum)
+ipa_data$fupper_simpson <- vegan::diversity(x = ipa_fun_groups$fg_forag_upper, index = "simpson")
 
 
 
 
-
+summary(wtraits)
 # FORAGING BEHAVIOUR?????????? other?
 
 rm(ttt)
