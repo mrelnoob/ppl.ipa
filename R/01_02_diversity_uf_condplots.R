@@ -3,27 +3,51 @@
 ##### 1. Conditional boxplot for results presentation #####
 # ------------------------------------------------------- #
 
+colnames(ipa_data)
+wdata <- cbind(ipa_metrics[,c(1, 3:7)],ipa_data[,c(50:ncol(ipa_data))])
 summary(wdata)
 
-# ##### For the birds species richness ----
-# par(font.lab = 4, font.axis=6,
-#     mar = c(10, 4, 3, 2) + 0.5,
-#     bty="l", fg="gray4")
+
+
+# ---------------------------------------------------------------------------- #
+##### * 1.1. Birds specific diversity ------------------------------------------
+# ---------------------------------------------------------------------------- #
+##### ** 1.1.1. Using the first UF typology ----
+# __________________________________________________
+
+##### ~~~~~~~~~ For the birds species richness ----
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+
+# end_point = 0.5 + nrow(mtcars) + nrow(mtcars) - 1 #this is the line which does the trick (together with barplot "space = 1" parameter)
+bp <- graphics::boxplot(wdata$sp_richness~wdata$urban_type, outline=TRUE,
+                  ylab="Specific richness (Nb. of bird species)",
+                  xlab="", las=2,
+                  xaxt = "n", # Do not plot the default labels
+                  type="n", border="orange", col="tomato",
+                  boxwex=0.7, boxcol= "tomato", boxlwd=0.01,
+                  lty=1, staplewex=0,
+                  whisklwd=3, medlwd=3, pch=20, cex=1.25)
+
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 1.5, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+# ### To add jittered data points to the graph:
+# mylevels <- levels(wdata$urban_type)
+# levelproportions <- summary(wdata$urban_type)/nrow(wdata)
 #
-# # end_point = 0.5 + nrow(mtcars) + nrow(mtcars) - 1 #this is the line which does the trick (together with barplot "space = 1" parameter)
-# bp <- graphics::boxplot(wdata$sp_richness~wdata$urban_type_2, outline=TRUE,
-#                   ylab="Specific richness (number of observed bird species)",
-#                   xlab="", las=2,
-#                   xaxt = "n", # Do not plot the default labels
-#                   type="n", border="orange", col="darkred", lty=1, staplewex=0,
-#                   whisklwd=2, boxwex=0.7, boxlwd=0.1, medlwd=2.6, pch=19, cex=0.7)
+# for(i in 1:length(mylevels)){
+#   thislevel <- mylevels[i]
+#   thisvalues <- wdata[wdata$urban_type==thislevel, "sp_richness"]
 #
-#
-# tick <- seq_along(bp$names)
-# axis(1, at = tick, labels = FALSE)
-# text(x = tick, y = par("usr")[3] - 1.5, labels = bp$names, # For the distance to the axis, you have to tune
-#      # the number that is subtracted.
-#      srt = 45, xpd = TRUE, adj = 1, font = 9)
+#   # take the x-axis indices and add a jitter, proportional to the N in each level
+#   myjitter <- jitter(rep(i, length(thisvalues)), amount=levelproportions[i]/2)
+#   points(myjitter, thisvalues, pch=20, col=rgb(0,0,0,.9), cex=0.8)
+# }
 
 
 

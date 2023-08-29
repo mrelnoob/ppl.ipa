@@ -35,9 +35,9 @@ rmetrics <- readr::read_csv2(file = here::here("data/ipa_urban_metrics.csv"), co
                                               vmanag = readr::col_factor(
                                                 ordered = TRUE,
                                                 levels = c("natural_evol", "extensive",
-                                                           "medium", "intesive")))) # Note, as I use "read_csv2",
-# my decimal separator should be a "," and not a "." (as used by default by most softwares). I thus corrected
-# that manually on my CSV file!
+                                                           "medium", "intesive")))) # Note, as I use
+# "read_csv2", my decimal separator should be a "," and not a "." (as used by default by most softwares). I
+# thus corrected that manually on my CSV file!
 rdata <- readr::read_csv2(file = here::here("data/ppl_ipa_data_20192022.csv"), col_names = TRUE, na = "",
                          col_types = readr::cols(id_ipa = readr::col_factor(),
                                                  id_site = readr::col_factor(),
@@ -71,6 +71,7 @@ rtraits <- readr::read_csv2(file = here::here("data/ppl_ipa_species_traits.csv")
 ##### ** 0.1.2. Data preparation and cleaning ----
 # ________________________________________________
 
+##### *** 0.1.2.1. Tables formatting ----
 ## Removing useless columns, converting number of couples into number of contacted individuals, and changing
 # NAs by zeros (i.e. the species was not observed):
 rdata %>% dplyr::select(-id_site, -site_name, -date) %>%
@@ -108,43 +109,35 @@ sum(!rtraits$sp_id %in% colnames(rdata)) # Counts the number of elements of the 
 
 
 
-##### ** 0.1.3. Choice of the buffer radius size ----
-# ___________________________________________________
+##### *** 0.1.2.2. Choice of the buffer radius size ----
 # For now, we will only work with the data extracted from the 150m radius buffers, so we select them:
 rmetrics %>% dplyr::filter(buffer_radius == 150) -> ipa_metrics
 
 
 
-##### ** 0.1.4. Missing data imputation ----
-# __________________________________________
+##### *** 0.1.2.3. Computing a synthetic light pollution variable ----
+## Computing synthetic morphometric or reproductive variables:
+ipa_metrics[,44:47] -> ttt
 
-rtraits %>% dplyr::select(-sp_id, -genus, -species, -iucn_status) %>%
-  as.data.frame() -> rtraits_mis # missForest only accepts data.frames or matrices (not tibbles).
-# Variables must also be only numeric or factors (no character, date, etc.)!
+## Normed-PCA for general morphology variables:
+res.pca <- FactoMineR::PCA(X = ttt, scale.unit = TRUE, graph = FALSE)
+# To plot results:
+landscape.varplot <- factoextra::fviz_pca_var(res.pca, col.var = "contrib",
+                                              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+                                              repel = TRUE)
+landscape.indplot <- plot(res.pca, choix = "ind", autoLab = "yes")
+# gridExtra::grid.arrange(landscape.varplot, landscape.indplot, ncol = 2)
 
-## Actual data imputation using Random Forests:
-set.seed(382)
-imput <- missForest::missForest(xmis = rtraits_mis, maxiter = 300, ntree = 300, variablewise = TRUE)
-rtraits_imp <- imput$ximp
-
-# To create a summary table for the OOB errors (for each imputed variable):
-rtraits_imp_error <- data.frame(cbind(
-  sapply(rtraits_mis, function(y) sum(length(which(is.na(y))))), # Number of imputed values (i.e. NAs).
-  sqrt(imput$OOBerror)), # When 'variablewise' is set to TRUE, missForest() returns MSE (Mean
-  # Squared Error) values instead of NRMSE (Normalized Root Mean Square Error). Therefore, I use
-  # the square root of the out-of-bag (OOB) values to convert MSE into RMSE.
-  row.names = colnames(rtraits_mis)) # To get the name of the variables
-rtraits_imp_error %>% dplyr::rename(Nb_imputed_values = 'X1', Oob_RMSE = 'X2') %>%
-  dplyr::filter(Nb_imputed_values > 0) -> sub_errtab_rtraits
-
-rtraits$brain_mass <- rtraits_imp$brain_mass
-rm(imput, rtraits_mis, rtraits_imp_error, sub_errtab_rtraits, rtraits_imp)
+# As the first axis (PC) of my PCA satisfactorily synthesizes a large amount of the variance (79.5%)
+# of my four variables, we can use the coordinates of observations on this axis as a synthetic variable:
+ttt <- res.pca$ind$coord[,1]
+ipa_metrics$lpoll <- ttt # This variable opposes sites with high light pollution with those with low pollution.
+ipa_metrics <- ipa_metrics[,-c(44:47)]
+ipa_metrics %>% dplyr::relocate(lpoll, .after = npoll) -> ipa_metrics
 
 
 
-##### ** 0.1.5. Excluding aquatic species ----
-# ____________________________________________
-
+##### *** 0.1.2.4. Excluding aquatic species ----
 taxa <- as.character(rtraits$sp_id)[which(rtraits$habitat %in% c("wetland", "riverine"))]
 
 ## Removing the columns or rows belonging to the 8 wetland or riverine species:
@@ -154,12 +147,43 @@ ipa_traits <- as.data.frame(rtraits[!rtraits$sp_id %in% taxa, ])
 
 
 
-##### ** 0.1.6. Creating an urban form (UF) morphology typology through cluster analysis ----
+##### ** 0.1.3. Missing data imputation ----
+# __________________________________________
+
+ipa_traits %>% dplyr::select(-sp_id, -genus, -species, -iucn_status) %>%
+  as.data.frame() -> rtraits_mis # missForest only accepts data.frames or matrices (not tibbles).
+# Variables must also be only numeric or factors (no character, date, etc.)!
+
+## Actual data imputation using Random Forests:
+set.seed(402)
+imput <- missForest::missForest(xmis = rtraits_mis, maxiter = 300, ntree = 300, variablewise = TRUE)
+wtraits_imp <- imput$ximp
+
+# To create a summary table for the OOB errors (for each imputed variable):
+wtraits_imp_error <- data.frame(cbind(
+  sapply(rtraits_mis, function(y) sum(length(which(is.na(y))))), # Number of imputed values (i.e. NAs).
+  sqrt(imput$OOBerror)), # When 'variablewise' is set to TRUE, missForest() returns MSE (Mean
+  # Squared Error) values instead of NRMSE (Normalized Root Mean Square Error). Therefore, I use
+  # the square root of the out-of-bag (OOB) values to convert MSE into RMSE.
+  row.names = colnames(rtraits_mis)) # To get the name of the variables
+wtraits_imp_error %>% dplyr::rename(Nb_imputed_values = 'X1', Oob_RMSE = 'X2') %>%
+  dplyr::filter(Nb_imputed_values > 0) -> sub_errtab_rtraits
+
+ipa_traits$brain_mass <- wtraits_imp$brain_mass
+rm(imput, rtraits_mis, wtraits_imp_error, sub_errtab_rtraits, wtraits_imp, res.pca, ttt, taxa)
+
+
+
+##### ** 0.1.4. Creating an urban form (UF) morphology typology through cluster analysis ----
 # ___________________________________________________________________________________________
 
 ## Preparing data:
-ipa_metrics %>% dplyr::select(-buffer_radius, -wprop) -> wmetrics
-wmetrics[,14:46] -> wmetrics
+ipa_metrics %>% dplyr::select(-buffer_radius) -> wmetrics
+wmetrics[,14:43] -> wmetrics
+wmetrics %>% dplyr::select(-bprop, -bh, -bh_iqr, -bfreq, -barea_iqr, -bhgaps,
+                           -hcount, -harea_m, -harea_iqr, -scount, -sarea_m, -sarea_iqr,
+                           -fcount, -farea_m, -farea_iqr) %>%
+  as.data.frame() -> wmetrics
 rownames(wmetrics) <- ipa_metrics$id_ipa
 # I only select metrics related to the intrinsic urban characteristics of the sampled urban tissues and not
 # those related to their location, their topology within habitat networks, or their vegetation diversity as
@@ -168,27 +192,45 @@ rownames(wmetrics) <- ipa_metrics$id_ipa
 # but not its diversity or large-scale connectivity)! Similarly, I did not include variables related to
 # water surfaces as any UF could include water area and it is thus not a defining factor.
 
-## Computing a distance matrix among sites (using Gower distance for mixed data)
-rgow_dist <- cluster::daisy(x = wmetrics)
+## Computing a distance matrix among sites (using Manhattan distance):
+ruf_dist <- cluster::daisy(x = wmetrics, metric = "gower", weights = c(1,1,2, rep(x = 1, 12)))
 
 ## Computing a dendrogram using Ward method:
-tree <- stats::hclust(d = rgow_dist, method = "ward.D2")
+tree <- stats::hclust(d = ruf_dist, method = "ward.D2")
 inertia <- sort(tree$height, decreasing = TRUE)
 plot(inertia[1:20], type = "s", xlab = "Number of classes", ylab = "Inertia")
-# The loss of inertia with increasing number of classes suggest that retaining five classes could be a
+# The loss of inertia with increasing number of classes suggest that retaining seven classes could be a
 # starting point to prune the tree.
-ggplot2::ggplot(dendextend::color_branches(tree, k = 5), labels = TRUE) # To colour the tree branches with
-# a 5 class pruning.
-# We can see that a 5 class typology makes sense. However, we can also see that there are also 8 clearly
-# defined subgroups. So we have the choice and could even retain both for exploratory analyses.
-ggplot2::ggplot(dendextend::color_branches(tree, k = 8), labels = TRUE)
+ggplot2::ggplot(dendextend::color_branches(tree, k = 7), labels = TRUE) # To colour the tree branches with
+# a 7 class pruning.
+# We can see that a 7 class typology makes sense. However, we can also see other clearly defined subgroups.
+# So we have the choice and could even retain several solutions for exploratory analyses.
 
-## Extracting the typologies:
-ipa_metrics$urban_type_3 <- stats::cutree(tree = tree, k = 5)
-ipa_metrics$urban_type_4 <- stats::cutree(tree = tree, k = 8)
+## Extracting the chosen typologies:
+ipa_metrics$urban_type_3 <- as.factor(stats::cutree(tree = tree, k = 7))
 ipa_metrics %>%
   dplyr::relocate(urban_type_3, .after = urban_type_2) %>%
-  dplyr::relocate(urban_type_4, .after = urban_type_3) -> ipa_metrics
+  as.data.frame()-> ipa_metrics
+## Class interpretation:
+# ** Class 1 = Medium density small non-contiguous (mixed) residential housing in small blocks.
+# ** Class 2 = Same (but with more large and high buildings)???
+# ** Class 3 = Old city.
+# ** Class 4 = Industrial commercial.
+# ** Class 5 = Low density individual (mixed) residential housing in rather large blocks???
+# ** Class 6 = Contiguous buildings in small blocks???
+# ** Class 7 = Urban parks.
+## It is harder than one might think.
+## Renaming factor levels:
+levels(ipa_metrics$urban_type_3) <- c("Small disc. resid. housing",
+                                      "Large disc. resid. housing",
+                                      "City centre",
+                                      "Industrial or commercial buildings",
+                                      "Disc. resid. housing (large blocks)",
+                                      "Contig. buildings (small blocks)",
+                                      "Urban parks")
+ipa_metrics %>%
+  dplyr::mutate(urban_type_3 = stats::relevel(x = urban_type_3, ref = 7)) -> ipa_metrics # Assigning "urban
+# parks" as reference level.
 
 
 
@@ -216,7 +258,7 @@ ipa_data$sp_abund <- apply(wdata[,4:ncol(wdata)], 1, sum) # Total abundance of b
 
 ##### *** 2.1.2.1. Per site diversity indices ----
 ipa_data$sp_shannon <- vegan::diversity(x = wdata[,4:ncol(wdata)], index = "shannon") # Shannon-Wiever index.
-ipa_data$sp_simpson <- vegan::diversity(x = wdata[,4:ncol(wdata)], index = "invsimpson") # Inverse Simpson index.
+ipa_data$sp_simpson <- vegan::diversity(x = wdata[,4:ncol(wdata)], index = "simpson") # Simpson index.
 ipa_data$sp_evenness <- (ipa_data$sp_shannon/log(ipa_data$sp_richness)) # Pielou's evenness index.
 # We preferred the Shannon index over the Simpson one because we wanted to give importance to rare species, but
 # we calculate both anyway, notably because Pielou's J is known to be sensitive to sample size (likely not a
@@ -238,15 +280,10 @@ alpha_uf_2 <- with(ipa_metrics, tapply(vegan::specnumber(wdata[,4:ncol(wdata)]),
 gamma_uf_2 <- with(ipa_metrics, vegan::specnumber(wdata[,4:ncol(wdata)], urban_type_2))
 beta_uf_2 <- gamma_uf_2/alpha_uf_2 - 1
 
-## For the second UF typology:
+## For the third UF typology (clustering-based):
 alpha_uf_3 <- with(ipa_metrics, tapply(vegan::specnumber(wdata[,4:ncol(wdata)]), urban_type_3, mean))
 gamma_uf_3 <- with(ipa_metrics, vegan::specnumber(wdata[,4:ncol(wdata)], urban_type_3))
 beta_uf_3 <- gamma_uf_3/alpha_uf_3 - 1
-
-## For the second UF typology:
-alpha_uf_4 <- with(ipa_metrics, tapply(vegan::specnumber(wdata[,4:ncol(wdata)]), urban_type_4, mean))
-gamma_uf_4 <- with(ipa_metrics, vegan::specnumber(wdata[,4:ncol(wdata)], urban_type_4))
-beta_uf_4 <- gamma_uf_4/alpha_uf_4 - 1
 
 
 
@@ -272,8 +309,8 @@ tree <- rotl::tol_induced_subtree(ott_ids = rotl::ott_id(taxa_m), label_format =
 plot(tree, cex = .8, label.offset = .1, no.margin = TRUE)
 
 ## Compute the phylogenetic distance between species:
-rphylo_dist <- as.matrix(ape::cophenetic.phylo(x = tree)) # Sometimes, this function doesn't return the expected
-# values (too many 0), and the code chunk should thus be run again. So be careful!
+rphylo_dist <- as.matrix(ape::cophenetic.phylo(x = tree)) # Sometimes, this function doesn't return the
+# expected values (too many 0), and the code chunk should thus be run again. So be careful!
 
 
 
@@ -299,7 +336,8 @@ wtraits %>% dplyr::select(body_mass, tarsus_length, wing_length, tail_length,
 res.pca <- FactoMineR::PCA(X = ttt[, 1:4], scale.unit = TRUE, graph = FALSE)
 # To plot results:
 landscape.varplot <- factoextra::fviz_pca_var(res.pca, col.var = "contrib",
-                                              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), repel = TRUE)
+                                              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+                                              repel = TRUE)
 landscape.indplot <- plot(res.pca, choix = "ind", autoLab = "yes")
 # gridExtra::grid.arrange(landscape.varplot, landscape.indplot, ncol = 2)
 
@@ -313,7 +351,8 @@ wtraits$morpho <- zzz # This variable opposes big birds (high values - with larg
 res.pca <- FactoMineR::PCA(X = ttt[, 5:7], scale.unit = TRUE, graph = FALSE)
 # To plot results:
 landscape.varplot <- factoextra::fviz_pca_var(res.pca, col.var = "contrib",
-                                              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), repel = TRUE)
+                                              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+                                              repel = TRUE)
 landscape.indplot <- plot(res.pca, choix = "ind", autoLab = "yes")
 # gridExtra::grid.arrange(landscape.varplot, landscape.indplot, ncol = 2)
 
@@ -327,7 +366,8 @@ wtraits$beak_size <- zzz # This variable opposes large beak birds (high values) 
 res.pca <- FactoMineR::PCA(X = ttt[, c(8,10,11)], scale.unit = TRUE, graph = FALSE)
 # To plot results:
 landscape.varplot <- factoextra::fviz_pca_var(res.pca, col.var = "contrib",
-                                              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), repel = TRUE)
+                                              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+                                              repel = TRUE)
 landscape.indplot <- plot(res.pca, choix = "ind", autoLab = "yes")
 # gridExtra::grid.arrange(landscape.varplot, landscape.indplot, ncol = 2)
 
@@ -350,15 +390,15 @@ wtraits %>% dplyr::relocate(morpho, .after = body_mass) %>%
 ## As the 'rao.diversity()' function requires matching species name lists, I need to harmonize the order
 # and names of the species included in the tables:
 rphylo_dist -> wphylo_dist
-found <- match(colnames(wphylo_dist), table = taxa, nomatch = 0) # This functions enables me to match each name
-# of column of "wphylo_dist" with the index of its match in "taxa".
+found <- match(colnames(wphylo_dist), table = taxa, nomatch = 0) # This functions enables me to match each
+# name of column of "wphylo_dist" with the index of its match in "taxa".
 # Now, the following lines of code enable me to assign the matching code names for columns and rows in the
 # order found in "found" (= conditional renaming).
 colnames(wphylo_dist) <- as.character(ipa_traits$sp_id)[found]
 rownames(wphylo_dist) <- as.character(ipa_traits$sp_id)[found]
 
-# Now our three tables share the same code names (names ID - e.g. "pass_dome" for "Passer domesticus"), but not
-# in the same order (because the tables were not built this way).
+# Now our three tables share the same code names (names ID - e.g. "pass_dome" for "Passer domesticus"), but
+# not in the same order (because the tables were not built this way).
 all(rownames(wtraits) == colnames(wdata)) # FALSE!
 all(rownames(wtraits) == colnames(wphylo_dist)) # FALSE!
 # So we need to re-order them:
@@ -383,7 +423,8 @@ ipa_data$rao_q <- wmetrics$FunRao # Rao's quadratic entropy index (based on trai
 ipa_data$fun_redund <- wmetrics$FunRedundancy # Functional redundancy index.
 ipa_data$rao_phy <- wmetrics$PhyRao # Rao's quadratic entropy index (based on phylogenetic distances).
 ipa_data$phy_redund <- wmetrics$PhyRedundancy # Phylogenetic redundancy index.
-rm(taxa_m, taxa, traits_grp, tree, found, zzz)
+rm(taxa_m, taxa, traits_grp, tree, found, zzz, ttt,
+   ruf_dist, inertia, res.pca, landscape.indplot, landscape.varplot)
 
 
 
@@ -391,8 +432,8 @@ rm(taxa_m, taxa, traits_grp, tree, found, zzz)
 ## Computing additional functional diversity (FD) indices and Community Weighted Mean traits (might be long
 # to run):
 wmetrics <- FD::dbFD(x = wmeta_com$traits, a = wmeta_com$community, w.abun = TRUE,
-                     calc.FRic = TRUE, stand.FRic = TRUE, # To calculate functional richness (i.e. the convex
-                     # hull volume of the PCA of the trait space).
+                     calc.FRic = TRUE, stand.FRic = TRUE, # To calculate functional richness (i.e. the
+                     # convex hull volume of the PCA of the trait space).
                      m = "min", # To reduce the dimensionality of the trait matrix.
                      calc.CWM = TRUE, CWM.type = "all", # To calculate CWM with the abundance of each
                      # individual class being returned for categorical variables.
@@ -422,8 +463,8 @@ functional_groups <- function(community_table, grouping_factor){
     # have to use the 'drop = FALSE' in this case because otherwise, if a single column is extracted, it will
     # coerced it into a numeric vector (not a data.frame) and thus drop its (col)name!
   }
-  return(data_subsets) # Must be within the function but NOT in the for-loop (otherwise it will obviously only
-  # return the first element of the list)!
+  return(data_subsets) # Must be within the function but NOT in the for-loop (otherwise it will obviously
+  # only return the first element of the list)!
 }
 ipa_fun_groups <- NULL
 
@@ -587,13 +628,7 @@ ipa_data$fgrp_richness <- apply(ipa_fun_groups$fg_smallgroups > 0, 1, sum)
 ipa_data$fgrp_abund <- apply(ipa_fun_groups$fg_smallgroups, 1, sum)
 ipa_data$fgrp_simpson <- vegan::diversity(x = ipa_fun_groups$fg_smallgroups, index = "simpson")
 
-
-
-
-summary(wtraits)
-# FORAGING BEHAVIOUR?????????? other?
-
-rm(ttt)
+rm(ttt, wphylo_dist, rphylo_dist, functional_groups)
 
 
 
@@ -662,10 +697,11 @@ rm(ttt)
 #                                           insig = "blank")
 # # We can see that:
 # # - Most metrics are quite strongly correlated among each other.
-# # - The proportion of herbaceous areas is negatively correlated with the proportion of buildings or their height,
-# #   but it is far less true for the proportion of woody areas!
+# # - The proportion of herbaceous areas is negatively correlated with the proportion of buildings or their
+# #   height, but it is far less true for the proportion of woody areas!
 # # - The crossing orthogonality metric is not really correlated with anything!
-# # - The F metrics seem like good candidates to approximate herbaceous/woody proportions as well as connectivity!
+# # - The F metrics seem like good candidates to approximate herbaceous/woody proportions as well as
+# #   connectivity!
 # # - The bcount and bfreq metrics could be interesting covariates!
 #
 # ipa.pairplot <- GGally::ggpairs(wdata.num)
@@ -925,8 +961,8 @@ rm(ttt)
 # # # GOF test of Pearson's Chi2 residuals:
 # # dat.resid <- sum(stats::resid(ipaSR_glmm2, type = "pearson")^2)
 # # 1 - stats::pchisq(dat.resid, stats::df.residual(ipaSR_glmm2)) # p = 0.83, indicating that there is no
-# # # significant lack of fit. Keep in mind though that GOF measures for mixed models is an extremely complicated
-# # # topic and interpretations are not straightforward.
+# # # significant lack of fit. Keep in mind though that GOF measures for mixed models is an extremely
+# # # complicated topic and interpretations are not straightforward.
 # #
 # # # Computing a pseudo-R2:
 # # performance::r2_nakagawa(ipaSR_glmm2) # [Additive model]: Marg_R2_glmm = 0.1; Cond_R2_glmm = 0.11.
@@ -989,8 +1025,8 @@ rm(ttt)
 # # ______________________________
 #
 # # There are strong GENUS richness variations across regions.
-# # Methodologically challenging to account for many urban metrics at the same time as they are highly correlated
-# # (which causes multicollinearity issues).
+# # Methodologically challenging to account for many urban metrics at the same time as they are highly
+# # correlated (which causes multicollinearity issues).
 # # This model works relatively fine:
 # ipaSR_glmm2 <- glmmTMB::glmmTMB(genus_richness ~ dist_centre + log_bn + bc + log_bam + bw +
 #                                    ua_f2 + ua_f3 + longitude + latitude + (1|city) + (1|flower_sp),
