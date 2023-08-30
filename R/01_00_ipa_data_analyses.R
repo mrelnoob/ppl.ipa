@@ -632,20 +632,20 @@ names(ipa_fun_groups)[14] <- "fg_hab_shrubopen"
 ipa_fun_groups[[15]] <- ttt[[2]] # Rupestrian species.
 names(ipa_fun_groups)[15] <- "fg_hab_rupest"
 
-## For non-exclusive ground foragers:
-ipa_data$fforest_richness <- apply(ipa_fun_groups$fg_hab_forest > 0, 1, sum)
-ipa_data$fforest_abund <- apply(ipa_fun_groups$fg_hab_forest, 1, sum)
-ipa_data$fforest_simpson <- vegan::diversity(x = ipa_fun_groups$fg_hab_forest, index = "simpson")
+## For forest or woodland species:
+ipa_data$hab_forest_richness <- apply(ipa_fun_groups$fg_hab_forest > 0, 1, sum)
+ipa_data$hab_forest_abund <- apply(ipa_fun_groups$fg_hab_forest, 1, sum)
+ipa_data$hab_forest_simpson <- vegan::diversity(x = ipa_fun_groups$fg_hab_forest, index = "simpson")
 
-## For lower strata foragers:
-ipa_data$fshrub_richness <- apply(ipa_fun_groups$fg_hab_shrubopen > 0, 1, sum)
-ipa_data$fshrub_abund <- apply(ipa_fun_groups$fg_hab_shrubopen, 1, sum)
-ipa_data$fshrub_simpson <- vegan::diversity(x = ipa_fun_groups$fg_hab_shrubopen, index = "simpson")
+## For shrubland or grassland species:
+ipa_data$hab_shrub_richness <- apply(ipa_fun_groups$fg_hab_shrubopen > 0, 1, sum)
+ipa_data$hab_shrub_abund <- apply(ipa_fun_groups$fg_hab_shrubopen, 1, sum)
+ipa_data$hab_shrub_simpson <- vegan::diversity(x = ipa_fun_groups$fg_hab_shrubopen, index = "simpson")
 
-## For mid and upper strata foragers:
-ipa_data$frup_richness <- apply(ipa_fun_groups$fg_hab_rupest > 0, 1, sum)
-ipa_data$frup_abund <- apply(ipa_fun_groups$fg_hab_rupest, 1, sum)
-ipa_data$frup_simpson <- vegan::diversity(x = ipa_fun_groups$fg_hab_rupest, index = "simpson")
+## For rupestrian species:
+ipa_data$hab_rupest_richness <- apply(ipa_fun_groups$fg_hab_rupest > 0, 1, sum)
+ipa_data$hab_rupest_abund <- apply(ipa_fun_groups$fg_hab_rupest, 1, sum)
+ipa_data$hab_rupest_simpson <- vegan::diversity(x = ipa_fun_groups$fg_hab_rupest, index = "simpson")
 
 
 
@@ -659,20 +659,20 @@ names(ipa_fun_groups)[17] <- "fg_gregarious"
 ipa_fun_groups[[18]] <- ttt[[3]] # Species living in small groups.
 names(ipa_fun_groups)[18] <- "fg_smallgroups"
 
-## For non-exclusive ground foragers:
-ipa_data$fsolit_richness <- apply(ipa_fun_groups$fg_solitary > 0, 1, sum)
-ipa_data$fsolit_abund <- apply(ipa_fun_groups$fg_solitary, 1, sum)
-ipa_data$fsolit_simpson <- vegan::diversity(x = ipa_fun_groups$fg_solitary, index = "simpson")
+## For solitary species:
+ipa_data$soc_solit_richness <- apply(ipa_fun_groups$fg_solitary > 0, 1, sum)
+ipa_data$soc_solit_abund <- apply(ipa_fun_groups$fg_solitary, 1, sum)
+ipa_data$soc_solit_simpson <- vegan::diversity(x = ipa_fun_groups$fg_solitary, index = "simpson")
 
-## For lower strata foragers:
-ipa_data$fgreg_richness <- apply(ipa_fun_groups$fg_gregarious > 0, 1, sum)
-ipa_data$fgreg_abund <- apply(ipa_fun_groups$fg_gregarious, 1, sum)
-ipa_data$fgreg_simpson <- vegan::diversity(x = ipa_fun_groups$fg_gregarious, index = "simpson")
+## For gregarious species:
+ipa_data$soc_greg_richness <- apply(ipa_fun_groups$fg_gregarious > 0, 1, sum)
+ipa_data$soc_greg_abund <- apply(ipa_fun_groups$fg_gregarious, 1, sum)
+ipa_data$soc_greg_simpson <- vegan::diversity(x = ipa_fun_groups$fg_gregarious, index = "simpson")
 
-## For mid and upper strata foragers:
-ipa_data$fgrp_richness <- apply(ipa_fun_groups$fg_smallgroups > 0, 1, sum)
-ipa_data$fgrp_abund <- apply(ipa_fun_groups$fg_smallgroups, 1, sum)
-ipa_data$fgrp_simpson <- vegan::diversity(x = ipa_fun_groups$fg_smallgroups, index = "simpson")
+## For species living in small groups:
+ipa_data$soc_smallgrp_richness <- apply(ipa_fun_groups$fg_smallgroups > 0, 1, sum)
+ipa_data$soc_smallgrp_abund <- apply(ipa_fun_groups$fg_smallgroups, 1, sum)
+ipa_data$soc_smallgrp_simpson <- vegan::diversity(x = ipa_fun_groups$fg_smallgroups, index = "simpson")
 
 rm(ttt, wphylo_dist, rphylo_dist, functional_groups)
 
