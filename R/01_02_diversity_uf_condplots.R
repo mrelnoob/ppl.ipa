@@ -15,7 +15,7 @@ summary(wdata)
 ##### ** 1.1.1. Using the first UF typology ----
 # __________________________________________________
 
-##### ~~~~~~~~~ For the birds species richness ----
+##### ~~~~~~~~~ For the bird species richness ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
     mar = c(10, 4, 3, 2) + 0.5,
     bty="l", fg="gray4")
@@ -26,9 +26,10 @@ bp <- graphics::boxplot(wdata$sp_richness~wdata$urban_type, outline=TRUE,
                   xlab="", las=2,
                   xaxt = "n", # Do not plot the default labels
                   type="n", border="orange", col="tomato",
-                  boxwex=0.7, boxcol= "tomato", boxlwd=0.01,
+                  boxwex=0.7, boxcol= "tomato", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                  # same colour as the rest of the box to make it invisible.
                   lty=1, staplewex=0,
-                  whisklwd=3, medlwd=3, pch=20, cex=1.25)
+                  whisklwd=2, medlwd=2, pch=20, cex=1.25)
 
 tick <- seq_along(bp$names)
 axis(1, at = tick, labels = FALSE)
@@ -51,7 +52,367 @@ text(x = tick, y = par("usr")[3] - 1.5, labels = bp$names, # For the distance to
 
 
 
+##### ~~~~~~~~~ For the bird species abundance ----
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
 
+# end_point = 0.5 + nrow(mtcars) + nrow(mtcars) - 1 #this is the line which does the trick (together with barplot "space = 1" parameter)
+bp <- graphics::boxplot(wdata$sp_abund~wdata$urban_type, outline=TRUE,
+                        ylab="Birds abundance",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="orange", col="tomato",
+                        boxwex=0.7, boxcol= "tomato", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 15, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+
+##### ~~~~~~~~~ For the bird species Shannon index ----
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+
+# end_point = 0.5 + nrow(mtcars) + nrow(mtcars) - 1 #this is the line which does the trick (together with barplot "space = 1" parameter)
+bp <- graphics::boxplot(wdata$sp_shannon~wdata$urban_type, outline=TRUE,
+                        ylab="Shannon-Wiever index",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="orange", col="tomato",
+                        boxwex=0.7, boxcol= "tomato", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.15, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+
+##### ~~~~~~~~~ For the bird species Simpson index ----
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+
+# end_point = 0.5 + nrow(mtcars) + nrow(mtcars) - 1 #this is the line which does the trick (together with barplot "space = 1" parameter)
+bp <- graphics::boxplot(wdata$sp_simpson~wdata$urban_type, outline=TRUE,
+                        ylab="Simpson index",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="orange", col="tomato",
+                        boxwex=0.7, boxcol= "tomato", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.025, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+
+##### ~~~~~~~~~ For the bird species Pielou's evenness index ----
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+
+# end_point = 0.5 + nrow(mtcars) + nrow(mtcars) - 1 #this is the line which does the trick (together with barplot "space = 1" parameter)
+bp <- graphics::boxplot(wdata$sp_evenness~wdata$urban_type, outline=TRUE,
+                        ylab="Pielou's evenness index",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="orange", col="tomato",
+                        boxwex=0.7, boxcol= "tomato", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.03, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+
+
+
+##### ** 1.1.2. Using the second UF typology ----
+# __________________________________________________
+
+##### ~~~~~~~~~ For the bird species richness ----
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+
+# end_point = 0.5 + nrow(mtcars) + nrow(mtcars) - 1 #this is the line which does the trick (together with barplot "space = 1" parameter)
+bp <- graphics::boxplot(wdata$sp_richness~wdata$urban_type_2, outline=TRUE,
+                        ylab="Specific richness (Nb. of bird species)",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="plum1", col="palevioletred1",
+                        boxwex=0.7, boxcol= "palevioletred1", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 1.5, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+
+##### ~~~~~~~~~ For the bird species abundance ----
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+
+# end_point = 0.5 + nrow(mtcars) + nrow(mtcars) - 1 #this is the line which does the trick (together with barplot "space = 1" parameter)
+bp <- graphics::boxplot(wdata$sp_abund~wdata$urban_type_2, outline=TRUE,
+                        ylab="Birds abundance",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="plum1", col="palevioletred1",
+                        boxwex=0.7, boxcol= "palevioletred1", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 15, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+
+##### ~~~~~~~~~ For the bird species Shannon index ----
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+
+# end_point = 0.5 + nrow(mtcars) + nrow(mtcars) - 1 #this is the line which does the trick (together with barplot "space = 1" parameter)
+bp <- graphics::boxplot(wdata$sp_shannon~wdata$urban_type_2, outline=TRUE,
+                        ylab="Shannon-Wiever index",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="plum1", col="palevioletred1",
+                        boxwex=0.7, boxcol= "palevioletred1", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.15, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+
+##### ~~~~~~~~~ For the bird species Simpson index ----
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+
+# end_point = 0.5 + nrow(mtcars) + nrow(mtcars) - 1 #this is the line which does the trick (together with barplot "space = 1" parameter)
+bp <- graphics::boxplot(wdata$sp_simpson~wdata$urban_type_2, outline=TRUE,
+                        ylab="Simpson index",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="plum1", col="palevioletred1",
+                        boxwex=0.7, boxcol= "palevioletred1", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.025, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+
+##### ~~~~~~~~~ For the bird species Pielou's evenness index ----
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+
+# end_point = 0.5 + nrow(mtcars) + nrow(mtcars) - 1 #this is the line which does the trick (together with barplot "space = 1" parameter)
+bp <- graphics::boxplot(wdata$sp_evenness~wdata$urban_type_2, outline=TRUE,
+                        ylab="Pielou's evenness index",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="plum1", col="palevioletred1",
+                        boxwex=0.7, boxcol= "palevioletred1", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.03, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+
+
+
+##### ** 1.1.3. Using the third UF typology ----
+# __________________________________________________
+
+##### ~~~~~~~~~ For the bird species richness ----
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+
+# end_point = 0.5 + nrow(mtcars) + nrow(mtcars) - 1 #this is the line which does the trick (together with barplot "space = 1" parameter)
+bp <- graphics::boxplot(wdata$sp_richness~wdata$urban_type_3, outline=TRUE,
+                        ylab="Specific richness (Nb. of bird species)",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="palegreen4", col="lightseagreen",
+                        boxwex=0.7, boxcol= "lightseagreen", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 1.5, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+
+##### ~~~~~~~~~ For the bird species abundance ----
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+
+# end_point = 0.5 + nrow(mtcars) + nrow(mtcars) - 1 #this is the line which does the trick (together with barplot "space = 1" parameter)
+bp <- graphics::boxplot(wdata$sp_abund~wdata$urban_type_3, outline=TRUE,
+                        ylab="Birds abundance",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="palegreen4", col="lightseagreen",
+                        boxwex=0.7, boxcol= "lightseagreen", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 15, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+
+##### ~~~~~~~~~ For the bird species Shannon index ----
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+
+# end_point = 0.5 + nrow(mtcars) + nrow(mtcars) - 1 #this is the line which does the trick (together with barplot "space = 1" parameter)
+bp <- graphics::boxplot(wdata$sp_shannon~wdata$urban_type_3, outline=TRUE,
+                        ylab="Shannon-Wiever index",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="palegreen4", col="lightseagreen",
+                        boxwex=0.7, boxcol= "lightseagreen", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.15, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+
+##### ~~~~~~~~~ For the bird species Simpson index ----
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+
+# end_point = 0.5 + nrow(mtcars) + nrow(mtcars) - 1 #this is the line which does the trick (together with barplot "space = 1" parameter)
+bp <- graphics::boxplot(wdata$sp_simpson~wdata$urban_type_3, outline=TRUE,
+                        ylab="Simpson index",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="palegreen4", col="lightseagreen",
+                        boxwex=0.7, boxcol= "lightseagreen", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.025, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+
+##### ~~~~~~~~~ For the bird species Pielou's evenness index ----
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+
+# end_point = 0.5 + nrow(mtcars) + nrow(mtcars) - 1 #this is the line which does the trick (together with barplot "space = 1" parameter)
+bp <- graphics::boxplot(wdata$sp_evenness~wdata$urban_type_3, outline=TRUE,
+                        ylab="Pielou's evenness index",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="palegreen4", col="lightseagreen",
+                        boxwex=0.7, boxcol= "lightseagreen", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.03, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###################################### XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX ###########################
+###################################### XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX ###########################
+###################################### XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX ###########################
 
 # ##### For the birds species abundance ----
 # par(font.lab = 4, font.axis=6,

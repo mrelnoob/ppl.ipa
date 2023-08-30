@@ -92,10 +92,7 @@ rmetrics[which(is.na(rmetrics$rdens)), "rdens"] <- 0
 rmetrics[which(is.na(rmetrics$rortho_m)), "rortho_m"] <- 0
 # Note that I do not attribute 0 to the NAs of "bconti" as it would not make sense!
 
-rmetrics %>% dplyr::mutate(urban_type = stats::relevel(x = urban_type, ref = 7), # Assigning "urban parks" as
-                           # reference level.
-                           urban_type_2 = stats::relevel(x = urban_type_2, ref = 8), # Same here.
-                           lcz = stats::relevel(x = lcz, ref = 5)) %>% # Assigning "forested areas" as
+rmetrics %>% dplyr::mutate(lcz = stats::relevel(x = lcz, ref = 5)) %>% # Assigning "forested areas" as
   # reference level.
   dplyr::mutate(coord_y = jitter(x = coord_y, factor = 1.2)) %>% # Jitter coordinates a little bit.
   dplyr::mutate(coord_x = jitter(x = coord_x, factor = 1.2)) -> rmetrics
@@ -211,26 +208,75 @@ ipa_metrics$urban_type_3 <- as.factor(stats::cutree(tree = tree, k = 7))
 ipa_metrics %>%
   dplyr::relocate(urban_type_3, .after = urban_type_2) %>%
   as.data.frame()-> ipa_metrics
-## Class interpretation:
-# ** Class 1 = Medium density small non-contiguous (mixed) residential housing in small blocks.
-# ** Class 2 = Same (but with more large and high buildings)???
-# ** Class 3 = Old city.
-# ** Class 4 = Industrial commercial.
-# ** Class 5 = Low density individual (mixed) residential housing in rather large blocks???
-# ** Class 6 = Contiguous buildings in small blocks???
-# ** Class 7 = Urban parks.
-## It is harder than one might think.
-## Renaming factor levels:
-levels(ipa_metrics$urban_type_3) <- c("Small disc. resid. housing",
-                                      "Large disc. resid. housing",
-                                      "City centre",
-                                      "Industrial or commercial buildings",
-                                      "Disc. resid. housing (large blocks)",
-                                      "Contig. buildings (small blocks)",
-                                      "Urban parks")
-ipa_metrics %>%
-  dplyr::mutate(urban_type_3 = stats::relevel(x = urban_type_3, ref = 7)) -> ipa_metrics # Assigning "urban
-# parks" as reference level.
+
+## Interpreting the created typology:
+ipa_metrics %>% dplyr::group_by(urban_type_3) %>%
+  dplyr::summarise(building_nb = stats::median(bcount, na.rm = TRUE),
+                   building_height = stats::median(bh_m, na.rm = TRUE),
+                   building_contig = stats::median(bconti, na.rm = TRUE),
+                   building_area = stats::median(barea_m, na.rm = TRUE),
+                   gap_prop = stats::median(bgaps, na.rm = TRUE),
+                   street_length = stats::median(rlength, na.rm = TRUE),
+                   street_density = stats::median(rdens, na.rm = TRUE),
+                   street_orthog = stats::median(rortho_m, na.rm = TRUE),
+                   herbaceous_prop = stats::median(hprop, na.rm = TRUE),
+                   shrub_prop = stats::median(sprop, na.rm = TRUE),
+                   forest_prop = stats::median(fprop, na.rm = TRUE),
+                   water_prop = stats::median(wprop, na.rm = TRUE),
+                   noise_pollution = stats::median(npoll, na.rm = TRUE),
+                   light_pollution = stats::median(lpoll, na.rm = TRUE)) -> ttt
+# ** Class 1 = High building density   + low buildings    + discontiguous        + small surface  +
+#              few gaps     + high street density + orthogonal      +
+#              mainly grass and shrubs       + noisy      + high light pollution
+#              [= DENSE RESIDENTIAL DEVELOPMENT]!
+# ** Class 2 = Medium building density + medium buildings + discontiguous        + medium surface +
+#              average gaps + high street density + less orthogonal +
+#              diversified vegetation cover  + very noisy + average light pollution
+#              [= LARGE MIXED HOUSING (small blocks)]!
+# ** Class 3 = High building density   + high buildings   + contiguous           + large surface  +
+#              few gaps     + high street density + less orthogonal +
+#              low vegetation cover          + less noisy + high light pollution
+#              [= CITY CENTRE]!
+# ** Class 4 = Low building density    + medium buildings + discontiguous        + large surface  +
+#              average gaps + low street density  +  less orthogonal +
+#              mainly herbaceous cover       + very noisy + low light pollution
+#              [= INDUSTRIAL OR COMMERCIAL AREAS]!
+# ** Class 5 = Medium building density + medium buildings + highly discontiguous + medium surface +
+#              average gaps + low street density  + less orthogonal +
+#              mainly grass and shrubs       + less noisy + average light pollution
+#              [= SMALL MIXED HOUSING (large blocks)]!
+# ** Class 6 = High building density   + high buildings   + contiguous           + medium surface +
+#              few gaps     + high street density + less orthogonal +
+#              mainly grass and shrubs (low) + very noisy + average light pollution
+#              [= HIGH CONTIGUOUS BUILDINGS]!
+# ** Class 7 = Low building density    + low buildings    + highly discontiguous + small surface  +
+#              many gaps    + low street density  + less orthogonal +
+#              high vegetation cover         + less noisy + low light pollution
+#              [= URBAN PARKS]!
+
+## Renaming and reordering factor levels:
+ipa_metrics$urban_type_3 <- factor(ipa_metrics$urban_type_3,
+                                   levels=c("7", "4", "3", "6", "2", "5", "1"))
+levels(ipa_metrics$urban_type_3) <- c("urban_parks",
+                                      "industrial_commercial",
+                                      "city_centre",
+                                      "high_contig_buildings",
+                                      "large_mixed_housing",
+                                      "small_mixed_housing",
+                                      "dense_resid_housing_dev")
+## I also do it for the first classification (expert-based):
+ipa_metrics$urban_type <- factor(ipa_metrics$urban_type,
+                                   levels=c("urban_park", "industrial_commercial", "old_city",
+                                            "housing_buildings", "mixed_housing", "mixed_surrounding_park",
+                                            "resid_housing_park", "housing_development"))
+levels(ipa_metrics$urban_type) <- c("urban_parks",
+                                    "industrial_commercial",
+                                    "city_centre",
+                                    "housing_buildings",
+                                    "mixed_housing",
+                                    "mixed_housing_park",
+                                    "resid_housing_dev_park",
+                                    "resid_housing_dev")
 
 
 
@@ -1057,27 +1103,14 @@ rm(ttt, wphylo_dist, rphylo_dist, functional_groups)
 
 
 ########### *-----------------------------------------------------* ############
-############################ Main Git commits ##################################
+############################### To do list #####################################
 # ---------------------------------------------------------------------------- #
-usethis::use_git(message = ":boom: First generated results!")
-usethis::use_git(message = ":metal: Created a new function")
-usethis::use_git(message = ":zap: Ignoring something")
-usethis::use_git(message = ":pencil: Documented a function or wrote something")
-usethis::use_git(message = ":hammer: Ongoing programming!")
-usethis::use_git(message = ":white_check_mark: Updated the {target} pipeline")
-usethis::use_git(message = ":x: Problem detected!")
-#system("git push") # Or using a CLI!
-# Don't forget to push your commits once you're sure you made no mistakes.
+# * Explorer toutes les combinaisons possibles (avec les 2 typo de FU), d'abord graphiquement, puis stats
+# * Faire un rapport
+# * Faire analyse RLQ!!!!!
+# ** (Try and plot species accumulation curves????)
 # ---------------------------------------------------------------------------- #
 # ------------------------------- THE END ------------------------------------ #
 ########### *-----------------------------------------------------* ############
 
 
-
-########### TO DO LIST ----
-# ----------------------- #
-# * Explorer toutes les combinaisons possibles (avec les 2 typo de FU), d'abord graphiquement, puis stats
-# * Faire un rapport
-# * Faire analyse RLQ!!!!!
-# ** (Try and plot species accumulation curves????)
-# ----------------------- #
