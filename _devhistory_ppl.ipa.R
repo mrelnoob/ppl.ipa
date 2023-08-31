@@ -187,6 +187,7 @@ dir.create("R")
 # ---------------------------------------------------------------------------- #
 
 file.create(... = "R/01_00_ipa_data_analyses.R")
+file.create(... = "R/02_01_rlq_analysis.R")
 # ATTENTION: Je devrais probablement créer plus de scripts pour être propre (à voir quand je TARGET)§§§
 # ATTENTION: Je devrais probablement créer plus de scripts pour être propre (à voir quand je TARGET)§§§
 # ATTENTION: Je devrais probablement créer plus de scripts pour être propre (à voir quand je TARGET)§§§
