@@ -3637,7 +3637,7 @@ par(font.lab = 4, font.axis=6, font.lab= 2,
     mar = c(10, 4, 3, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$repro~wdata$urban_type, outline=TRUE,
-                        ylab="CWM reproduction XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+                        ylab="CWM reproductive strategy",
                         xlab="", las=2,
                         xaxt = "n", # Do not plot the default labels
                         type="n", border="sandybrown", col="violetred4",
@@ -3654,8 +3654,8 @@ text(x = tick, y = par("usr")[3] - 0.25, labels = bp$names, # For the distance t
 par(font.lab = 4, font.axis=6, font.lab= 2,
     mar = c(10, 4, 3, 2) + 0.5,
     bty="l", fg="gray4")
-bp <- graphics::boxplot(wcwm$clutch_nb~wdata$urban_type_3, outline=TRUE,
-                        ylab="CWM clutch numbers (per year)",
+bp <- graphics::boxplot(wcwm$repro~wdata$urban_type_3, outline=TRUE,
+                        ylab="CWM reproductive strategy",
                         xlab="", las=2,
                         xaxt = "n", # Do not plot the default labels
                         type="n", border="yellowgreen", col="darkcyan",
@@ -3669,3 +3669,565 @@ text(x = tick, y = par("usr")[3] - 0.25, labels = bp$names, # For the distance t
      # the number that is subtracted.
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
+
+
+##### ~~~~~~~~~~~ CWM habitat preferences ----
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wcwm$habitat_forest~wdata$urban_type, outline=TRUE,
+                        ylab="CWM proportion of forest birds",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="sandybrown", col="violetred4",
+                        boxwex=0.7, boxcol= "violetred4", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wcwm$habitat_forest~wdata$urban_type_3, outline=TRUE,
+                        ylab="CWM proportion of forest birds",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="yellowgreen", col="darkcyan",
+                        boxwex=0.7, boxcol= "darkcyan", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wcwm$habitat_woodland~wdata$urban_type, outline=TRUE,
+                        ylab="CWM proportion of woodland birds",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="sandybrown", col="violetred4",
+                        boxwex=0.7, boxcol= "violetred4", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wcwm$habitat_woodland~wdata$urban_type_3, outline=TRUE,
+                        ylab="CWM proportion of woodland birds",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="yellowgreen", col="darkcyan",
+                        boxwex=0.7, boxcol= "darkcyan", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wcwm$habitat_rupestrian~wdata$urban_type, outline=TRUE,
+                        ylab="CWM proportion of rupestrian birds",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="sandybrown", col="violetred4",
+                        boxwex=0.7, boxcol= "violetred4", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wcwm$habitat_rupestrian~wdata$urban_type_3, outline=TRUE,
+                        ylab="CWM proportion of rupestrian birds",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="yellowgreen", col="darkcyan",
+                        boxwex=0.7, boxcol= "darkcyan", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wcwm$habitat_shrubland~wdata$urban_type, outline=TRUE,
+                        ylab="CWM proportion of shrubland birds",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="sandybrown", col="violetred4",
+                        boxwex=0.7, boxcol= "violetred4", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.025, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wcwm$habitat_shrubland~wdata$urban_type_3, outline=TRUE,
+                        ylab="CWM proportion of shrubland birds",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="yellowgreen", col="darkcyan",
+                        boxwex=0.7, boxcol= "darkcyan", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.025, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wcwm$habitat_grassland~wdata$urban_type, outline=TRUE,
+                        ylab="CWM proportion of grassland birds",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="sandybrown", col="violetred4",
+                        boxwex=0.7, boxcol= "violetred4", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.025, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wcwm$habitat_grassland~wdata$urban_type_3, outline=TRUE,
+                        ylab="CWM proportion of grassland birds",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="yellowgreen", col="darkcyan",
+                        boxwex=0.7, boxcol= "darkcyan", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.025, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+
+##### ~~~~~~~~~~~ CWM habitat density preferences ----
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wcwm$hab_density_dense~wdata$urban_type, outline=TRUE,
+                        ylab="CWM prop. of densely wooded habitat birds",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="sandybrown", col="violetred4",
+                        boxwex=0.7, boxcol= "violetred4", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wcwm$hab_density_dense~wdata$urban_type_3, outline=TRUE,
+                        ylab="CWM prop. of densely wooded habitat birds",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="yellowgreen", col="darkcyan",
+                        boxwex=0.7, boxcol= "darkcyan", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wcwm$hab_density_semi_open~wdata$urban_type, outline=TRUE,
+                        ylab="CWM prop. of semi-open habitat birds",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="sandybrown", col="violetred4",
+                        boxwex=0.7, boxcol= "violetred4", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wcwm$hab_density_semi_open~wdata$urban_type_3, outline=TRUE,
+                        ylab="CWM prop. of semi-open habitat birds",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="yellowgreen", col="darkcyan",
+                        boxwex=0.7, boxcol= "darkcyan", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wcwm$hab_density_open~wdata$urban_type, outline=TRUE,
+                        ylab="CWM prop. of open habitat birds",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="sandybrown", col="violetred4",
+                        boxwex=0.7, boxcol= "violetred4", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wcwm$hab_density_open~wdata$urban_type_3, outline=TRUE,
+                        ylab="CWM prop. of open habitat birds",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="yellowgreen", col="darkcyan",
+                        boxwex=0.7, boxcol= "darkcyan", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+
+##### ~~~~~~~~~~~ CWM primary lifestyle ----
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wcwm$prim_lifestyle_insessorial~wdata$urban_type, outline=TRUE,
+                        ylab="CWM proportion of insessorial birds",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="sandybrown", col="violetred4",
+                        boxwex=0.7, boxcol= "violetred4", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wcwm$prim_lifestyle_insessorial~wdata$urban_type_3, outline=TRUE,
+                        ylab="CWM proportion of insessorial birds",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="yellowgreen", col="darkcyan",
+                        boxwex=0.7, boxcol= "darkcyan", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wcwm$prim_lifestyle_aerial~wdata$urban_type, outline=TRUE,
+                        ylab="CWM proportion of aerial birds",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="sandybrown", col="violetred4",
+                        boxwex=0.7, boxcol= "violetred4", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wcwm$prim_lifestyle_aerial~wdata$urban_type_3, outline=TRUE,
+                        ylab="CWM proportion of aerial birds",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="yellowgreen", col="darkcyan",
+                        boxwex=0.7, boxcol= "darkcyan", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wcwm$prim_lifestyle_terrestrial~wdata$urban_type, outline=TRUE,
+                        ylab="CWM proportion of terrestrial birds",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="sandybrown", col="violetred4",
+                        boxwex=0.7, boxcol= "violetred4", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wcwm$prim_lifestyle_terrestrial~wdata$urban_type_3, outline=TRUE,
+                        ylab="CWM proportion of terrestrial birds",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="yellowgreen", col="darkcyan",
+                        boxwex=0.7, boxcol= "darkcyan", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wcwm$prim_lifestyle_generalist~wdata$urban_type, outline=TRUE,
+                        ylab="CWM proportion of generalist lifestyle birds",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="sandybrown", col="violetred4",
+                        boxwex=0.7, boxcol= "violetred4", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wcwm$prim_lifestyle_generalist~wdata$urban_type_3, outline=TRUE,
+                        ylab="CWM proportion of generalist lifestyle birds",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="yellowgreen", col="darkcyan",
+                        boxwex=0.7, boxcol= "darkcyan", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+
+##### ~~~~~~~~~~~ CWM social behaviour ----
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wcwm$social_behaviour_solitary~wdata$urban_type, outline=TRUE,
+                        ylab="CWM proportion of solitary birds",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="sandybrown", col="violetred4",
+                        boxwex=0.7, boxcol= "violetred4", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wcwm$social_behaviour_solitary~wdata$urban_type_3, outline=TRUE,
+                        ylab="CWM proportion of solitary birds",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="yellowgreen", col="darkcyan",
+                        boxwex=0.7, boxcol= "darkcyan", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wcwm$social_behaviour_gregarious~wdata$urban_type, outline=TRUE,
+                        ylab="CWM proportion of gregarious birds",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="sandybrown", col="violetred4",
+                        boxwex=0.7, boxcol= "violetred4", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wcwm$social_behaviour_gregarious~wdata$urban_type_3, outline=TRUE,
+                        ylab="CWM proportion of gregarious birds",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="yellowgreen", col="darkcyan",
+                        boxwex=0.7, boxcol= "darkcyan", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wcwm$social_behaviour_small_groups~wdata$urban_type, outline=TRUE,
+                        ylab="CWM proportion of small grouped birds",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="sandybrown", col="violetred4",
+                        boxwex=0.7, boxcol= "violetred4", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wcwm$social_behaviour_small_groups~wdata$urban_type_3, outline=TRUE,
+                        ylab="CWM proportion of small grouped birds",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="yellowgreen", col="darkcyan",
+                        boxwex=0.7, boxcol= "darkcyan", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
