@@ -3863,7 +3863,7 @@ par(font.lab = 4, font.axis=6, font.lab= 2,
     mar = c(10, 4, 3, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$hab_density_dense~wdata$urban_type, outline=TRUE,
-                        ylab="CWM prop. of densely wooded habitat birds",
+                        ylab="CWM abund. of densely wooded habitat birds",
                         xlab="", las=2,
                         xaxt = "n", # Do not plot the default labels
                         type="n", border="sandybrown", col="violetred4",
@@ -3881,7 +3881,7 @@ par(font.lab = 4, font.axis=6, font.lab= 2,
     mar = c(10, 4, 3, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$hab_density_dense~wdata$urban_type_3, outline=TRUE,
-                        ylab="CWM prop. of densely wooded habitat birds",
+                        ylab="CWM abund. of densely wooded habitat birds",
                         xlab="", las=2,
                         xaxt = "n", # Do not plot the default labels
                         type="n", border="yellowgreen", col="darkcyan",
@@ -3900,7 +3900,7 @@ par(font.lab = 4, font.axis=6, font.lab= 2,
     mar = c(10, 4, 3, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$hab_density_semi_open~wdata$urban_type, outline=TRUE,
-                        ylab="CWM prop. of semi-open habitat birds",
+                        ylab="CWM abund. of semi-open habitat birds",
                         xlab="", las=2,
                         xaxt = "n", # Do not plot the default labels
                         type="n", border="sandybrown", col="violetred4",
@@ -3918,7 +3918,7 @@ par(font.lab = 4, font.axis=6, font.lab= 2,
     mar = c(10, 4, 3, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$hab_density_semi_open~wdata$urban_type_3, outline=TRUE,
-                        ylab="CWM prop. of semi-open habitat birds",
+                        ylab="CWM abund. of semi-open habitat birds",
                         xlab="", las=2,
                         xaxt = "n", # Do not plot the default labels
                         type="n", border="yellowgreen", col="darkcyan",
@@ -3937,7 +3937,7 @@ par(font.lab = 4, font.axis=6, font.lab= 2,
     mar = c(10, 4, 3, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$hab_density_open~wdata$urban_type, outline=TRUE,
-                        ylab="CWM prop. of open habitat birds",
+                        ylab="CWM abund. of open habitat birds",
                         xlab="", las=2,
                         xaxt = "n", # Do not plot the default labels
                         type="n", border="sandybrown", col="violetred4",
@@ -3955,7 +3955,7 @@ par(font.lab = 4, font.axis=6, font.lab= 2,
     mar = c(10, 4, 3, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$hab_density_open~wdata$urban_type_3, outline=TRUE,
-                        ylab="CWM prop. of open habitat birds",
+                        ylab="CWM abund. of open habitat birds",
                         xlab="", las=2,
                         xaxt = "n", # Do not plot the default labels
                         type="n", border="yellowgreen", col="darkcyan",
