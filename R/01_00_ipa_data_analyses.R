@@ -296,6 +296,8 @@ levels(ipa_metrics$urban_type) <- c("urban_parks",
 wdata <- ipa_data
 ipa_data$sp_richness <- apply(wdata[,4:ncol(wdata)] > 0, 1, sum) # Total number of bird species per site.
 ipa_data$sp_abund <- apply(wdata[,4:ncol(wdata)], 1, sum) # Total abundance of birds per site.
+# To compute relative abundance of species, I could also make use of the following function:
+# funrar::make_relative()
 
 
 
