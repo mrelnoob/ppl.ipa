@@ -42,22 +42,11 @@ wmeta_com$traits %>% dplyr::select(-development_mode, -trophic_niche, -foraging_
       foraging_strata == "midhigh_strata" | foraging_strata == "tree_canopy" ~ "upper_strata")) %>%
   dplyr::select(-nesting_pref, -foraging_strata) %>%
   dplyr::relocate(nesting_guild, .before = trophic_level) %>%
-  dplyr::relocate(foraging_niche, .after = trophic_level) -> wtraits # Strong simplification, including
+  dplyr::relocate(foraging_niche, .after = trophic_level) %>%
+  dplyr::mutate(dplyr::across(where(is.character), factor)) -> wtraits # Strong simplification, including
 # factor levels, to reduce the number of binary comparisons during the Fourth Corner analysis. Note that
 # I use the table stored in the working metacommunity object so for it to share the same species order as
 # the community table.
-
-
-wmetrics %>% dplyr::mutate(plant_evenness = dplyr::case_when(
-  evenness_class == "D" ~ 0,
-  evenness_class == "C" ~ 1,
-  evenness_class == "B" ~ 2,
-  evenness_class == "A" ~ 3)) %>%
-  dplyr::rename(plant_richness = species_richness) %>%
-  dplyr::relocate(plant_evenness, .after = plant_richness) %>%
-  dplyr::select(-evenness_class) -> wmetrics
-
-
 
 xy <- cbind(ipa_metrics$coord_x, ipa_metrics$coord_y) # IPA sites coordinates.
 
@@ -93,7 +82,7 @@ otable.l_coa <- ade4::dudi.coa(df = wdata, scannf = FALSE, nf = 2) # 'otable' is
 # sections.
 # sum(otable.l_coa$eig)*sum(wdata) # Yields the same value!
 ade4::scatter(x = otable.l_coa, poseig = "bottomright")
-ade4::sco.distri(score = otable.l_coa$l1[,2], df = wdata, labels = colnames(wdata)) # To get the conditional
+ade4::sco.distri(score = otable.l_coa$l1[,1], df = wdata, labels = colnames(wdata)) # To get the conditional
 # variances of the columns (species) on the first axis (i.e. something like the variances of the species
 # abundances in the sites represented by this axis in which they occur).
 ## For some reason, there consistently is an overlap between "Falco subbuteo" and "Cuculus canorus". A possible
@@ -113,8 +102,6 @@ ade4::s.value(xy, otable.l_coa$l1[, 1], addaxes = FALSE, include.origin = FALSE)
 ade4::s.value(xy, otable.l_coa$l1[, 2], addaxes = FALSE, include.origin = FALSE) # Ordinations suggest
 # the existence of a rather clear spatial structure.
 dev.off()
-
-
 
 
 
@@ -169,22 +156,41 @@ dev.off()
 
 
 
-
-
 ##### ** 1.1.3. Q table ordination (Hill & Smith's Analysis) ----
 # _______________________________________________________________
 
 # As the species x traits (Q table) contains both quantitative and (one) qualitative variables , we should
 # ordinate it using an Hill and Smith's Analysis. Furthermore, to enable the coupling of this table with
 # the species table, we also have to weigh lines using the column weight from the CoA.
-otable.q_hsa <- ade4::dudi.hillsmith(df = )
+otable.q_hsa <- ade4::dudi.hillsmith(df = wtraits, row.w = otable.l_coa$cw,
+                                     scannf = FALSE, nf = 2)
+ade4::scatter(x = otable.q_hsa)
+summary(otable.q_hsa) # Indicates that the first 2 axes account for ~31% and ~18% of the projected inertia.
+otable.q_hsa$c1 %>% dplyr::arrange(desc(CS1)) # Or CS2.
+# --> The first axis seems is rather hard to interpret as it opposes birds with many different attributes,
+#     but it seems partly linked to the reproductive and foraging strategies with, on one side, small "quick
+#     POLS" birds that forage and nest mainly in woody vegetation or on the ground and, on the other side,
+#     big "slow POLS" birds that forage in the air or exclusively on the ground (e.g. swallows or pigeons).
+# --> The second PC clearly opposes aerial birds (and their other traits) or some small forest passerines to
+#     bigger birds such as corvids or pigeons.
+dev.off()
 
 
 
-##### P.10 du tuto 2009
+##### ** 1.1.4. RL and QL tests (Co-Inertia Analysis) ----
+# ________________________________________________________
+
+## To investigate if the links between species and environment or between traits and distribution are
+# strong and significant, we can run Co-Inertia Analyses (COIA).
+otable.rl_coia <- ade4::coinertia(dudiX = otable.l_coa, dudiY = otable.r_pca, scannf = FALSE, nf = 2)
+otable.l_coa2 <- ade4::dudi.coa(df = t(wdata), scannf = FALSE, nf = 2) # Same CoA but with a transposed matrix.
+otable.ql_coia <- ade4::coinertia(dudiX = otable.l_coa2, dudiY = otable.q_hsa, scannf = FALSE, nf = 2)
+
+test1 <- ade4::randtest.coinertia(otable.rl_coia, fixed = 1)
 
 
-#
-# data(aviurba, package = "ade4")
-# test1 <- chisq.test(aviurba$fau)
-# aviurba$species.names.fr
+
+##### P.11 du tuto 2009
+
+
+
