@@ -3488,6 +3488,43 @@ text(x = tick, y = par("usr")[3] - 0.3, labels = bp$names, # For the distance to
 par(font.lab = 4, font.axis=6, font.lab= 2,
     mar = c(10, 4, 3, 2) + 0.5,
     bty="l", fg="gray4")
+bp <- graphics::boxplot(wcwm$brain_ratio~wdata$urban_type, outline=TRUE,
+                        ylab="CWM brain ratio",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="sandybrown", col="violetred4",
+                        boxwex=0.7, boxcol= "violetred4", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.002, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wcwm$brain_ratio~wdata$urban_type_3, outline=TRUE,
+                        ylab="CWM brain ratio",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="yellowgreen", col="darkcyan",
+                        boxwex=0.7, boxcol= "darkcyan", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.0025, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$beak_size~wdata$urban_type, outline=TRUE,
                         ylab="CWM beak size value",
                         xlab="", las=2,

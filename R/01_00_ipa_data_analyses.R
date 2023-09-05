@@ -113,10 +113,9 @@ rmetrics %>% dplyr::filter(buffer_radius == 150) -> ipa_metrics
 
 
 ##### *** 0.1.2.3. Computing a synthetic light pollution variable ----
-## Computing synthetic morphometric or reproductive variables:
 ipa_metrics[,44:47] -> ttt
 
-## Normed-PCA for general morphology variables:
+## Normed-PCA for general light pollution proxies:
 res.pca <- FactoMineR::PCA(X = ttt, scale.unit = TRUE, graph = FALSE)
 # To plot results:
 landscape.varplot <- factoextra::fviz_pca_var(res.pca, col.var = "contrib",
@@ -169,6 +168,9 @@ wtraits_imp_error %>% dplyr::rename(Nb_imputed_values = 'X1', Oob_RMSE = 'X2') %
 ipa_traits$brain_mass <- wtraits_imp$brain_mass
 rm(imput, rtraits_mis, wtraits_imp_error, sub_errtab_rtraits, wtraits_imp, res.pca, ttt, taxa)
 
+## Computing a brain proportion variable:
+ipa_traits %>% dplyr::mutate(brain_ratio = brain_mass/body_mass) %>%
+  dplyr::relocate(brain_ratio, .after = brain_mass) -> ipa_traits
 
 
 ##### ** 0.1.4. Creating an urban form (UF) morphology typology through cluster analysis ----
@@ -427,7 +429,7 @@ wtraits$repro <- zzz # This variable opposes birds that lay few large eggs and f
 # birds that lay many small eggs with early fledging juveniles (~slow vs quick POLS)!
 
 wtraits %>% dplyr::relocate(morpho, .after = body_mass) %>%
-  dplyr::relocate(beak_size, .after = brain_mass) %>%
+  dplyr::relocate(beak_size, .after = brain_ratio) %>%
   dplyr::relocate(repro, .after = clutch_nb) %>%
   dplyr::select(-body_mass, -tarsus_length, -wing_length, -tail_length,
                 -beak_length, -beak_width, -beak_depth,
@@ -458,7 +460,7 @@ all(rownames(wmeta_com$traits) == colnames(wmeta_com$phylodist)) # TRUE!
 ## Rao's indices computations:
 # Creating groups of trait to assign valid weights:
 traits_grp <- list(c("nesting_pref", "habitat", "hab_density"),
-                   c("prim_lifestyle", "urban_tolerance", "social_behaviour", "brain_mass"),
+                   c("prim_lifestyle", "urban_tolerance", "social_behaviour", "brain_mass", "brain_ratio"),
                    c("trophic_level", "trophic_niche", "foraging_behaviour", "foraging_strata"),
                    c("morpho", "beak_size"),
                    c("kipps_distance", "hwi"),
