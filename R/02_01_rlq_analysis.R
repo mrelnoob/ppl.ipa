@@ -110,7 +110,7 @@ dev.off()
 
 # As the site x environment (R table) contains both quantitative and (one) qualitative variables , we should
 # theoretically ordinate it using an Hill and Smith's Analysis. Furthermore, to enable the coupling of this
-# table with the species table, we also have to weigh lines using the line weight from the CoA.
+# table with the species table, we also have to weigh lines using the LINE WEIGHTS from the CoA.
 # Unfortunately, the Hill & Smith's Analysis precludes the inclusion of ordered factors and the alternative,
 # a "mixed analysis", does not allow row weightings.
 # Consequently, I should either drop my ordered factor or convert it into a numeric variable and then run
@@ -161,7 +161,7 @@ dev.off()
 
 # As the species x traits (Q table) contains both quantitative and (one) qualitative variables , we should
 # ordinate it using an Hill and Smith's Analysis. Furthermore, to enable the coupling of this table with
-# the species table, we also have to weigh lines using the column weight from the CoA.
+# the species table, we also have to weigh lines using the COLUMN WEIGHTS from the CoA.
 otable.q_hsa <- ade4::dudi.hillsmith(df = wtraits, row.w = otable.l_coa$cw,
                                      scannf = FALSE, nf = 2)
 ade4::scatter(x = otable.q_hsa)
@@ -180,17 +180,75 @@ dev.off()
 ##### ** 1.1.4. RL and QL tests (Co-Inertia Analysis) ----
 # ________________________________________________________
 
-## To investigate if the links between species and environment or between traits and distribution are
-# strong and significant, we can run Co-Inertia Analyses (COIA).
-otable.rl_coia <- ade4::coinertia(dudiX = otable.l_coa, dudiY = otable.r_pca, scannf = FALSE, nf = 2)
-otable.l_coa2 <- ade4::dudi.coa(df = t(wdata), scannf = FALSE, nf = 2) # Same CoA but with a transposed matrix.
-otable.ql_coia <- ade4::coinertia(dudiX = otable.l_coa2, dudiY = otable.q_hsa, scannf = FALSE, nf = 2)
+# ## To investigate if the links between species and environment or between traits and distribution are
+# # strong and significant, we can run Co-Inertia Analyses (COIA):
+# otable.rl_coia <- ade4::coinertia(dudiX = otable.l_coa, dudiY = otable.r_pca, scannf = FALSE, nf = 2)
+# otable.l_coa2 <- ade4::dudi.coa(df = t(wdata), scannf = FALSE, nf = 2) # Same CoA but with a transposed matrix.
+# otable.ql_coia <- ade4::coinertia(dudiX = otable.l_coa2, dudiY = otable.q_hsa, scannf = FALSE, nf = 2)
+#
+# test1 <- ade4::randtest(otable.rl_coia, fixed = 1)
+# test2 <- ade4::randtest(otable.ql_coia, fixed = 1)
+# ## That doesn't work. The 'randtest' function returns an unfathomable error message. So I'll skip this part
+# # for now.
 
-test1 <- ade4::randtest.coinertia(otable.rl_coia, fixed = 1)
+
+
+
+
+# *------------------------------------------------* #####
+# ---------------------------------------------------------------------------- #
+##### * 1.2. Three-tables synthesis (RLQ) --------------------------------------
+# ---------------------------------------------------------------------------- #
+
+## RLQ analyses use the factorial analyses made in the preliminary steps to create its own ordinations,
+# but these new ordinations do not necessarily match the previous ones.
+o.rlq <- ade4::rlq(dudiR = otable.r_pca, dudiL = otable.l_coa, dudiQ = otable.q_hsa,
+                   scannf = FALSE, nf = 2)
+## To test the significance of the global link R-Q with a permutation test:
+ade4::randtest(xtest = o.rlq) # DOES NOT WORK WITH MY DATA?!!!!!
+
+summary(o.rlq) # Cumulative projected inertia for the 2 first RLQ axes is 93%!
+plot(o.rlq) # The graph produced shows:
+# * The ordination of sites (upper left) and species (upper right).
+# * The contributions of the environmental variables (lower left) and traits (lower right)
+## We can see that the 2 RLQ axes are well linked to the 2 PCA axis of the R table (as shown by the left
+# correlation circle and by the high inertia/co-inertia ratio for R in the summary). The link is quite
+# weaker for the HSA axes of the Q table.
+
+## Interpretation of the link between R and the RLQ axes (projection of the environmental variables):
+ade4::s.arrow(dfxy = o.rlq$l1, boxes = FALSE) # 'l1' contains the normed scores of the R variables.
+ade4::s.label(dfxy = o.rlq$mR, add.plot = TRUE)
+dev.new()
+par(mfrow = c(1, 2))
+ade4::s.value(dfxy = xy, z = o.rlq$lR[,1], # 'lR' is the row coordinates of the R table on the chosen RLQ axis.
+              addaxes = FALSE, include.origin = FALSE) # If we include the origin, the plot is too small.
+ade4::s.value(dfxy = xy, z = o.rlq$lR[,2],
+              addaxes = FALSE, include.origin = FALSE)
+dev.off()
+## As with R_pca's 1st axis, the 1st RLQ axis seems to oppose centre and periphery and thus partly represents
+# a building density gradient (as well as a forest connectivity gradient).
+## The 2nd axis is harder to interpret. It opposes sites with high forest connectivity, large gaps between
+# buildings, and/or rather low buildings (sometimes small), with a low woody plant richness and evenness, low
+# vegetation cover and connectivity (except the forest one), against the opposite.
+
+
+# AFINIR§§§§ Interprétation Q sur RLQ!!! + P.15 tuto + Tuto 2013 + Braga???
+# Je commence à me dire que certains sites devraient être retirés car ils tirent trop les analyses! IPA074
+
+
+## To reproduce and enhance the two factorial projection plots:
+ade4::s.arrow(dfxy = o.rlq$c1, xlim = c(-1,1), boxes = FALSE) # 'c1' contains the normed scores (coordinates)
+# of the traits.
+ade4::s.label(dfxy = o.rlq$li, add.plot = TRUE) # 'li' contains the coordinates of the environmental variables.
+# Note that, for factors, arrows can go well beyond one and far exceed the arrows of numeric variables, but
+# that doesn't mean that their importance exceed that of the latter, they're just plotted on different scales
+# (or at least, I think).
+## See also Jacquet & Prodon (2014) [in French].
+
+
 
 
 
 ##### P.11 du tuto 2009
-
 
 
