@@ -15,7 +15,7 @@ ipa_metrics[,c("species_richness", "evenness_class",
                "bcount", "bprop", "bh_m", "barea_m", "bgaps",
                "rdens", "rortho_m",
                "hprop", "sprop", "fprop",
-               "cfh_d1b1_euc", "cfs_d1b1_euc", "cff_d1b1_euc")] -> wmetrics # I only keep a very limited set
+               "cfh_d1b1_euc", "cff_d1b1_euc")] -> wmetrics # I only keep a very limited set
 # of environmental and urban metrics as we cannot test all combinations. Note that I removed the "bconti"
 # variable because it contained true NA which are not allowed by some ordination analyses. I also removed
 # the light and noise pollution variables as the urban metrics should satisfyingly approximate them. Finally,
@@ -130,7 +130,7 @@ wmetrics %>% dplyr::mutate(plant_evenness = dplyr::case_when(
 otable.r_pca <- ade4::dudi.pca(df = wmetrics, row.w = otable.l_coa$lw, # Row weights.
                              scannf = FALSE, nf = 2)
 ade4::scatter(x = otable.r_pca)
-summary(otable.r_pca) # Indicates that the first 2 axes account for ~30% and ~21% of the total inertia.
+summary(otable.r_pca) # Indicates that the first 2 axes account for ~27.3% and ~23.2% of the total inertia.
 otable.r_pca$c1 %>% dplyr::arrange(desc(CS2)) # To get the variable loadings on the axes (on descending order
 # according to the second axis 'CS2' values).
 # --> The first PC seems to represent a kind of building density gradient, as it opposes building metrics and
@@ -207,7 +207,8 @@ o.rlq <- ade4::rlq(dudiR = otable.r_pca, dudiL = otable.l_coa, dudiQ = otable.q_
 ## To test the significance of the global link R-Q with a permutation test:
 # ade4::randtest(xtest = o.rlq) # DOES NOT WORK WITH MY DATA. WHY???
 
-summary(o.rlq) # Cumulative projected inertia for the 2 first RLQ axes is 93%!
+summary(o.rlq) # Cumulative projected inertia for the 2 first RLQ axes is 91.3%!
+dev.new()
 plot(o.rlq) # The graph produced shows:
 # * The ordination (row scores) of sites (upper left) and species (upper right).
 # * The contributions of the environmental variables (lower left) and traits (lower right).
@@ -215,9 +216,10 @@ plot(o.rlq) # The graph produced shows:
 # correlation circle and by the high inertia/co-inertia ratio for R in the summary). The link is quite
 # weaker for the HSA axes of the Q table.
 
+dev.off()
 ## Interpretation of the link between R and the RLQ axes (projection of the environmental variables):
 ade4::s.arrow(dfxy = o.rlq$l1, boxes = FALSE) # 'l1' contains the normed scores of the R variables.
-ade4::s.label(dfxy = o.rlq$mR, add.plot = TRUE)
+ade4::s.label(dfxy = o.rlq$mR, add.plot = TRUE) # 'mR' contains the normed scores of sites.
 dev.new()
 par(mfrow = c(1, 2))
 ade4::s.value(dfxy = xy, z = o.rlq$lR[,1], # 'lR' is the row coordinates of the R table on the chosen RLQ axis.
@@ -226,14 +228,23 @@ ade4::s.value(dfxy = xy, z = o.rlq$lR[,2],
               addaxes = FALSE, include.origin = FALSE)
 dev.off()
 ## As with R_pca's 1st axis, the 1st RLQ axis seems to oppose centre and periphery and thus partly represents
-# a building density gradient (as well as a forest connectivity gradient).
-## The 2nd axis is harder to interpret. It opposes sites with high forest connectivity, large gaps between
-# buildings, and/or rather low buildings (sometimes small), with a low woody plant richness and evenness, low
-# vegetation cover and connectivity (except the forest one), against the opposite.
+# a building density gradient. Archetypal sites with HIGH values on this axis are urban parks or some urban
+# fabrics with low building density.
+## The 2nd axis is harder to interpret. It opposes sites with large gaps between buildings, and/or rather
+# low buildings (sometimes small), to sites with much vegetation, high grassland connectivity, high plant
+# diversity. Archetypal sites with HIGH values are periurban industrial or commercial sites or some housing
+# buildings. Archetypal sites with LOW values are some low density residential development or even building areas located
+# on large scale vegetation corridors.
 
+
+## Interpretation of the link between Q and the RLQ axes (projection of the traits):
+ade4::s.arrow(dfxy = o.rlq$c1, boxes = FALSE) # 'c1' contains the normed scores of the Q variables.
+ade4::s.label(dfxy = o.rlq$mQ, add.plot = TRUE) # 'mQ' contains the normed scores of species.
+## The first axis
 
 # AFINIR§§§§ Interprétation Q sur RLQ!!! + P.15 tuto + Tuto 2013 + Braga???
-# Je commence à me dire que certains sites devraient être retirés car ils tirent trop les analyses! IPA074
+# Je commence à me dire que certains sites devraient être retirés car ils tirent trop les analyses! IPA074+071
+# voire tous les ESV??? ou trucs trop périphériques???
 
 
 ## To reproduce and enhance the two factorial projection plots:

@@ -712,17 +712,12 @@ ipa_fun_groups[[21]] <- cbind(ttt[[3]], ttt[[4]]) # For species that are NT or V
 names(ipa_fun_groups)[21] <- "fg_ntvu"
 
 
-
 ## For non-migratory species:
 ipa_data$conserv_richness <- apply(ipa_fun_groups$fg_ntvu > 0, 1, sum)
 ipa_data$conserv_abund <- apply(ipa_fun_groups$fg_ntvu, 1, sum)
 ipa_data$conserv_simpson <- vegan::diversity(x = ipa_fun_groups$fg_ntvu, index = "simpson")
 
 rm(ttt, wphylo_dist, rphylo_dist, functional_groups)
-
-
-
-
 
 
 
