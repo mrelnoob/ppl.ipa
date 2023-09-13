@@ -1534,8 +1534,6 @@ text(x = tick, y = par("usr")[3] - 0.06, labels = bp$names, # For the distance t
 
 
 
-
-
 ##### *** 2.1.1.5. Social behaviour guild diversity ----
 ##### ~~~~~~~~~~~ Solitary species ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
@@ -1709,6 +1707,189 @@ bp <- graphics::boxplot(wdata$soc_smallgrp_simpson~wdata$urban_type, outline=TRU
 tick <- seq_along(bp$names)
 axis(1, at = tick, labels = FALSE)
 text(x = tick, y = par("usr")[3] - 0.06, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+
+
+
+##### *** 2.1.1.6. Migratory guild diversity ----
+##### ~~~~~~~~~~~ Non-migratory species ----
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wdata$migrat_no_richness~wdata$urban_type, outline=TRUE,
+                        ylab="Non-migratory species richness",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="hotpink2", col="rosybrown1",
+                        boxwex=0.7, boxcol= "rosybrown1", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 1.2, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wdata$migrat_no_abund~wdata$urban_type, outline=FALSE, # OUTLIERS NOT PLOTTED!
+                        ylab="Non-migratory species abundance",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="hotpink2", col="rosybrown1",
+                        boxwex=0.7, boxcol= "rosybrown1", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 3, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wdata$migrat_no_simpson~wdata$urban_type, outline=TRUE,
+                        ylab="Non-migratory species diversity (Simpson index)",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="hotpink2", col="rosybrown1",
+                        boxwex=0.7, boxcol= "rosybrown1", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.025, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+
+##### ~~~~~~~~~~~ Migratory species ----
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wdata$migrat_yes_richness~wdata$urban_type, outline=TRUE,
+                        ylab="Migratory species richness",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="hotpink2", col="rosybrown1",
+                        boxwex=0.7, boxcol= "rosybrown1", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wdata$migrat_yes_abund~wdata$urban_type, outline=FALSE, # OUTLIERS NOT PLOTTED!
+                        ylab="Migratory species abundance",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="hotpink2", col="rosybrown1",
+                        boxwex=0.7, boxcol= "rosybrown1", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 2, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wdata$migrat_yes_simpson~wdata$urban_type, outline=TRUE,
+                        ylab="Migratory species diversity (Simpson index)",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="hotpink2", col="rosybrown1",
+                        boxwex=0.7, boxcol= "rosybrown1", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+
+
+
+##### *** 2.1.1.7. Vulnerable birds diversity ----
+##### ~~~~~~~~~~~ NTVU species ----
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wdata$conserv_richness~wdata$urban_type, outline=TRUE,
+                        ylab="Vulnerable species richness",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="hotpink2", col="rosybrown1",
+                        boxwex=0.7, boxcol= "rosybrown1", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.4, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wdata$conserv_abund~wdata$urban_type, outline=FALSE, # OUTLIERS NOT PLOTTED!
+                        ylab="Vulnerable species abundance",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="hotpink2", col="rosybrown1",
+                        boxwex=0.7, boxcol= "rosybrown1", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.5, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wdata$conserv_simpson~wdata$urban_type, outline=TRUE,
+                        ylab="Vulnerable species diversity (Simpson index)",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="hotpink2", col="rosybrown1",
+                        boxwex=0.7, boxcol= "rosybrown1", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to the axis, you have to tune
      # the number that is subtracted.
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
@@ -2780,6 +2961,189 @@ par(font.lab = 4, font.axis=6, font.lab= 2,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$soc_smallgrp_simpson~wdata$urban_type_3, outline=TRUE,
                         ylab="Small grouped species diversity (Simpson index)",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="olivedrab3", col="khaki2",
+                        boxwex=0.7, boxcol= "khaki2", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+
+
+
+##### *** 2.1.2.6. Migratory guild diversity ----
+##### ~~~~~~~~~~~ Non-migratory species ----
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wdata$migrat_no_richness~wdata$urban_type_3, outline=TRUE,
+                        ylab="Non-migratory species richness",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="olivedrab3", col="khaki2",
+                        boxwex=0.7, boxcol= "khaki2", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 1.2, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wdata$migrat_no_abund~wdata$urban_type_3, outline=FALSE, # OUTLIERS NOT PLOTTED!
+                        ylab="Non-migratory species abundance",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="olivedrab3", col="khaki2",
+                        boxwex=0.7, boxcol= "khaki2", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 3, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wdata$migrat_no_simpson~wdata$urban_type_3, outline=TRUE,
+                        ylab="Non-migratory species diversity (Simpson index)",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="olivedrab3", col="khaki2",
+                        boxwex=0.7, boxcol= "khaki2", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.025, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+
+##### ~~~~~~~~~~~ Migratory species ----
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wdata$migrat_yes_richness~wdata$urban_type_3, outline=TRUE,
+                        ylab="Migratory species richness",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="olivedrab3", col="khaki2",
+                        boxwex=0.7, boxcol= "khaki2", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wdata$migrat_yes_abund~wdata$urban_type_3, outline=FALSE, # OUTLIERS NOT PLOTTED!
+                        ylab="Migratory species abundance",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="olivedrab3", col="khaki2",
+                        boxwex=0.7, boxcol= "khaki2", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 2, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wdata$migrat_yes_simpson~wdata$urban_type_3, outline=TRUE,
+                        ylab="Migratory species diversity (Simpson index)",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="olivedrab3", col="khaki2",
+                        boxwex=0.7, boxcol= "khaki2", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+
+
+
+##### *** 2.1.2.7. Vulnerable birds diversity ----
+##### ~~~~~~~~~~~ NTVU species ----
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wdata$conserv_richness~wdata$urban_type_3, outline=TRUE,
+                        ylab="Vulnerable species richness",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="olivedrab3", col="khaki2",
+                        boxwex=0.7, boxcol= "khaki2", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.4, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wdata$conserv_abund~wdata$urban_type_3, outline=FALSE, # OUTLIERS NOT PLOTTED!
+                        ylab="Vulnerable species abundance",
+                        xlab="", las=2,
+                        xaxt = "n", # Do not plot the default labels
+                        type="n", border="olivedrab3", col="khaki2",
+                        boxwex=0.7, boxcol= "khaki2", boxlwd=0.01, # I cannot set 'boxlwd=0' so I assign it the
+                        # same colour as the rest of the box to make it invisible.
+                        lty=1, staplewex=0,
+                        whisklwd=2, medlwd=2, pch=20, cex=1.25)
+tick <- seq_along(bp$names)
+axis(1, at = tick, labels = FALSE)
+text(x = tick, y = par("usr")[3] - 0.5, labels = bp$names, # For the distance to the axis, you have to tune
+     # the number that is subtracted.
+     srt = 45, xpd = TRUE, adj = 1, font = 3)
+
+
+par(font.lab = 4, font.axis=6, font.lab= 2,
+    mar = c(10, 4, 3, 2) + 0.5,
+    bty="l", fg="gray4")
+bp <- graphics::boxplot(wdata$conserv_simpson~wdata$urban_type_3, outline=TRUE,
+                        ylab="Vulnerable species diversity (Simpson index)",
                         xlab="", las=2,
                         xaxt = "n", # Do not plot the default labels
                         type="n", border="olivedrab3", col="khaki2",
