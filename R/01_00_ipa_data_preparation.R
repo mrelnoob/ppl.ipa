@@ -259,7 +259,8 @@ ipa_metrics %>% dplyr::group_by(urban_type_3) %>%
 
 ## Renaming and reordering factor levels:
 ipa_metrics$urban_type_3 <- factor(ipa_metrics$urban_type_3,
-                                   levels=c("7", "4", "3", "6", "2", "5", "1"))
+                                   levels=c("7", "4", "3", "6", "2", "5", "1")) # This code reorders the
+# factor levels in the desired order.
 levels(ipa_metrics$urban_type_3) <- c("urban_parks",
                                       "industrial_commercial",
                                       "city_centre",
@@ -429,7 +430,8 @@ zzz <- res.pca$ind$coord[,1]
 wtraits$repro <- zzz # This variable opposes birds that lay few large eggs and fledge late (large values) vs
 # birds that lay many small eggs with early fledging juveniles (~slow vs quick POLS)!
 
-wtraits %>% dplyr::relocate(morpho, .after = body_mass) %>%
+wtraits %>%
+  dplyr::relocate(morpho, .after = body_mass) %>%
   dplyr::relocate(beak_size, .after = brain_ratio) %>%
   dplyr::relocate(repro, .after = clutch_nb) %>%
   dplyr::select(-body_mass, -tarsus_length, -wing_length, -tail_length,
@@ -679,6 +681,42 @@ ipa_data$soc_greg_simpson <- vegan::diversity(x = ipa_fun_groups$fg_gregarious, 
 ipa_data$soc_smallgrp_richness <- apply(ipa_fun_groups$fg_smallgroups > 0, 1, sum)
 ipa_data$soc_smallgrp_abund <- apply(ipa_fun_groups$fg_smallgroups, 1, sum)
 ipa_data$soc_smallgrp_simpson <- vegan::diversity(x = ipa_fun_groups$fg_smallgroups, index = "simpson")
+
+
+
+##### *** 1.2.2.7. Migratory diversity ----
+ttt <- functional_groups(community_table = ipa_data, grouping_factor = ipa_traits$migratory)
+
+ipa_fun_groups[[19]] <- ttt[[1]] # Non-migratory species.
+names(ipa_fun_groups)[19] <- "fg_resident"
+ipa_fun_groups[[20]] <- ttt[[2]] # Migratory species.
+names(ipa_fun_groups)[20] <- "fg_migratory"
+
+
+## For non-migratory species:
+ipa_data$migrat_no_richness <- apply(ipa_fun_groups$fg_resident > 0, 1, sum)
+ipa_data$migrat_no_abund <- apply(ipa_fun_groups$fg_resident, 1, sum)
+ipa_data$migrat_no_simpson <- vegan::diversity(x = ipa_fun_groups$fg_resident, index = "simpson")
+
+## For migratory species:
+ipa_data$migrat_yes_richness <- apply(ipa_fun_groups$fg_migratory > 0, 1, sum)
+ipa_data$migrat_yes_abund <- apply(ipa_fun_groups$fg_migratory, 1, sum)
+ipa_data$migrat_yes_simpson <- vegan::diversity(x = ipa_fun_groups$fg_migratory, index = "simpson")
+
+
+
+##### *** 1.2.2.8. Conservation status group diversity ----
+ttt <- functional_groups(community_table = ipa_data, grouping_factor = ipa_traits$iucn_status)
+
+ipa_fun_groups[[21]] <- cbind(ttt[[3]], ttt[[4]]) # For species that are NT or VU.
+names(ipa_fun_groups)[21] <- "fg_ntvu"
+
+
+
+## For non-migratory species:
+ipa_data$conserv_richness <- apply(ipa_fun_groups$fg_ntvu > 0, 1, sum)
+ipa_data$conserv_abund <- apply(ipa_fun_groups$fg_ntvu, 1, sum)
+ipa_data$conserv_simpson <- vegan::diversity(x = ipa_fun_groups$fg_ntvu, index = "simpson")
 
 rm(ttt, wphylo_dist, rphylo_dist, functional_groups)
 
