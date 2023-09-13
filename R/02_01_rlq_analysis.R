@@ -205,12 +205,12 @@ dev.off()
 o.rlq <- ade4::rlq(dudiR = otable.r_pca, dudiL = otable.l_coa, dudiQ = otable.q_hsa,
                    scannf = FALSE, nf = 2)
 ## To test the significance of the global link R-Q with a permutation test:
-ade4::randtest(xtest = o.rlq) # DOES NOT WORK WITH MY DATA?!!!!!
+# ade4::randtest(xtest = o.rlq) # DOES NOT WORK WITH MY DATA. WHY???
 
 summary(o.rlq) # Cumulative projected inertia for the 2 first RLQ axes is 93%!
 plot(o.rlq) # The graph produced shows:
-# * The ordination of sites (upper left) and species (upper right).
-# * The contributions of the environmental variables (lower left) and traits (lower right)
+# * The ordination (row scores) of sites (upper left) and species (upper right).
+# * The contributions of the environmental variables (lower left) and traits (lower right).
 ## We can see that the 2 RLQ axes are well linked to the 2 PCA axis of the R table (as shown by the left
 # correlation circle and by the high inertia/co-inertia ratio for R in the summary). The link is quite
 # weaker for the HSA axes of the Q table.
@@ -249,6 +249,5 @@ ade4::s.label(dfxy = o.rlq$li, add.plot = TRUE) # 'li' contains the coordinates 
 
 
 
-##### P.11 du tuto 2009
 
 

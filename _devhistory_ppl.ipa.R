@@ -186,7 +186,8 @@ dir.create("R")
 ##### * 1.4. Creating scripts for custom functions -----------------------------
 # ---------------------------------------------------------------------------- #
 
-file.create(... = "R/01_00_ipa_data_analyses.R")
+file.create(... = "R/01_00_ipa_data_preparation.R")
+file.create(... = "R/01_01_ipa_explo_analyses.R")
 file.create(... = "R/02_01_rlq_analysis.R")
 # ATTENTION: Je devrais probablement créer plus de scripts pour être propre (à voir quand je TARGET)§§§
 # ATTENTION: Je devrais probablement créer plus de scripts pour être propre (à voir quand je TARGET)§§§
