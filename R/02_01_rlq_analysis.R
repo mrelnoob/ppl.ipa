@@ -13,6 +13,9 @@
 dev.off()
 library(ade4)
 
+
+### ATTEMPT WITHOUT OUTLIER SITES???: IPA074, 071? Those without buildings?????
+
 wdata <- ipa_data[,4:49]
 rownames(wdata) <- ipa_data$id_ipa
 
@@ -224,16 +227,29 @@ randtest(xtest = o.rlq) # Remember, it only works if the ordinated objects have 
 ## Model 2 is significant (p = 0.013) but not model 4 (p = 0.18)!
 
 summary(o.rlq) # Cumulative projected inertia for the 2 first RLQ axes is 91.3%!
+## The "Inertia & coinertia R" section shows the projected inertia of the 1st axis (and the 1-2 axes plan) of
+## the environmental variables ordination (here a PCA on the R table) onto the RLQ axes. The "max" column
+## shows the optimum inertia that could be achieved while the "ratio" is "inertia/max"!
+## The "Inertia & coinertia Q" section is the same thing but for the trait ordination (here a HSA on the
+## Q table).
+# The ratios from these two sections of the summary highlight the degree of matching between the axes of the
+# simple ordinations and those of the RLQ analyses (and, somehow, their contributions). They can be close but
+# not necessarily. The same information is depicted on the correlation circles of the plot. Here, we can see
+# that the 2 RLQ axes are well linked to the 2 PCA axis of the R table (so they pretty much ordinate sites
+# the same way) but the relationship is quite weaker for the HSA axes of the Q table.
+## The "Correlation L" section relates (I think) to the correlation between the COA axes (from the L table)
+## and the RLQ axes, that is to the ordination axes that account for both the environment and the traits.
+# We can see that the factorial coordinates on the RLQ axes are far from being optimal, probably because the
+# environment does not explain all the trait (and species) distribution, which is quite logical.
+
 dev.new()
 plot(o.rlq) # The graph produced shows:
 # * The ordination (row scores) of sites (upper left) and species (upper right).
 # * The contributions of the environmental variables (lower left) and traits (lower right).
-## We can see that the 2 RLQ axes are well linked to the 2 PCA axis of the R table (as shown by the left
-# correlation circle and by the high inertia/co-inertia ratio for R in the summary). The link is quite
-# weaker for the HSA axes of the Q table representing the trait-species relationship.
-
 dev.off()
+
 ## Interpretation of the link between R and the RLQ axes (projection of the environmental variables):
+dev.new()
 s.arrow(dfxy = o.rlq$l1, boxes = FALSE) # 'l1' contains the normed scores of the R variables.
 s.label(dfxy = o.rlq$mR, add.plot = TRUE) # 'mR' contains the normed scores of sites.
 dev.new()
@@ -243,9 +259,10 @@ s.value(dfxy = xy, z = o.rlq$lR[,1], # 'lR' is the row coordinates of the R tabl
 s.value(dfxy = xy, z = o.rlq$lR[,2],
               addaxes = FALSE, include.origin = FALSE)
 dev.off()
-## As with R_pca's 1st axis, the 1st RLQ axis seems to oppose centre and periphery and thus partly represents
-# a building density gradient. Archetypal sites with HIGH values on this axis are urban parks or some urban
-# fabrics with low building density.
+## As with the (R) PCA's 1st axis, the 1st RLQ axis seems to oppose centre and periphery and thus partly
+# represents a building density gradient. Archetypal sites with HIGH values on this axis are urban parks or
+# some urban fabrics with low building density and possibly high vegetation cover (e.g. the campus, some
+# industrial areas).
 ## The 2nd axis is harder to interpret. It opposes sites with large gaps between buildings, and/or rather
 # low buildings (sometimes small), to sites with much vegetation, high grassland connectivity, high plant
 # diversity. Archetypal sites with HIGH values are periurban industrial or commercial sites or some housing
@@ -258,7 +275,10 @@ s.arrow(dfxy = o.rlq$c1, boxes = FALSE) # 'c1' contains the normed scores of the
 s.label(dfxy = o.rlq$mQ, add.plot = TRUE) # 'mQ' contains the normed scores of species.
 ## The first axis
 
-# AFINIR§§§§ Interprétation Q sur RLQ!!! + P.15 tuto + Tuto 2013 + Braga???
+# AFINIR§§§§ Interprétation Q sur RLQ!!! Tuto 2013 + Braga??? --> SUPPRIMER SITES outliers????
+# AFINIR§§§§ Interprétation Q sur RLQ!!! Tuto 2013 + Braga??? --> SUPPRIMER SITES outliers????
+# AFINIR§§§§ Interprétation Q sur RLQ!!! Tuto 2013 + Braga??? --> SUPPRIMER SITES outliers????
+# AFINIR§§§§ Interprétation Q sur RLQ!!! Tuto 2013 + Braga??? --> SUPPRIMER SITES outliers????
 # Je commence à me dire que certains sites devraient être retirés car ils tirent trop les analyses! IPA074+071
 # voire tous les ESV??? ou trucs trop périphériques???
 
@@ -270,7 +290,7 @@ s.label(dfxy = o.rlq$li, add.plot = TRUE) # 'li' contains the coordinates of the
 # Note that, for factors, arrows can go well beyond one and far exceed the arrows of numeric variables, but
 # that doesn't mean that their importance exceed that of the latter, they're just plotted on different scales
 # (or at least, I think).
-## See also Jacquet & Prodon (2014) [in French].
+## See also Jacquet & Prodon (2014) [in French] + book Thioulouse 2018 ???
 
 
 
