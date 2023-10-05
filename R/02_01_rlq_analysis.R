@@ -6,8 +6,13 @@
 ##### 0. Data import and preparation #####
 # -------------------------------------- #
 
-# For now, you have to run the previous script to load the required data... I'll change it later!
+## For now, you have to run the previous script to load the required data... I'll change it later!
+## Besides, for this script, I'll exceptionally load the {ade4} package because the latter was not written to
+# allow the use of the pkg::fun() syntax I usually use. The use of this syntax caused error messages when I ran
+# permutation tests on my factorial analyses (see code below). I had to ask the developers of the package.
 dev.off()
+library(ade4)
+
 wdata <- ipa_data[,4:49]
 rownames(wdata) <- ipa_data$id_ipa
 
@@ -19,8 +24,8 @@ ipa_metrics[,c("species_richness", "evenness_class",
 # of environmental and urban metrics as we cannot test all combinations. Note that I removed the "bconti"
 # variable because it contained true NA which are not allowed by some ordination analyses. I also removed
 # the light and noise pollution variables as the urban metrics should satisfyingly approximate them. Finally,
-# note also that I only keep 3 connectivity metrics (CF metrics) that better reflect large scale multi-
-# generational spatial dynamics than the F-metrics.
+# note also that I only keep 3 connectivity metrics - CF metrics - that better reflect large scale multi-
+# generational dispersal dynamics than the F-metrics.
 rownames(wmetrics) <- ipa_metrics$id_ipa
 
 wmeta_com$traits %>% dplyr::select(-development_mode, -trophic_niche, -foraging_behaviour,
@@ -60,7 +65,7 @@ xy <- cbind(ipa_metrics$coord_x, ipa_metrics$coord_y) # IPA sites coordinates.
 # ----------------------- #
 # *----------------------------------------------------* #####
 # ---------------------------------------------------------------------------- #
-##### * 1.1. Preliminary two-tables analyses -----------------------------------
+##### * 1.1. Preliminary one-table analyses ------------------------------------
 # ---------------------------------------------------------------------------- #
 
 ## A preliminary step of RLQ analysis is to perform the separate analyses of each table. Because of the two
@@ -77,29 +82,29 @@ xy <- cbind(ipa_metrics$coord_x, ipa_metrics$coord_y) # IPA sites coordinates.
 #   test1 <- chisq.test(wdata)
 #   test1$statistic # X² = 13019.06!
 # The CoA decompose this link across several axes:
-otable.l_coa <- ade4::dudi.coa(df = wdata, scannf = FALSE, nf = 2) # 'otable' is for "ordination table", 'l'
+otable.l_coa <- dudi.coa(df = wdata, scannf = FALSE, nf = 2) # 'otable' is for "ordination table", 'l'
 # is for the L table, and 'coa' is for Correspondence Analysis! The same logic will be followed in the next
 # sections.
 # sum(otable.l_coa$eig)*sum(wdata) # Yields the same value!
-ade4::scatter(x = otable.l_coa, poseig = "bottomright")
-ade4::sco.distri(score = otable.l_coa$l1[,1], df = wdata, labels = colnames(wdata)) # To get the conditional
+scatter(x = otable.l_coa, poseig = "bottomright")
+sco.distri(score = otable.l_coa$l1[,1], df = wdata, labels = colnames(wdata)) # To get the conditional
 # variances of the columns (species) on the first axis (i.e. something like the variances of the species
 # abundances in the sites represented by this axis in which they occur).
 ## For some reason, there consistently is an overlap between "Falco subbuteo" and "Cuculus canorus". A possible
 # reason could be that they are double-ones (they co-occur in the same single site). Moreover, some species
 # seem to have quite variable abundances among sites, especially the "aerial" species (e.g. Apus apus).
-ade4::sco.distri(otable.l_coa$c1[,1], df = data.frame(t(wdata)), labels = rownames(wdata)) # To get the
+sco.distri(otable.l_coa$c1[,1], df = data.frame(t(wdata)), labels = rownames(wdata)) # To get the
 # conditional variances of the rows (sites) on the first axis (i.e. something like the variances, on this
 # axis, of the species of this site).
 ## On the 1st axis, IPA074 seem to have an oddly large variance of species abundances, but that seems normal
 # as it is solely drawn by the high abundances of some "aerial" species.
 par(mfrow = c(1, 2))
-ade4::sco.label(otable.l_coa$co[, 1], lab = colnames(wdata), reverse = TRUE,
+sco.label(otable.l_coa$co[, 1], lab = colnames(wdata), reverse = TRUE,
           boxes = FALSE, horizontal = FALSE, lim = c(-2.5, 2.5), pos.lab = 0.3)
-ade4::sco.label(otable.l_coa$l1[, 1], horizontal = FALSE, lim = c(-2.5, 2.5),
+sco.label(otable.l_coa$l1[, 1], horizontal = FALSE, lim = c(-2.5, 2.5),
           boxes = FALSE)
-ade4::s.value(xy, otable.l_coa$l1[, 1], addaxes = FALSE, include.origin = FALSE)
-ade4::s.value(xy, otable.l_coa$l1[, 2], addaxes = FALSE, include.origin = FALSE) # Ordinations suggest
+s.value(xy, otable.l_coa$l1[, 1], addaxes = FALSE, include.origin = FALSE)
+s.value(xy, otable.l_coa$l1[, 2], addaxes = FALSE, include.origin = FALSE) # Ordinations suggest
 # the existence of a rather clear spatial structure.
 dev.off()
 
@@ -127,9 +132,9 @@ wmetrics %>% dplyr::mutate(plant_evenness = dplyr::case_when(
   dplyr::relocate(plant_evenness, .after = plant_richness) %>%
   dplyr::select(-evenness_class) -> wmetrics
 
-otable.r_pca <- ade4::dudi.pca(df = wmetrics, row.w = otable.l_coa$lw, # Row weights.
+otable.r_pca <- dudi.pca(df = wmetrics, row.w = otable.l_coa$lw, # Row weights.
                              scannf = FALSE, nf = 2)
-ade4::scatter(x = otable.r_pca)
+scatter(x = otable.r_pca)
 summary(otable.r_pca) # Indicates that the first 2 axes account for ~27.3% and ~23.2% of the total inertia.
 otable.r_pca$c1 %>% dplyr::arrange(desc(CS2)) # To get the variable loadings on the axes (on descending order
 # according to the second axis 'CS2' values).
@@ -142,13 +147,13 @@ otable.r_pca$c1 %>% dplyr::arrange(desc(CS2)) # To get the variable loadings on 
 #     forest patches, against sites characterised by many small buildings (e.g. houses), higher shrub habitat
 #     proportions and connectivity, higher woody plant diversity (e.g. ornamentals), and quite high
 #     grassland connectivity.
-ade4::inertia.dudi(x = otable.r_pca, row.inertia = TRUE, col.inertia = TRUE) # To get the contributions
+inertia.dudi(x = otable.r_pca, row.inertia = TRUE, col.inertia = TRUE) # To get the contributions
 # of rows and columns in the ordination.
 ## Some sites seem quite (overly?) influential: e.g. IPA056 and IPA071. Otherwise, we could say that the
 # first 2 axes adequately describe a large portion of the urban gradient.
 par(mfrow = c(1, 2))
-ade4::s.value(xy, otable.r_pca$l1[, 1], addaxes = FALSE, include.origin = FALSE)
-ade4::s.value(xy, otable.r_pca$l1[, 2], addaxes = FALSE, include.origin = FALSE) # Ordinations once again
+s.value(xy, otable.r_pca$l1[, 1], addaxes = FALSE, include.origin = FALSE)
+s.value(xy, otable.r_pca$l1[, 2], addaxes = FALSE, include.origin = FALSE) # Ordinations once again
 # show some spatial patterns confirming our interpretation. The spatial arrangement of the 2nd axis values
 # furthermore emphasises the fact that urban gradients go beyond simple centre-periphery or dense-not dense
 # gradients.
@@ -162,9 +167,9 @@ dev.off()
 # As the species x traits (Q table) contains both quantitative and (one) qualitative variables , we should
 # ordinate it using an Hill and Smith's Analysis. Furthermore, to enable the coupling of this table with
 # the species table, we also have to weigh lines using the COLUMN WEIGHTS from the CoA.
-otable.q_hsa <- ade4::dudi.hillsmith(df = wtraits, row.w = otable.l_coa$cw,
+otable.q_hsa <- dudi.hillsmith(df = wtraits, row.w = otable.l_coa$cw,
                                      scannf = FALSE, nf = 2)
-ade4::scatter(x = otable.q_hsa)
+scatter(x = otable.q_hsa)
 summary(otable.q_hsa) # Indicates that the first 2 axes account for ~31% and ~18% of the projected inertia.
 otable.q_hsa$c1 %>% dplyr::arrange(desc(CS1)) # Or CS2.
 # --> The first axis seems is rather hard to interpret as it opposes birds with many different attributes,
@@ -177,19 +182,28 @@ dev.off()
 
 
 
-##### ** 1.1.4. RL and QL tests (Co-Inertia Analysis) ----
+
+
+# *----------------------------------------------------* #####
+# ---------------------------------------------------------------------------- #
+##### * 1.2. Preliminary two-table analyses ------------------------------------
+# ---------------------------------------------------------------------------- #
+
+##### ** 1.2.1. RL and QL tests (Co-Inertia Analysis) ----
 # ________________________________________________________
 
-# ## To investigate if the links between species and environment or between traits and distribution are
-# # strong and significant, we can run Co-Inertia Analyses (COIA):
-# otable.rl_coia <- ade4::coinertia(dudiX = otable.l_coa, dudiY = otable.r_pca, scannf = FALSE, nf = 2)
-# otable.l_coa2 <- ade4::dudi.coa(df = t(wdata), scannf = FALSE, nf = 2) # Same CoA but with a transposed matrix.
-# otable.ql_coia <- ade4::coinertia(dudiX = otable.l_coa2, dudiY = otable.q_hsa, scannf = FALSE, nf = 2)
-#
-# test1 <- ade4::randtest(otable.rl_coia, fixed = 1)
-# test2 <- ade4::randtest(otable.ql_coia, fixed = 1)
-# ## That doesn't work. The 'randtest' function returns an unfathomable error message. So I'll skip this part
-# # for now.
+## To investigate if the links between species and environment or between traits and distributions are
+# strong and significant, we can run Co-Inertia Analyses (COIA):
+otable.rl_coia <- coinertia(dudiX = otable.l_coa, dudiY = otable.r_pca, scannf = FALSE, nf = 2)
+otable.l_coa2 <- dudi.coa(df = t(wdata), scannf = FALSE, nf = 2) # Same CoA but with a transposed matrix.
+otable.ql_coia <- coinertia(dudiX = otable.l_coa2, dudiY = otable.q_hsa, scannf = FALSE, nf = 2)
+
+test1 <- randtest(otable.rl_coia, fixed = 1) # Remember, it only works if the ordinated objects have been
+# created by loading {ade4} and avoiding the pkg::fun() syntax!
+test2 <- randtest(otable.ql_coia, fixed = 1)
+# The first test is highly significant (p = 0.001) but the 2nd one does not work. It seems that the method is
+# not yet available for COIA between a Correspondence Analysis and a Hill & Smith Analysis. I hope it will
+# work for the RLQ analysis.
 
 
 
@@ -197,15 +211,17 @@ dev.off()
 
 # *------------------------------------------------* #####
 # ---------------------------------------------------------------------------- #
-##### * 1.2. Three-tables synthesis (RLQ) --------------------------------------
+##### * 1.3. Three-tables synthesis (RLQ Analysis) -----------------------------
 # ---------------------------------------------------------------------------- #
 
 ## RLQ analyses use the factorial analyses made in the preliminary steps to create its own ordinations,
 # but these new ordinations do not necessarily match the previous ones.
-o.rlq <- ade4::rlq(dudiR = otable.r_pca, dudiL = otable.l_coa, dudiQ = otable.q_hsa,
+o.rlq <- rlq(dudiR = otable.r_pca, dudiL = otable.l_coa, dudiQ = otable.q_hsa,
                    scannf = FALSE, nf = 2)
 ## To test the significance of the global link R-Q with a permutation test:
-# ade4::randtest(xtest = o.rlq) # DOES NOT WORK WITH MY DATA. WHY???
+randtest(xtest = o.rlq) # Remember, it only works if the ordinated objects have been created by loading {ade4}
+# and avoiding the pkg::fun() syntax!
+## Model 2 is significant (p = 0.013) but not model 4 (p = 0.18)!
 
 summary(o.rlq) # Cumulative projected inertia for the 2 first RLQ axes is 91.3%!
 dev.new()
@@ -214,17 +230,17 @@ plot(o.rlq) # The graph produced shows:
 # * The contributions of the environmental variables (lower left) and traits (lower right).
 ## We can see that the 2 RLQ axes are well linked to the 2 PCA axis of the R table (as shown by the left
 # correlation circle and by the high inertia/co-inertia ratio for R in the summary). The link is quite
-# weaker for the HSA axes of the Q table.
+# weaker for the HSA axes of the Q table representing the trait-species relationship.
 
 dev.off()
 ## Interpretation of the link between R and the RLQ axes (projection of the environmental variables):
-ade4::s.arrow(dfxy = o.rlq$l1, boxes = FALSE) # 'l1' contains the normed scores of the R variables.
-ade4::s.label(dfxy = o.rlq$mR, add.plot = TRUE) # 'mR' contains the normed scores of sites.
+s.arrow(dfxy = o.rlq$l1, boxes = FALSE) # 'l1' contains the normed scores of the R variables.
+s.label(dfxy = o.rlq$mR, add.plot = TRUE) # 'mR' contains the normed scores of sites.
 dev.new()
 par(mfrow = c(1, 2))
-ade4::s.value(dfxy = xy, z = o.rlq$lR[,1], # 'lR' is the row coordinates of the R table on the chosen RLQ axis.
+s.value(dfxy = xy, z = o.rlq$lR[,1], # 'lR' is the row coordinates of the R table on the chosen RLQ axis.
               addaxes = FALSE, include.origin = FALSE) # If we include the origin, the plot is too small.
-ade4::s.value(dfxy = xy, z = o.rlq$lR[,2],
+s.value(dfxy = xy, z = o.rlq$lR[,2],
               addaxes = FALSE, include.origin = FALSE)
 dev.off()
 ## As with R_pca's 1st axis, the 1st RLQ axis seems to oppose centre and periphery and thus partly represents
@@ -233,13 +249,13 @@ dev.off()
 ## The 2nd axis is harder to interpret. It opposes sites with large gaps between buildings, and/or rather
 # low buildings (sometimes small), to sites with much vegetation, high grassland connectivity, high plant
 # diversity. Archetypal sites with HIGH values are periurban industrial or commercial sites or some housing
-# buildings. Archetypal sites with LOW values are some low density residential development or even building areas located
-# on large scale vegetation corridors.
+# buildings. Archetypal sites with LOW values are some low density residential development or even building
+# areas located on large scale vegetation corridors.
 
 
 ## Interpretation of the link between Q and the RLQ axes (projection of the traits):
-ade4::s.arrow(dfxy = o.rlq$c1, boxes = FALSE) # 'c1' contains the normed scores of the Q variables.
-ade4::s.label(dfxy = o.rlq$mQ, add.plot = TRUE) # 'mQ' contains the normed scores of species.
+s.arrow(dfxy = o.rlq$c1, boxes = FALSE) # 'c1' contains the normed scores of the Q variables.
+s.label(dfxy = o.rlq$mQ, add.plot = TRUE) # 'mQ' contains the normed scores of species.
 ## The first axis
 
 # AFINIR§§§§ Interprétation Q sur RLQ!!! + P.15 tuto + Tuto 2013 + Braga???
@@ -248,9 +264,9 @@ ade4::s.label(dfxy = o.rlq$mQ, add.plot = TRUE) # 'mQ' contains the normed score
 
 
 ## To reproduce and enhance the two factorial projection plots:
-ade4::s.arrow(dfxy = o.rlq$c1, xlim = c(-1,1), boxes = FALSE) # 'c1' contains the normed scores (coordinates)
+s.arrow(dfxy = o.rlq$c1, xlim = c(-1,1), boxes = FALSE) # 'c1' contains the normed scores (coordinates)
 # of the traits.
-ade4::s.label(dfxy = o.rlq$li, add.plot = TRUE) # 'li' contains the coordinates of the environmental variables.
+s.label(dfxy = o.rlq$li, add.plot = TRUE) # 'li' contains the coordinates of the environmental variables.
 # Note that, for factors, arrows can go well beyond one and far exceed the arrows of numeric variables, but
 # that doesn't mean that their importance exceed that of the latter, they're just plotted on different scales
 # (or at least, I think).
