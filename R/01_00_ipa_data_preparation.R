@@ -730,6 +730,8 @@ rm(ttt, wphylo_dist, rphylo_dist, functional_groups)
 # * Explorer toutes les combinaisons possibles (avec les 2 typo de FU), d'abord graphiquement, puis stats
 # * Faire un rapport
 # * Faire analyse RLQ!!!!!
+# * -- Faire une 2ème RLQ avec des ratios de métriques, pour tester les combinaisons (et réduire le nombre de
+#      prédicteurs)???????
 # ** (Try and plot species accumulation curves????)
 # ---------------------------------------------------------------------------- #
 # ------------------------------- THE END ------------------------------------ #
