@@ -18,7 +18,7 @@ summary(wdata)
 
 ##### ~~~~~~~~~ For the bird species richness ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 
 # end_point = 0.5 + nrow(mtcars) + nrow(mtcars) - 1 #this is the line which does the trick (together with barplot "space = 1" parameter)
@@ -55,7 +55,7 @@ text(x = tick, y = par("usr")[3] - 1.5, labels = bp$names, # For the distance to
 
 ##### ~~~~~~~~~ For the bird species abundance ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 
 # end_point = 0.5 + nrow(mtcars) + nrow(mtcars) - 1 #this is the line which does the trick (together with barplot "space = 1" parameter)
@@ -79,7 +79,7 @@ text(x = tick, y = par("usr")[3] - 15, labels = bp$names, # For the distance to 
 
 ##### ~~~~~~~~~ For the bird species Shannon index ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 
 # end_point = 0.5 + nrow(mtcars) + nrow(mtcars) - 1 #this is the line which does the trick (together with barplot "space = 1" parameter)
@@ -103,7 +103,7 @@ text(x = tick, y = par("usr")[3] - 0.15, labels = bp$names, # For the distance t
 
 ##### ~~~~~~~~~ For the bird species Simpson index ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 
 # end_point = 0.5 + nrow(mtcars) + nrow(mtcars) - 1 #this is the line which does the trick (together with barplot "space = 1" parameter)
@@ -127,7 +127,7 @@ text(x = tick, y = par("usr")[3] - 0.025, labels = bp$names, # For the distance 
 
 ##### ~~~~~~~~~ For the bird species Pielou's evenness index ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 
 # end_point = 0.5 + nrow(mtcars) + nrow(mtcars) - 1 #this is the line which does the trick (together with barplot "space = 1" parameter)
@@ -157,7 +157,7 @@ text(x = tick, y = par("usr")[3] - 0.03, labels = bp$names, # For the distance t
 
 ##### ~~~~~~~~~ For the bird species richness ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 
 # end_point = 0.5 + nrow(mtcars) + nrow(mtcars) - 1 #this is the line which does the trick (together with barplot "space = 1" parameter)
@@ -181,7 +181,7 @@ text(x = tick, y = par("usr")[3] - 1.5, labels = bp$names, # For the distance to
 
 ##### ~~~~~~~~~ For the bird species abundance ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 
 # end_point = 0.5 + nrow(mtcars) + nrow(mtcars) - 1 #this is the line which does the trick (together with barplot "space = 1" parameter)
@@ -205,7 +205,7 @@ text(x = tick, y = par("usr")[3] - 15, labels = bp$names, # For the distance to 
 
 ##### ~~~~~~~~~ For the bird species Shannon index ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 
 # end_point = 0.5 + nrow(mtcars) + nrow(mtcars) - 1 #this is the line which does the trick (together with barplot "space = 1" parameter)
@@ -229,7 +229,7 @@ text(x = tick, y = par("usr")[3] - 0.15, labels = bp$names, # For the distance t
 
 ##### ~~~~~~~~~ For the bird species Simpson index ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 
 # end_point = 0.5 + nrow(mtcars) + nrow(mtcars) - 1 #this is the line which does the trick (together with barplot "space = 1" parameter)
@@ -253,7 +253,7 @@ text(x = tick, y = par("usr")[3] - 0.025, labels = bp$names, # For the distance 
 
 ##### ~~~~~~~~~ For the bird species Pielou's evenness index ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 
 # end_point = 0.5 + nrow(mtcars) + nrow(mtcars) - 1 #this is the line which does the trick (together with barplot "space = 1" parameter)
@@ -287,7 +287,7 @@ text(x = tick, y = par("usr")[3] - 0.03, labels = bp$names, # For the distance t
 
 ##### ~~~~~~~~~ For Rao's functional diversity index ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$rao_q~wdata$urban_type, outline=TRUE,
                         ylab="Rao's quadratic entropy index",
@@ -308,7 +308,7 @@ text(x = tick, y = par("usr")[3] - 0.025, labels = bp$names, # For the distance 
 
 ##### ~~~~~~~~~ For Rao's functional redundancy index ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$fun_redund~wdata$urban_type, outline=TRUE,
                         ylab="Functional redundancy",
@@ -329,7 +329,7 @@ text(x = tick, y = par("usr")[3] - 0.015, labels = bp$names, # For the distance 
 
 ##### ~~~~~~~~~ For Rao's phylogenetic diversity index ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$rao_phy~wdata$urban_type, outline=TRUE,
                         ylab="Rao's phylogenetic diversity index",
@@ -350,7 +350,7 @@ text(x = tick, y = par("usr")[3] - 0.025, labels = bp$names, # For the distance 
 
 ##### ~~~~~~~~~ For Rao's phylogenetic redundancy index ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$phy_redund~wdata$urban_type, outline=TRUE,
                         ylab="Phylogenetic redundancy",
@@ -371,7 +371,7 @@ text(x = tick, y = par("usr")[3] - 0.025, labels = bp$names, # For the distance 
 
 ##### ~~~~~~~~~ For DF functional richness index ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$fun_richness~wdata$urban_type, outline=TRUE,
                         ylab="Functional richness (FD)",
@@ -392,7 +392,7 @@ text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to
 
 ##### ~~~~~~~~~ For DF functional evenness index ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$fun_evenness~wdata$urban_type, outline=TRUE,
                         ylab="Functional evenness (FD)",
@@ -413,7 +413,7 @@ text(x = tick, y = par("usr")[3] - 0.03, labels = bp$names, # For the distance t
 
 ##### ~~~~~~~~~ For DF functional diversity index ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$fun_diversity~wdata$urban_type, outline=TRUE,
                         ylab="Functional diversity (FD)",
@@ -434,7 +434,7 @@ text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance t
 
 ##### ~~~~~~~~~ For DF functional dispersion index ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$fun_dispersion~wdata$urban_type, outline=TRUE,
                         ylab="Functional dispersion (FD)",
@@ -461,7 +461,7 @@ text(x = tick, y = par("usr")[3] - 0.02, labels = bp$names, # For the distance t
 
 ##### ~~~~~~~~~ For Rao's functional diversity index ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$rao_q~wdata$urban_type_3, outline=TRUE,
                         ylab="Rao's quadratic entropy index",
@@ -482,7 +482,7 @@ text(x = tick, y = par("usr")[3] - 0.025, labels = bp$names, # For the distance 
 
 ##### ~~~~~~~~~ For Rao's functional redundancy index ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$fun_redund~wdata$urban_type_3, outline=TRUE,
                         ylab="Functional redundancy",
@@ -503,7 +503,7 @@ text(x = tick, y = par("usr")[3] - 0.015, labels = bp$names, # For the distance 
 
 ##### ~~~~~~~~~ For Rao's phylogenetic diversity index ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$rao_phy~wdata$urban_type_3, outline=TRUE,
                         ylab="Rao's phylogenetic diversity index",
@@ -524,7 +524,7 @@ text(x = tick, y = par("usr")[3] - 0.025, labels = bp$names, # For the distance 
 
 ##### ~~~~~~~~~ For Rao's phylogenetic redundancy index ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$phy_redund~wdata$urban_type_3, outline=TRUE,
                         ylab="Phylogenetic redundancy",
@@ -545,7 +545,7 @@ text(x = tick, y = par("usr")[3] - 0.025, labels = bp$names, # For the distance 
 
 ##### ~~~~~~~~~ For DF functional richness index ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$fun_richness~wdata$urban_type_3, outline=TRUE,
                         ylab="Functional richness (FD)",
@@ -566,7 +566,7 @@ text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to
 
 ##### ~~~~~~~~~ For DF functional evenness index ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$fun_evenness~wdata$urban_type_3, outline=TRUE,
                         ylab="Functional evenness (FD)",
@@ -587,7 +587,7 @@ text(x = tick, y = par("usr")[3] - 0.03, labels = bp$names, # For the distance t
 
 ##### ~~~~~~~~~ For DF functional diversity index ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$fun_diversity~wdata$urban_type_3, outline=TRUE,
                         ylab="Functional diversity (FD)",
@@ -608,7 +608,7 @@ text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance t
 
 ##### ~~~~~~~~~ For DF functional dispersion index ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$fun_dispersion~wdata$urban_type_3, outline=TRUE,
                         ylab="Functional dispersion (FD)",
@@ -640,9 +640,9 @@ text(x = tick, y = par("usr")[3] - 0.02, labels = bp$names, # For the distance t
 ##### *** 2.1.1.1. Trophic guild diversity ----
 ##### ~~~~~~~~~~~ Carnivorous species ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
-bp <- graphics::boxplot(wdata$carni_richness~wdata$urban_type, outline=TRUE,
+bp <- graphics::boxplot(wdata$carni_richness/wdata$sp_richness~wdata$urban_type, outline=TRUE,
                         ylab="Carnivore species richness",
                         xlab="", las=2,
                         xaxt = "n", # Do not plot the default labels
@@ -653,13 +653,13 @@ bp <- graphics::boxplot(wdata$carni_richness~wdata$urban_type, outline=TRUE,
                         whisklwd=2, medlwd=2, pch=20, cex=1.25)
 tick <- seq_along(bp$names)
 axis(1, at = tick, labels = FALSE)
-text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to the axis, you have to tune
+text(x = tick, y = par("usr")[3] - 0.025, labels = bp$names, # For the distance to the axis, you have to tune
      # the number that is subtracted.
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$carni_abund~wdata$urban_type, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Carnivore species abundance",
@@ -678,7 +678,7 @@ text(x = tick, y = par("usr")[3] - 2, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$carni_simpson~wdata$urban_type, outline=TRUE,
                         ylab="Carnivore species diversity (Simpson index)",
@@ -699,7 +699,7 @@ text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to
 
 ##### ~~~~~~~~~~~ Herbivorous species ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$herbi_richness~wdata$urban_type, outline=TRUE,
                         ylab="Herbivore species richness",
@@ -718,7 +718,7 @@ text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$herbi_abund~wdata$urban_type, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Herbivore species abundance",
@@ -737,7 +737,7 @@ text(x = tick, y = par("usr")[3] - 2, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$herbi_simpson~wdata$urban_type, outline=TRUE,
                         ylab="Herbivore species diversity (Simpson index)",
@@ -758,7 +758,7 @@ text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to
 
 ##### ~~~~~~~~~~~ Omnivorous species ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$omni_richness~wdata$urban_type, outline=TRUE,
                         ylab="Omnivore species richness",
@@ -777,7 +777,7 @@ text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$omni_abund~wdata$urban_type, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Omnivore species abundance",
@@ -796,7 +796,7 @@ text(x = tick, y = par("usr")[3] - 3, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$omni_simpson~wdata$urban_type, outline=TRUE,
                         ylab="Omnivore species diversity (Simpson index)",
@@ -820,7 +820,7 @@ text(x = tick, y = par("usr")[3] - 0.06, labels = bp$names, # For the distance t
 ##### *** 2.1.1.2. Nesting guild diversity ----
 ##### ~~~~~~~~~~~ Cavity nesters ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$ncav_richness~wdata$urban_type, outline=TRUE,
                         ylab="Cavity nesters richness",
@@ -839,7 +839,7 @@ text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$ncav_abund~wdata$urban_type, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Cavity nesters abundance",
@@ -858,7 +858,7 @@ text(x = tick, y = par("usr")[3] - 3, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$ncav_simpson~wdata$urban_type, outline=TRUE,
                         ylab="Cavity nesters diversity (Simpson index)",
@@ -879,7 +879,7 @@ text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to
 
 ##### ~~~~~~~~~~~ Tree nesters ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$ntree_richness~wdata$urban_type, outline=TRUE,
                         ylab="Tree nesters richness",
@@ -898,7 +898,7 @@ text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$ntree_abund~wdata$urban_type, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Tree nesters abundance",
@@ -917,7 +917,7 @@ text(x = tick, y = par("usr")[3] - 3, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$ntree_simpson~wdata$urban_type, outline=TRUE,
                         ylab="Tree nesters diversity (Simpson index)",
@@ -938,7 +938,7 @@ text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to
 
 ##### ~~~~~~~~~~~ Shrub nesters ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$nshrub_richness~wdata$urban_type, outline=TRUE,
                         ylab="Shrub nesters richness",
@@ -957,7 +957,7 @@ text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$nshrub_abund~wdata$urban_type, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Shrub nesters abundance",
@@ -976,7 +976,7 @@ text(x = tick, y = par("usr")[3] - 3, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$nshrub_simpson~wdata$urban_type, outline=TRUE,
                         ylab="Shrub nesters diversity (Simpson index)",
@@ -997,7 +997,7 @@ text(x = tick, y = par("usr")[3] - 0.06, labels = bp$names, # For the distance t
 
 ##### ~~~~~~~~~~~ Building nesters ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$nbuild_richness~wdata$urban_type, outline=TRUE,
                         ylab="Building nesters richness",
@@ -1016,7 +1016,7 @@ text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$nbuild_abund~wdata$urban_type, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Building nesters abundance",
@@ -1035,7 +1035,7 @@ text(x = tick, y = par("usr")[3] - 3, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$nbuild_simpson~wdata$urban_type, outline=TRUE,
                         ylab="Building nesters diversity (Simpson index)",
@@ -1056,7 +1056,7 @@ text(x = tick, y = par("usr")[3] - 0.06, labels = bp$names, # For the distance t
 
 ##### ~~~~~~~~~~~ Ground nesters ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$nground_richness~wdata$urban_type, outline=TRUE,
                         ylab="Ground nesters richness",
@@ -1075,7 +1075,7 @@ text(x = tick, y = par("usr")[3] - 0.5, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$nground_abund~wdata$urban_type, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Ground nesters abundance",
@@ -1094,7 +1094,7 @@ text(x = tick, y = par("usr")[3] - 1, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$nground_simpson~wdata$urban_type, outline=TRUE,
                         ylab="Ground nesters diversity (Simpson index)",
@@ -1118,7 +1118,7 @@ text(x = tick, y = par("usr")[3] - 0.06, labels = bp$names, # For the distance t
 ##### *** 2.1.1.3. Foraging guild diversity ----
 ##### ~~~~~~~~~~~ Exclusive ground foragers ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$fexground_richness~wdata$urban_type, outline=TRUE,
                         ylab="Exclusive ground foragers richness",
@@ -1137,7 +1137,7 @@ text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$fexground_abund~wdata$urban_type, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Exclusive ground foragers abundance",
@@ -1156,7 +1156,7 @@ text(x = tick, y = par("usr")[3] - 3, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$fexground_simpson~wdata$urban_type, outline=TRUE,
                         ylab="Exclusive ground foragers diversity (Simpson index)",
@@ -1177,7 +1177,7 @@ text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to
 
 ##### ~~~~~~~~~~~ Ground foragers ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$fground_richness~wdata$urban_type, outline=TRUE,
                         ylab="Ground foragers richness",
@@ -1196,7 +1196,7 @@ text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$fground_abund~wdata$urban_type, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Ground foragers abundance",
@@ -1215,7 +1215,7 @@ text(x = tick, y = par("usr")[3] - 3, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$fground_simpson~wdata$urban_type, outline=TRUE,
                         ylab="Ground foragers diversity (Simpson index)",
@@ -1236,7 +1236,7 @@ text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to
 
 ##### ~~~~~~~~~~~ Lower strata foragers ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$flower_richness~wdata$urban_type, outline=TRUE,
                         ylab="Lower strata foragers richness",
@@ -1255,7 +1255,7 @@ text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$flower_abund~wdata$urban_type, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Lower strata foragers abundance",
@@ -1274,7 +1274,7 @@ text(x = tick, y = par("usr")[3] - 3, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$flower_simpson~wdata$urban_type, outline=TRUE,
                         ylab="Lower strata foragers diversity (Simpson index)",
@@ -1295,7 +1295,7 @@ text(x = tick, y = par("usr")[3] - 0.06, labels = bp$names, # For the distance t
 
 ##### ~~~~~~~~~~~ Upper strata foragers ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$fupper_richness~wdata$urban_type, outline=TRUE,
                         ylab="Upper strata foragers richness",
@@ -1314,7 +1314,7 @@ text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$fupper_abund~wdata$urban_type, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Upper strata foragers abundance",
@@ -1333,7 +1333,7 @@ text(x = tick, y = par("usr")[3] - 3, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$fupper_simpson~wdata$urban_type, outline=TRUE,
                         ylab="Upper strata foragers diversity (Simpson index)",
@@ -1357,7 +1357,7 @@ text(x = tick, y = par("usr")[3] - 0.06, labels = bp$names, # For the distance t
 ##### *** 2.1.1.4. Habitat preferences diversity ----
 ##### ~~~~~~~~~~~ Forest or woodland species ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$hab_forest_richness~wdata$urban_type, outline=TRUE,
                         ylab="Forest or woodland species richness",
@@ -1376,7 +1376,7 @@ text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$hab_forest_abund~wdata$urban_type, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Forest or woodland species abundance",
@@ -1395,7 +1395,7 @@ text(x = tick, y = par("usr")[3] - 3, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$hab_forest_simpson~wdata$urban_type, outline=TRUE,
                         ylab="Forest or woodland species diversity (Simpson index)",
@@ -1416,7 +1416,7 @@ text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to
 
 ##### ~~~~~~~~~~~ Shrub or grassland species ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$hab_shrub_richness~wdata$urban_type, outline=TRUE,
                         ylab="Shrub or grassland species richness",
@@ -1435,7 +1435,7 @@ text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$hab_shrub_abund~wdata$urban_type, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Shrub or grassland species abundance",
@@ -1454,7 +1454,7 @@ text(x = tick, y = par("usr")[3] - 3, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$hab_shrub_simpson~wdata$urban_type, outline=TRUE,
                         ylab="Shrub or grassland species diversity (Simpson index)",
@@ -1475,7 +1475,7 @@ text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to
 
 ##### ~~~~~~~~~~~ Rupestrian species ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$hab_rupest_richness~wdata$urban_type, outline=TRUE,
                         ylab="Rupestrian species richness",
@@ -1494,7 +1494,7 @@ text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$hab_rupest_abund~wdata$urban_type, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Rupestrian species abundance",
@@ -1513,7 +1513,7 @@ text(x = tick, y = par("usr")[3] - 3, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$hab_rupest_simpson~wdata$urban_type, outline=TRUE,
                         ylab="Rupestrian species diversity (Simpson index)",
@@ -1537,7 +1537,7 @@ text(x = tick, y = par("usr")[3] - 0.06, labels = bp$names, # For the distance t
 ##### *** 2.1.1.5. Social behaviour guild diversity ----
 ##### ~~~~~~~~~~~ Solitary species ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$soc_solit_richness~wdata$urban_type, outline=TRUE,
                         ylab="Solitary species richness",
@@ -1556,7 +1556,7 @@ text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$soc_solit_abund~wdata$urban_type, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Solitary species abundance",
@@ -1575,7 +1575,7 @@ text(x = tick, y = par("usr")[3] - 3, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$soc_solit_simpson~wdata$urban_type, outline=TRUE,
                         ylab="Solitary species diversity (Simpson index)",
@@ -1596,7 +1596,7 @@ text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to
 
 ##### ~~~~~~~~~~~ Gregarious species ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$soc_greg_richness~wdata$urban_type, outline=TRUE,
                         ylab="Gregarious species richness",
@@ -1615,7 +1615,7 @@ text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$soc_greg_abund~wdata$urban_type, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Gregarious species abundance",
@@ -1634,7 +1634,7 @@ text(x = tick, y = par("usr")[3] - 5, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$soc_greg_simpson~wdata$urban_type, outline=TRUE,
                         ylab="Gregarious species diversity (Simpson index)",
@@ -1655,7 +1655,7 @@ text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to
 
 ##### ~~~~~~~~~~~ Small grouped species ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$soc_smallgrp_richness~wdata$urban_type, outline=TRUE,
                         ylab="Small grouped species richness",
@@ -1674,7 +1674,7 @@ text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$soc_smallgrp_abund~wdata$urban_type, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Small grouped species abundance",
@@ -1693,7 +1693,7 @@ text(x = tick, y = par("usr")[3] - 3, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$soc_smallgrp_simpson~wdata$urban_type, outline=TRUE,
                         ylab="Small grouped species diversity (Simpson index)",
@@ -1717,7 +1717,7 @@ text(x = tick, y = par("usr")[3] - 0.06, labels = bp$names, # For the distance t
 ##### *** 2.1.1.6. Migratory guild diversity ----
 ##### ~~~~~~~~~~~ Non-migratory species ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$migrat_no_richness~wdata$urban_type, outline=TRUE,
                         ylab="Non-migratory species richness",
@@ -1736,7 +1736,7 @@ text(x = tick, y = par("usr")[3] - 1.2, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$migrat_no_abund~wdata$urban_type, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Non-migratory species abundance",
@@ -1755,7 +1755,7 @@ text(x = tick, y = par("usr")[3] - 3, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$migrat_no_simpson~wdata$urban_type, outline=TRUE,
                         ylab="Non-migratory species diversity (Simpson index)",
@@ -1776,7 +1776,7 @@ text(x = tick, y = par("usr")[3] - 0.025, labels = bp$names, # For the distance 
 
 ##### ~~~~~~~~~~~ Migratory species ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$migrat_yes_richness~wdata$urban_type, outline=TRUE,
                         ylab="Migratory species richness",
@@ -1795,7 +1795,7 @@ text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$migrat_yes_abund~wdata$urban_type, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Migratory species abundance",
@@ -1814,7 +1814,7 @@ text(x = tick, y = par("usr")[3] - 2, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$migrat_yes_simpson~wdata$urban_type, outline=TRUE,
                         ylab="Migratory species diversity (Simpson index)",
@@ -1838,7 +1838,7 @@ text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to
 ##### *** 2.1.1.7. Vulnerable birds diversity ----
 ##### ~~~~~~~~~~~ NTVU species ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$conserv_richness~wdata$urban_type, outline=TRUE,
                         ylab="Vulnerable species richness",
@@ -1857,7 +1857,7 @@ text(x = tick, y = par("usr")[3] - 0.4, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$conserv_abund~wdata$urban_type, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Vulnerable species abundance",
@@ -1876,7 +1876,7 @@ text(x = tick, y = par("usr")[3] - 0.5, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$conserv_simpson~wdata$urban_type, outline=TRUE,
                         ylab="Vulnerable species diversity (Simpson index)",
@@ -1904,7 +1904,7 @@ text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to
 ##### *** 2.1.2.1. Trophic guild diversity ----
 ##### ~~~~~~~~~~~ Carnivorous species ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$carni_richness~wdata$urban_type_3, outline=TRUE,
                         ylab="Carnivore species richness",
@@ -1923,7 +1923,7 @@ text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$carni_abund~wdata$urban_type_3, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Carnivore species abundance",
@@ -1942,7 +1942,7 @@ text(x = tick, y = par("usr")[3] - 2, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$carni_simpson~wdata$urban_type_3, outline=TRUE,
                         ylab="Carnivore species diversity (Simpson index)",
@@ -1963,7 +1963,7 @@ text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to
 
 ##### ~~~~~~~~~~~ Herbivorous species ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$herbi_richness~wdata$urban_type_3, outline=TRUE,
                         ylab="Herbivore species richness",
@@ -1982,7 +1982,7 @@ text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$herbi_abund~wdata$urban_type_3, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Herbivore species abundance",
@@ -2001,7 +2001,7 @@ text(x = tick, y = par("usr")[3] - 2, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$herbi_simpson~wdata$urban_type_3, outline=TRUE,
                         ylab="Herbivore species diversity (Simpson index)",
@@ -2022,7 +2022,7 @@ text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to
 
 ##### ~~~~~~~~~~~ Omnivorous species ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$omni_richness~wdata$urban_type_3, outline=TRUE,
                         ylab="Omnivore species richness",
@@ -2041,7 +2041,7 @@ text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$omni_abund~wdata$urban_type_3, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Omnivore species abundance",
@@ -2060,7 +2060,7 @@ text(x = tick, y = par("usr")[3] - 3, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$omni_simpson~wdata$urban_type_3, outline=TRUE,
                         ylab="Omnivore species diversity (Simpson index)",
@@ -2084,7 +2084,7 @@ text(x = tick, y = par("usr")[3] - 0.06, labels = bp$names, # For the distance t
 ##### *** 2.1.2.2. Nesting guild diversity ----
 ##### ~~~~~~~~~~~ Cavity nesters ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$ncav_richness~wdata$urban_type_3, outline=TRUE,
                         ylab="Cavity nesters richness",
@@ -2103,7 +2103,7 @@ text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$ncav_abund~wdata$urban_type_3, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Cavity nesters abundance",
@@ -2122,7 +2122,7 @@ text(x = tick, y = par("usr")[3] - 3, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$ncav_simpson~wdata$urban_type_3, outline=TRUE,
                         ylab="Cavity nesters diversity (Simpson index)",
@@ -2143,7 +2143,7 @@ text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to
 
 ##### ~~~~~~~~~~~ Tree nesters ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$ntree_richness~wdata$urban_type_3, outline=TRUE,
                         ylab="Tree nesters richness",
@@ -2162,7 +2162,7 @@ text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$ntree_abund~wdata$urban_type_3, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Tree nesters abundance",
@@ -2181,7 +2181,7 @@ text(x = tick, y = par("usr")[3] - 3, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$ntree_simpson~wdata$urban_type_3, outline=TRUE,
                         ylab="Tree nesters diversity (Simpson index)",
@@ -2202,7 +2202,7 @@ text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to
 
 ##### ~~~~~~~~~~~ Shrub nesters ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$nshrub_richness~wdata$urban_type_3, outline=TRUE,
                         ylab="Shrub nesters richness",
@@ -2221,7 +2221,7 @@ text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$nshrub_abund~wdata$urban_type_3, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Shrub nesters abundance",
@@ -2240,7 +2240,7 @@ text(x = tick, y = par("usr")[3] - 3, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$nshrub_simpson~wdata$urban_type_3, outline=TRUE,
                         ylab="Shrub nesters diversity (Simpson index)",
@@ -2261,7 +2261,7 @@ text(x = tick, y = par("usr")[3] - 0.06, labels = bp$names, # For the distance t
 
 ##### ~~~~~~~~~~~ Building nesters ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$nbuild_richness~wdata$urban_type_3, outline=TRUE,
                         ylab="Building nesters richness",
@@ -2280,7 +2280,7 @@ text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$nbuild_abund~wdata$urban_type_3, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Building nesters abundance",
@@ -2299,7 +2299,7 @@ text(x = tick, y = par("usr")[3] - 3, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$nbuild_simpson~wdata$urban_type_3, outline=TRUE,
                         ylab="Building nesters diversity (Simpson index)",
@@ -2320,7 +2320,7 @@ text(x = tick, y = par("usr")[3] - 0.06, labels = bp$names, # For the distance t
 
 ##### ~~~~~~~~~~~ Ground nesters ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$nground_richness~wdata$urban_type_3, outline=TRUE,
                         ylab="Ground nesters richness",
@@ -2339,7 +2339,7 @@ text(x = tick, y = par("usr")[3] - 0.5, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$nground_abund~wdata$urban_type_3, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Ground nesters abundance",
@@ -2358,7 +2358,7 @@ text(x = tick, y = par("usr")[3] - 1, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$nground_simpson~wdata$urban_type_3, outline=TRUE,
                         ylab="Ground nesters diversity (Simpson index)",
@@ -2382,7 +2382,7 @@ text(x = tick, y = par("usr")[3] - 0.06, labels = bp$names, # For the distance t
 ##### *** 2.1.2.3. Foraging guild diversity ----
 ##### ~~~~~~~~~~~ Exclusive ground foragers ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$fexground_richness~wdata$urban_type_3, outline=TRUE,
                         ylab="Exclusive ground foragers richness",
@@ -2401,7 +2401,7 @@ text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$fexground_abund~wdata$urban_type_3, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Exclusive ground foragers abundance",
@@ -2420,7 +2420,7 @@ text(x = tick, y = par("usr")[3] - 3, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$fexground_simpson~wdata$urban_type_3, outline=TRUE,
                         ylab="Exclusive ground foragers diversity (Simpson index)",
@@ -2441,7 +2441,7 @@ text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance t
 
 ##### ~~~~~~~~~~~ Ground foragers ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$fground_richness~wdata$urban_type_3, outline=TRUE,
                         ylab="Ground foragers richness",
@@ -2460,7 +2460,7 @@ text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$fground_abund~wdata$urban_type_3, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Ground foragers abundance",
@@ -2479,7 +2479,7 @@ text(x = tick, y = par("usr")[3] - 3, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$fground_simpson~wdata$urban_type_3, outline=TRUE,
                         ylab="Ground foragers diversity (Simpson index)",
@@ -2500,7 +2500,7 @@ text(x = tick, y = par("usr")[3] - 0.03, labels = bp$names, # For the distance t
 
 ##### ~~~~~~~~~~~ Lower strata foragers ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$flower_richness~wdata$urban_type_3, outline=TRUE,
                         ylab="Lower strata foragers richness",
@@ -2519,7 +2519,7 @@ text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$flower_abund~wdata$urban_type_3, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Lower strata foragers abundance",
@@ -2538,7 +2538,7 @@ text(x = tick, y = par("usr")[3] - 3, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$flower_simpson~wdata$urban_type_3, outline=TRUE,
                         ylab="Lower strata foragers diversity (Simpson index)",
@@ -2559,7 +2559,7 @@ text(x = tick, y = par("usr")[3] - 0.06, labels = bp$names, # For the distance t
 
 ##### ~~~~~~~~~~~ Upper strata foragers ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$fupper_richness~wdata$urban_type_3, outline=TRUE,
                         ylab="Upper strata foragers richness",
@@ -2578,7 +2578,7 @@ text(x = tick, y = par("usr")[3] - 0.5, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$fupper_abund~wdata$urban_type_3, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Upper strata foragers abundance",
@@ -2597,7 +2597,7 @@ text(x = tick, y = par("usr")[3] - 2, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$fupper_simpson~wdata$urban_type_3, outline=TRUE,
                         ylab="Upper strata foragers diversity (Simpson index)",
@@ -2621,7 +2621,7 @@ text(x = tick, y = par("usr")[3] - 0.09, labels = bp$names, # For the distance t
 ##### *** 2.1.2.4. Habitat preferences diversity ----
 ##### ~~~~~~~~~~~ Forest or woodland species ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$hab_forest_richness~wdata$urban_type_3, outline=TRUE,
                         ylab="Forest or woodland species richness",
@@ -2640,7 +2640,7 @@ text(x = tick, y = par("usr")[3] - 1.2, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$hab_forest_abund~wdata$urban_type_3, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Forest or woodland species abundance",
@@ -2659,7 +2659,7 @@ text(x = tick, y = par("usr")[3] - 3, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$hab_forest_simpson~wdata$urban_type_3, outline=TRUE,
                         ylab="Forest or woodland species diversity (Simpson index)",
@@ -2680,7 +2680,7 @@ text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to
 
 ##### ~~~~~~~~~~~ Shrub or grassland species ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$hab_shrub_richness~wdata$urban_type_3, outline=TRUE,
                         ylab="Shrub or grassland species richness",
@@ -2699,7 +2699,7 @@ text(x = tick, y = par("usr")[3] - 0.3, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$hab_shrub_abund~wdata$urban_type_3, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Shrub or grassland species abundance",
@@ -2718,7 +2718,7 @@ text(x = tick, y = par("usr")[3] - 1, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$hab_shrub_simpson~wdata$urban_type_3, outline=TRUE,
                         ylab="Shrub or grassland species diversity (Simpson index)",
@@ -2739,7 +2739,7 @@ text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to
 
 ##### ~~~~~~~~~~~ Rupestrian species ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$hab_rupest_richness~wdata$urban_type_3, outline=TRUE,
                         ylab="Rupestrian species richness",
@@ -2758,7 +2758,7 @@ text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$hab_rupest_abund~wdata$urban_type_3, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Rupestrian species abundance",
@@ -2777,7 +2777,7 @@ text(x = tick, y = par("usr")[3] - 3, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$hab_rupest_simpson~wdata$urban_type_3, outline=TRUE,
                         ylab="Rupestrian species diversity (Simpson index)",
@@ -2801,7 +2801,7 @@ text(x = tick, y = par("usr")[3] - 0.09, labels = bp$names, # For the distance t
 ##### *** 2.1.2.5. Social behaviour guild diversity ----
 ##### ~~~~~~~~~~~ Solitary species ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$soc_solit_richness~wdata$urban_type_3, outline=TRUE,
                         ylab="Solitary species richness",
@@ -2820,7 +2820,7 @@ text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$soc_solit_abund~wdata$urban_type_3, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Solitary species abundance",
@@ -2839,7 +2839,7 @@ text(x = tick, y = par("usr")[3] - 3, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$soc_solit_simpson~wdata$urban_type_3, outline=TRUE,
                         ylab="Solitary species diversity (Simpson index)",
@@ -2860,7 +2860,7 @@ text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to
 
 ##### ~~~~~~~~~~~ Gregarious species ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$soc_greg_richness~wdata$urban_type_3, outline=TRUE,
                         ylab="Gregarious species richness",
@@ -2879,7 +2879,7 @@ text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$soc_greg_abund~wdata$urban_type_3, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Gregarious species abundance",
@@ -2898,7 +2898,7 @@ text(x = tick, y = par("usr")[3] - 5, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$soc_greg_simpson~wdata$urban_type_3, outline=TRUE,
                         ylab="Gregarious species diversity (Simpson index)",
@@ -2919,7 +2919,7 @@ text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance t
 
 ##### ~~~~~~~~~~~ Small grouped species ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$soc_smallgrp_richness~wdata$urban_type_3, outline=TRUE,
                         ylab="Small grouped species richness",
@@ -2938,7 +2938,7 @@ text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$soc_smallgrp_abund~wdata$urban_type_3, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Small grouped species abundance",
@@ -2957,7 +2957,7 @@ text(x = tick, y = par("usr")[3] - 2, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$soc_smallgrp_simpson~wdata$urban_type_3, outline=TRUE,
                         ylab="Small grouped species diversity (Simpson index)",
@@ -2981,7 +2981,7 @@ text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to
 ##### *** 2.1.2.6. Migratory guild diversity ----
 ##### ~~~~~~~~~~~ Non-migratory species ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$migrat_no_richness~wdata$urban_type_3, outline=TRUE,
                         ylab="Non-migratory species richness",
@@ -3000,7 +3000,7 @@ text(x = tick, y = par("usr")[3] - 1.2, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$migrat_no_abund~wdata$urban_type_3, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Non-migratory species abundance",
@@ -3019,7 +3019,7 @@ text(x = tick, y = par("usr")[3] - 3, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$migrat_no_simpson~wdata$urban_type_3, outline=TRUE,
                         ylab="Non-migratory species diversity (Simpson index)",
@@ -3040,7 +3040,7 @@ text(x = tick, y = par("usr")[3] - 0.025, labels = bp$names, # For the distance 
 
 ##### ~~~~~~~~~~~ Migratory species ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$migrat_yes_richness~wdata$urban_type_3, outline=TRUE,
                         ylab="Migratory species richness",
@@ -3059,7 +3059,7 @@ text(x = tick, y = par("usr")[3] - 0.8, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$migrat_yes_abund~wdata$urban_type_3, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Migratory species abundance",
@@ -3078,7 +3078,7 @@ text(x = tick, y = par("usr")[3] - 2, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$migrat_yes_simpson~wdata$urban_type_3, outline=TRUE,
                         ylab="Migratory species diversity (Simpson index)",
@@ -3102,7 +3102,7 @@ text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to
 ##### *** 2.1.2.7. Vulnerable birds diversity ----
 ##### ~~~~~~~~~~~ NTVU species ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$conserv_richness~wdata$urban_type_3, outline=TRUE,
                         ylab="Vulnerable species richness",
@@ -3121,7 +3121,7 @@ text(x = tick, y = par("usr")[3] - 0.4, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$conserv_abund~wdata$urban_type_3, outline=FALSE, # OUTLIERS NOT PLOTTED!
                         ylab="Vulnerable species abundance",
@@ -3140,7 +3140,7 @@ text(x = tick, y = par("usr")[3] - 0.5, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wdata$conserv_simpson~wdata$urban_type_3, outline=TRUE,
                         ylab="Vulnerable species diversity (Simpson index)",
@@ -3176,7 +3176,7 @@ text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to
 
 ##### ~~~~~~~~~~~ CWM nesting guild ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$nesting_pref_building~wdata$urban_type, outline=TRUE,
                         ylab="CWM abundance of building nesters",
@@ -3194,7 +3194,7 @@ text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$nesting_pref_building~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM abundance of building nesters",
@@ -3213,7 +3213,7 @@ text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$nesting_pref_cavity~wdata$urban_type, outline=TRUE,
                         ylab="CWM abundance of cavity nesters",
@@ -3231,7 +3231,7 @@ text(x = tick, y = par("usr")[3] - 0.07, labels = bp$names, # For the distance t
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$nesting_pref_cavity~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM abundance of cavity nesters",
@@ -3250,7 +3250,7 @@ text(x = tick, y = par("usr")[3] - 0.07, labels = bp$names, # For the distance t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$nesting_pref_treetop~wdata$urban_type, outline=TRUE,
                         ylab="CWM abundance of treetop nesters",
@@ -3268,9 +3268,9 @@ text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance t
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
-bp <- graphics::boxplot(wcwm$nesting_pref_cavity~wdata$urban_type_3, outline=TRUE,
+bp <- graphics::boxplot(wcwm$nesting_pref_treetop~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM abundance of treetop nesters",
                         xlab="", las=2,
                         xaxt = "n", # Do not plot the default labels
@@ -3281,13 +3281,13 @@ bp <- graphics::boxplot(wcwm$nesting_pref_cavity~wdata$urban_type_3, outline=TRU
                         whisklwd=2, medlwd=2, pch=20, cex=1.25)
 tick <- seq_along(bp$names)
 axis(1, at = tick, labels = FALSE)
-text(x = tick, y = par("usr")[3] - 0.07, labels = bp$names, # For the distance to the axis, you have to tune
+text(x = tick, y = par("usr")[3] - 0.025, labels = bp$names, # For the distance to the axis, you have to tune
      # the number that is subtracted.
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$nesting_pref_shrub~wdata$urban_type, outline=TRUE,
                         ylab="CWM abundance of shrub nesters",
@@ -3305,10 +3305,10 @@ text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance t
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$nesting_pref_shrub~wdata$urban_type_3, outline=TRUE,
-                        ylab="CWM abundance of treetop nesters",
+                        ylab="CWM abundance of shrub nesters",
                         xlab="", las=2,
                         xaxt = "n", # Do not plot the default labels
                         type="n", border="yellowgreen", col="darkcyan",
@@ -3318,7 +3318,7 @@ bp <- graphics::boxplot(wcwm$nesting_pref_shrub~wdata$urban_type_3, outline=TRUE
                         whisklwd=2, medlwd=2, pch=20, cex=1.25)
 tick <- seq_along(bp$names)
 axis(1, at = tick, labels = FALSE)
-text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance to the axis, you have to tune
+text(x = tick, y = par("usr")[3] - 0.025, labels = bp$names, # For the distance to the axis, you have to tune
      # the number that is subtracted.
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
@@ -3326,7 +3326,7 @@ text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance t
 
 ##### ~~~~~~~~~~~ CWM trophic level categories ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$trophic_level_carnivore~wdata$urban_type, outline=TRUE,
                         ylab="CWM abundance of carnivore birds",
@@ -3344,7 +3344,7 @@ text(x = tick, y = par("usr")[3] - 0.09, labels = bp$names, # For the distance t
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$trophic_level_carnivore~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM abundance of carnivore birds",
@@ -3363,7 +3363,7 @@ text(x = tick, y = par("usr")[3] - 0.09, labels = bp$names, # For the distance t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$trophic_level_herbivore~wdata$urban_type, outline=TRUE,
                         ylab="CWM abundance of herbivore birds",
@@ -3381,7 +3381,7 @@ text(x = tick, y = par("usr")[3] - 0.09, labels = bp$names, # For the distance t
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$trophic_level_herbivore~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM abundance of herbivore birds",
@@ -3400,7 +3400,7 @@ text(x = tick, y = par("usr")[3] - 0.09, labels = bp$names, # For the distance t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$trophic_level_omnivore~wdata$urban_type, outline=TRUE,
                         ylab="CWM abundance of omnivore birds",
@@ -3418,7 +3418,7 @@ text(x = tick, y = par("usr")[3] - 0.09, labels = bp$names, # For the distance t
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$trophic_level_omnivore~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM abundance of omnivore birds",
@@ -3439,7 +3439,7 @@ text(x = tick, y = par("usr")[3] - 0.09, labels = bp$names, # For the distance t
 
 ##### ~~~~~~~~~~~ CWM foraging behaviour ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$foraging_behaviour_hawking~wdata$urban_type, outline=TRUE,
                         ylab="CWM abundance of hawking birds",
@@ -3457,7 +3457,7 @@ text(x = tick, y = par("usr")[3] - 0.09, labels = bp$names, # For the distance t
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$foraging_behaviour_hawking~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM abundance of hawking birds",
@@ -3476,7 +3476,7 @@ text(x = tick, y = par("usr")[3] - 0.09, labels = bp$names, # For the distance t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$foraging_behaviour_scratching~wdata$urban_type, outline=TRUE,
                         ylab="CWM abundance of scratching birds",
@@ -3494,7 +3494,7 @@ text(x = tick, y = par("usr")[3] - 0.07, labels = bp$names, # For the distance t
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$foraging_behaviour_scratching~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM abundance of scratching birds",
@@ -3513,7 +3513,7 @@ text(x = tick, y = par("usr")[3] - 0.08, labels = bp$names, # For the distance t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$foraging_behaviour_gleaning~wdata$urban_type, outline=TRUE,
                         ylab="CWM abundance of gleaning birds",
@@ -3531,7 +3531,7 @@ text(x = tick, y = par("usr")[3] - 0.07, labels = bp$names, # For the distance t
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$foraging_behaviour_gleaning~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM abundance of gleaning birds",
@@ -3550,7 +3550,7 @@ text(x = tick, y = par("usr")[3] - 0.08, labels = bp$names, # For the distance t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$foraging_behaviour_probing~wdata$urban_type, outline=TRUE,
                         ylab="CWM abundance of probing birds",
@@ -3568,7 +3568,7 @@ text(x = tick, y = par("usr")[3] - 0.01, labels = bp$names, # For the distance t
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$foraging_behaviour_probing~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM abundance of probing birds",
@@ -3589,7 +3589,7 @@ text(x = tick, y = par("usr")[3] - 0.01, labels = bp$names, # For the distance t
 
 ##### ~~~~~~~~~~~ CWM foraging strata ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$foraging_strata_air~wdata$urban_type, outline=TRUE,
                         ylab="CWM abundance of air foraging birds",
@@ -3607,7 +3607,7 @@ text(x = tick, y = par("usr")[3] - 0.09, labels = bp$names, # For the distance t
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$foraging_strata_air~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM abundance of air foraging birds",
@@ -3626,7 +3626,7 @@ text(x = tick, y = par("usr")[3] - 0.09, labels = bp$names, # For the distance t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$foraging_strata_ground~wdata$urban_type, outline=TRUE,
                         ylab="CWM abundance of ground foraging birds",
@@ -3644,7 +3644,7 @@ text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$foraging_strata_ground~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM abundance of ground foraging birds",
@@ -3663,7 +3663,7 @@ text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$foraging_strata_ground_and_lower_strata~wdata$urban_type, outline=TRUE,
                         ylab="CWM abundance of ground and lower strata foraging birds",
@@ -3681,7 +3681,7 @@ text(x = tick, y = par("usr")[3] - 0.08, labels = bp$names, # For the distance t
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$foraging_strata_ground_and_lower_strata~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM abundance of ground and lower strata foraging birds",
@@ -3700,7 +3700,7 @@ text(x = tick, y = par("usr")[3] - 0.08, labels = bp$names, # For the distance t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$foraging_strata_lower_strata~wdata$urban_type, outline=TRUE,
                         ylab="CWM abundance of lower strata foraging birds",
@@ -3718,7 +3718,7 @@ text(x = tick, y = par("usr")[3] - 0.04, labels = bp$names, # For the distance t
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$foraging_strata_lower_strata~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM abundance of lower strata foraging birds",
@@ -3737,7 +3737,7 @@ text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$foraging_strata_midhigh_strata~wdata$urban_type, outline=TRUE,
                         ylab="CWM abundance of mid-height strata foraging birds",
@@ -3755,7 +3755,7 @@ text(x = tick, y = par("usr")[3] - 0.04, labels = bp$names, # For the distance t
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$foraging_strata_midhigh_strata~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM abundance of mid-height strata foraging birds",
@@ -3776,7 +3776,7 @@ text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance t
 
 ##### ~~~~~~~~~~~ CWM morphology and reproduction ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$morpho~wdata$urban_type, outline=TRUE,
                         ylab="CWM morphology value",
@@ -3794,7 +3794,7 @@ text(x = tick, y = par("usr")[3] - 0.4, labels = bp$names, # For the distance to
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$morpho~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM morphology value",
@@ -3813,7 +3813,7 @@ text(x = tick, y = par("usr")[3] - 0.3, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$brain_mass~wdata$urban_type, outline=TRUE,
                         ylab="CWM brain mass",
@@ -3831,7 +3831,7 @@ text(x = tick, y = par("usr")[3] - 0.4, labels = bp$names, # For the distance to
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$brain_mass~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM brain mass",
@@ -3850,7 +3850,7 @@ text(x = tick, y = par("usr")[3] - 0.3, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$brain_ratio~wdata$urban_type, outline=TRUE,
                         ylab="CWM brain ratio",
@@ -3868,7 +3868,7 @@ text(x = tick, y = par("usr")[3] - 0.002, labels = bp$names, # For the distance 
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$brain_ratio~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM brain ratio",
@@ -3887,7 +3887,7 @@ text(x = tick, y = par("usr")[3] - 0.0025, labels = bp$names, # For the distance
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$beak_size~wdata$urban_type, outline=TRUE,
                         ylab="CWM beak size value",
@@ -3905,7 +3905,7 @@ text(x = tick, y = par("usr")[3] - 0.3, labels = bp$names, # For the distance to
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$beak_size~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM beak size value",
@@ -3924,7 +3924,7 @@ text(x = tick, y = par("usr")[3] - 0.3, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$hwi~wdata$urban_type, outline=TRUE,
                         ylab="CWM hand-wing index",
@@ -3942,7 +3942,7 @@ text(x = tick, y = par("usr")[3] - 3, labels = bp$names, # For the distance to t
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$hwi~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM hand-wing index",
@@ -3961,7 +3961,7 @@ text(x = tick, y = par("usr")[3] - 3, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$kipps_distance~wdata$urban_type, outline=TRUE,
                         ylab="CWM kipps distance",
@@ -3979,7 +3979,7 @@ text(x = tick, y = par("usr")[3] - 5, labels = bp$names, # For the distance to t
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$kipps_distance~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM kipps distance",
@@ -3998,7 +3998,7 @@ text(x = tick, y = par("usr")[3] - 5, labels = bp$names, # For the distance to t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$clutch_nb~wdata$urban_type, outline=TRUE,
                         ylab="CWM clutch numbers (per year)",
@@ -4016,7 +4016,7 @@ text(x = tick, y = par("usr")[3] - 0.25, labels = bp$names, # For the distance t
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$clutch_nb~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM clutch numbers (per year)",
@@ -4035,7 +4035,7 @@ text(x = tick, y = par("usr")[3] - 0.25, labels = bp$names, # For the distance t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$repro~wdata$urban_type, outline=TRUE,
                         ylab="CWM reproductive strategy",
@@ -4053,7 +4053,7 @@ text(x = tick, y = par("usr")[3] - 0.25, labels = bp$names, # For the distance t
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$repro~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM reproductive strategy",
@@ -4074,7 +4074,7 @@ text(x = tick, y = par("usr")[3] - 0.25, labels = bp$names, # For the distance t
 
 ##### ~~~~~~~~~~~ CWM habitat preferences ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$habitat_forest~wdata$urban_type, outline=TRUE,
                         ylab="CWM abundance of forest birds",
@@ -4092,7 +4092,7 @@ text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance t
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$habitat_forest~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM abundance of forest birds",
@@ -4111,7 +4111,7 @@ text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$habitat_woodland~wdata$urban_type, outline=TRUE,
                         ylab="CWM abundance of woodland birds",
@@ -4129,7 +4129,7 @@ text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance t
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$habitat_woodland~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM abundance of woodland birds",
@@ -4148,7 +4148,7 @@ text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$habitat_rupestrian~wdata$urban_type, outline=TRUE,
                         ylab="CWM abundance of rupestrian birds",
@@ -4166,7 +4166,7 @@ text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$habitat_rupestrian~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM abundance of rupestrian birds",
@@ -4185,7 +4185,7 @@ text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$habitat_shrubland~wdata$urban_type, outline=TRUE,
                         ylab="CWM abundance of shrubland birds",
@@ -4203,7 +4203,7 @@ text(x = tick, y = par("usr")[3] - 0.025, labels = bp$names, # For the distance 
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$habitat_shrubland~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM abundance of shrubland birds",
@@ -4222,7 +4222,7 @@ text(x = tick, y = par("usr")[3] - 0.025, labels = bp$names, # For the distance 
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$habitat_grassland~wdata$urban_type, outline=TRUE,
                         ylab="CWM abundance of grassland birds",
@@ -4240,7 +4240,7 @@ text(x = tick, y = par("usr")[3] - 0.025, labels = bp$names, # For the distance 
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$habitat_grassland~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM abundance of grassland birds",
@@ -4261,7 +4261,7 @@ text(x = tick, y = par("usr")[3] - 0.025, labels = bp$names, # For the distance 
 
 ##### ~~~~~~~~~~~ CWM habitat density preferences ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$hab_density_dense~wdata$urban_type, outline=TRUE,
                         ylab="CWM abund. of densely wooded habitat birds",
@@ -4279,7 +4279,7 @@ text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance t
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$hab_density_dense~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM abund. of densely wooded habitat birds",
@@ -4298,7 +4298,7 @@ text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$hab_density_semi_open~wdata$urban_type, outline=TRUE,
                         ylab="CWM abund. of semi-open habitat birds",
@@ -4316,7 +4316,7 @@ text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance t
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$hab_density_semi_open~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM abund. of semi-open habitat birds",
@@ -4335,7 +4335,7 @@ text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$hab_density_open~wdata$urban_type, outline=TRUE,
                         ylab="CWM abund. of open habitat birds",
@@ -4353,7 +4353,7 @@ text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance t
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$hab_density_open~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM abund. of open habitat birds",
@@ -4374,7 +4374,7 @@ text(x = tick, y = par("usr")[3] - 0.1, labels = bp$names, # For the distance to
 
 ##### ~~~~~~~~~~~ CWM primary lifestyle ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$prim_lifestyle_insessorial~wdata$urban_type, outline=TRUE,
                         ylab="CWM abundance of insessorial birds",
@@ -4392,7 +4392,7 @@ text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance t
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$prim_lifestyle_insessorial~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM abundance of insessorial birds",
@@ -4411,7 +4411,7 @@ text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$prim_lifestyle_aerial~wdata$urban_type, outline=TRUE,
                         ylab="CWM abundance of aerial birds",
@@ -4429,7 +4429,7 @@ text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance t
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$prim_lifestyle_aerial~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM abundance of aerial birds",
@@ -4448,7 +4448,7 @@ text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$prim_lifestyle_terrestrial~wdata$urban_type, outline=TRUE,
                         ylab="CWM abundance of terrestrial birds",
@@ -4466,7 +4466,7 @@ text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance t
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$prim_lifestyle_terrestrial~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM abundance of terrestrial birds",
@@ -4485,7 +4485,7 @@ text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$prim_lifestyle_generalist~wdata$urban_type, outline=TRUE,
                         ylab="CWM abundance of generalist lifestyle birds",
@@ -4503,7 +4503,7 @@ text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance t
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$prim_lifestyle_generalist~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM abundance of generalist lifestyle birds",
@@ -4524,7 +4524,7 @@ text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance t
 
 ##### ~~~~~~~~~~~ CWM social behaviour ----
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$social_behaviour_solitary~wdata$urban_type, outline=TRUE,
                         ylab="CWM abundance of solitary birds",
@@ -4542,7 +4542,7 @@ text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance t
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$social_behaviour_solitary~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM abundance of solitary birds",
@@ -4561,7 +4561,7 @@ text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$social_behaviour_gregarious~wdata$urban_type, outline=TRUE,
                         ylab="CWM abundance of gregarious birds",
@@ -4579,7 +4579,7 @@ text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance t
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$social_behaviour_gregarious~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM abundance of gregarious birds",
@@ -4598,7 +4598,7 @@ text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance t
 
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$social_behaviour_small_groups~wdata$urban_type, outline=TRUE,
                         ylab="CWM abundance of small grouped birds",
@@ -4616,7 +4616,7 @@ text(x = tick, y = par("usr")[3] - 0.05, labels = bp$names, # For the distance t
      srt = 45, xpd = TRUE, adj = 1, font = 3)
 
 par(font.lab = 4, font.axis=6, font.lab= 2,
-    mar = c(10, 4, 3, 2) + 0.5,
+    mar = c(8, 4, 0.5, 2) + 0.5,
     bty="l", fg="gray4")
 bp <- graphics::boxplot(wcwm$social_behaviour_small_groups~wdata$urban_type_3, outline=TRUE,
                         ylab="CWM abundance of small grouped birds",
